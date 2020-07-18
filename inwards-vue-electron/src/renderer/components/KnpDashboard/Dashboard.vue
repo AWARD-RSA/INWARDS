@@ -1,0 +1,295 @@
+<template>
+  <div style="height: 100%;">
+    <StatusBar/>
+    <div class="container-fluid" style="height: 100%;">
+      <div class="row" style="height: 100%;">
+        <div class="col-md-3 no-float left-panel" style="background: #252526;">
+          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="card-body">
+              <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
+                <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
+              </button>
+            </div>
+          </div>
+          <MapDashboard ref="mapDashboard"/>
+          <div class="v-space"></div>
+          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="card-body">
+              <ComplianceTable ref="complianceTable"/>
+            </div>
+          </div>
+          <div class="v-space"></div>
+          <div class="card rounded-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6" style="padding-right: 2px;">
+                  <div class="form-group">
+                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label> 
+                    <input type="date" class="form-control" id="dateStart" style="margin-left: 4px;">
+                  </div>
+                </div>
+                <div class="col-sm-6" style="padding-left: 2px;">
+                  <div class="form-group">
+                    <label for="dateEnd" style="padding-left: 8px;">End Date:</label>
+                    <input type="date" class="form-control" id="dateEnd" style="margin-right: 10px;" @onload="setDates()">
+                  </div>
+                </div>
+              </div>
+                <div class="row">
+                <div class="col-md-12">
+                <button class="btn inwards_button" type="button" style="width: 100%">
+                  <i class="fa fa-line-chart"></i>Update Dashboard
+                </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                <button class="btn inwards_button" type="button" style="width: 100%" @click="showRiverLog()">
+                  <i class="fa fa-line-chart"></i>View River Log Book
+                </button>
+                </div>
+              </div>             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 no-float right-panel" style="background: #1E1E1E;">
+          <div class="row">
+            <div class="col-md-6">
+                  <CrocChart ref="crocComponent" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-6">
+                  <SabieChart ref="sabieComponent" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-6">
+              <BalChart ref="balComponent" style="margin-top: 5px;"/>   
+              </div>
+            <div class="col-md-6">
+                  <LetChart ref="letComponent" style="margin-top: 5px;"/>
+              </div>
+              <div class="col-md-6">
+                  <OliChart ref="oliComponent" style="margin-top: 5px;"/>
+              </div>
+              <div class="col-md-6">
+                  <LimChart ref="limComponent" style="margin-top: 5px;"/>
+              </div>
+              <br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <RiverLog ref="logComponent" style="margin-top: 5px;"/>
+  </div>
+</template>
+<style>
+.grid {
+  position: relative;
+}
+.muuri-container {
+  overflow-y: auto;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+.chartDivId.c3-line-[Reserve] {
+  stroke-width: 5px;
+}
+.item {
+  display: block;
+  position: absolute;
+  margin: 0;
+  z-index: 1;
+  width: 49%;
+  min-height: 480px;
+  padding-right: 0;
+}
+.item.muuri-item-dragging {
+  z-index: 3;
+}
+.item.muuri-item-releasing {
+  z-index: 2;
+}
+.item.muuri-item-hidden {
+  z-index: 0;
+}
+.item-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.right-panel {
+    overflow-y: scroll;
+}
+.left-panel {
+    overflow-y: scroll;
+}
+.c3-line-Reserve {
+    stroke-width: 2px;
+}
+.c3-line-Observed {
+    stroke-width: 2px;
+}
+.c3-line-Last_Year {
+    stroke-width: 2px;
+    stroke-dasharray: 5.5;
+}
+.c3-circle-Events {
+    stroke-width: 15px;
+    stroke: rgb(0, 0, 0);
+}
+</style>
+<script>
+  import axios from 'axios';
+  import router from '@/router/index';
+  import MapDashboard from './MapDashboard';
+  import ComplianceTable from './ComplianceTable';
+  import RiverLog from './RiverLog';
+  import CrocChart from './CrocChart';
+  import SabieChart from './SabieChart';
+  import OliChart from './OliChart';
+  import LetChart from './LetChart';
+  import BalChart from './BalChart';
+  import LimChart from './LimChart';
+  import StatusBar from '../StatusBar';
+  import VectorLayer from 'ol/layer/Vector';
+  import VectorSource from 'ol/source/Vector';
+  import GeoJSON from 'ol/format/GeoJSON';
+  import {Fill, Stroke, Style} from 'ol/style';
+  import path from 'path';
+  import WmaJson from '@/assets/wma_merge.json';
+  require('promise.prototype.finally').shim();
+  const { app } = require('electron').remote;
+  export default {
+
+    components: {
+      MapDashboard,
+      ComplianceTable,
+      CrocChart,
+      SabieChart,
+      OliChart,
+      LetChart,
+      BalChart,
+      LimChart,
+      RiverLog,
+      StatusBar
+    },
+    data () {
+      return {
+        stationsApi: 'http://inwards.award.org.za/app_json/tpc_stations.php',
+        stationsCoordinates: {}, // To stored all stations with their coordinates
+        stationsFeatures: {}, // To stored station features
+        stationsRequest: null,
+        selectedStations: [],
+        selectedWMAs: []
+      };
+    },
+    mounted () {
+      let self = this;
+      this.mapDashboardRef = this.$refs.mapDashboard;
+      let map = this.$refs.mapDashboard.map;
+      this.mapDashboardRef.connectedToTree = false;
+      let startDate = new Date();
+      startDate.setDate(startDate.getDate() - 14);
+      startDate = this.formatDate(startDate);
+      let endDate = this.formatDate(new Date());
+      this.$refs.letComponent.displayChart('chartComponent-unverified-timeseries-B8H008H3T', ['B8H008H3T'], this.formatDate(startDate), this.formatDate(endDate));
+      this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016BFW'], this.formatDate(startDate), this.formatDate(endDate));
+      this.$refs.sabieComponent.displayChart('chartComponent-unverified-timeseries-X3H021FW', ['X3H021BFW'], this.formatDate(startDate), this.formatDate(endDate));
+      this.$refs.oliComponent.displayChart('chartComponent-unverified-timeseries-B7H015FW', ['B7H015FW'], this.formatDate(startDate), this.formatDate(endDate));
+      this.$refs.balComponent.displayChart('chartComponent-unverified-timeseries-B7H026BFW', ['B7H026BFW'], this.formatDate(startDate), this.formatDate(endDate));
+      this.$refs.limComponent.displayChart('chartComponent-unverified-timeseries-A9H012FW', ['A9H012FW'], this.formatDate(startDate), this.formatDate(endDate));
+      let selectedWMAs = ['limpopo', 'olifants_letaba', 'inkomati_usuthu'];
+      self.mapDashboardRef.showSelectedWMA(selectedWMAs);
+      let vectorLayer = new VectorLayer({
+        source: new VectorSource({
+          features: (new GeoJSON({
+            defaultDataProjection: 'EPSG:4326'
+          })).readFeatures(WmaJson, {
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857'
+          })
+        }),
+        updateWhileAnimating: true,
+        updateWhileInteracting: true
+      });
+      map.addLayer(vectorLayer);
+      self.addKnpLayer(map);
+      self.fetchStations();
+    },
+    methods: {
+      fetchStations () {
+        let self = this;
+        let wmaNames = ['limpopo', 'olifants_letaba', 'inkomati_usuthu'];
+        let fs = require('fs');
+        let dir = path.join(app.getPath('userData'), '/stations');
+        // TODO : Create an util class for file storage
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir);
+        }
+        // Cancel previous request if any
+        if (this.stationsRequest) {
+          this.stationsRequest.cancel('Canceling stations request');
+          this.stationsRequest = null;
+        }
+        // Wrap wma name with single quotes, for api purposes
+        wmaNames = wmaNames.sort();
+        for (let i = 0; i < wmaNames.length; i++) {
+          wmaNames[i] = `'${wmaNames[i]}'`;
+        }
+        let url = `${self.stationsApi}?wma=${wmaNames.join()}`;
+        let stationFile = `${dir}/${url.hashCode()}.json`;
+        // Check if online
+        if (navigator.onLine) {
+          let cancelToken = null;
+          if (self.stationsRequest) {
+            cancelToken = self.stationsRequest.token;
+          }
+          axios.get(url, { cancelToken: cancelToken }).then(response => {
+            self.mapDashboardRef.loadStationsToMap(response.data);
+            self.createCatchmentTree(response.data);
+            fs.writeFileSync(stationFile, JSON.stringify(response.data));
+          }).catch(error => {
+            console.log(error);
+          });
+        } else {
+          if (fs.existsSync(stationFile)) {
+            let jsonData = fs.readFileSync(stationFile, 'utf-8');
+            let stationsData = JSON.parse(jsonData);
+            self.mapDashboardRef.loadStationsToMap(stationsData);
+          }
+        }
+      },
+      showRiverLog () {
+        this.$refs.logComponent.showLogModal();
+      },
+      addKnpLayer (map) {
+        const knpJson = require('@/assets/knp.json');
+        let knpLayer = new VectorLayer({
+          source: new VectorSource({
+            features: (new GeoJSON({
+              defaultDataProjection: 'EPSG:4326'
+            })).readFeatures(knpJson, {
+              dataProjection: 'EPSG:4326',
+              featureProjection: 'EPSG:3857'
+            })
+          }),
+          updateWhileAnimating: true,
+          updateWhileInteracting: false
+        });
+        map.addLayer(knpLayer);
+        let knpStyle = new Style({
+          stroke: new Stroke({
+            color: [51, 204, 51, 0.6],
+            width: 1
+          }),
+          fill: new Fill({
+            color: [51, 204, 51, 0.2]
+          }),
+          zIndex: 1
+        });
+        knpLayer.setStyle(knpStyle);
+      },
+      backToMapSelect () {
+        router.push({ path: '/' });
+      }
+    }
+  };
+</script>

@@ -9,8 +9,8 @@
         </div>
         <div class="col-2">
           <div class="pull-right">
-            <div class="online">Online<img class="bullet-icon" src="@/assets/bullet-green.png" alt="Online"></div>
-            <div class="offline">Offline<img class="bullet-icon" src="@/assets/bullet-red.png" alt="Offline"></div>
+            <div class="online" style="color: white;">Online<img class="bullet-icon" src="@/assets/bullet-green.png" alt="Online"></div>
+            <div class="offline" style="color: white;">Offline<img class="bullet-icon" src="@/assets/bullet-red.png" alt="Offline"></div>
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
     z-index: 999;
     bottom: 0;
     height: 20px;
-    background-color: white;
+    background-color: #3C3C3C;
     font-size: 10pt;
     width: 100%;
     padding-right: 25px;

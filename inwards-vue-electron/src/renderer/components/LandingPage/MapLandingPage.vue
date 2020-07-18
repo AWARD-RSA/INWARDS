@@ -36,6 +36,8 @@
                     <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Biodiversity Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button class="btn inwards_button" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+
                   </div>
                 </div>
                 </div>
@@ -52,7 +54,7 @@
         </div>
       </div>
       <div v-if="devMode" class="reset-application-data-container" style="position: absolute; bottom: 0; margin-bottom: 50px; margin-left: 20px;">
-        <div class="btn btn-primary" v-on:click="resetApplicationData">Reset application data</div>
+        <div class="btn inwards_button" v-on:click="resetApplicationData">Reset application data</div>
       </div>
     </div>
 </template>
@@ -240,6 +242,9 @@
       },
       goToUserDefinedDashboard () {
         router.push({ path: 'user-dashboard' });
+      },
+      goToKnpDashboard () {
+        router.push({ path: 'knp-dashboard' });
       },
       resetApplicationData (e) {
         stateStore.clearAll();

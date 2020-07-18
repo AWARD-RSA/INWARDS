@@ -10,9 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Unverified timeseries',
+        chartTitle: 'A9H012: Luvuvhu at Mhinga',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/unverified_timeseries.php'
+        baseUrl: 'http://inwards.award.org.za/app_json/tpc_inwards.php'
       };
     },
     methods: {
@@ -28,14 +28,14 @@
         console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
         axios.get(url).then(response => {
-          let chartData = response.data;
+          let limData = response.data;
           self.chartUrl = url;
           setTimeout(() => {
             c3.generate({
               bindto: '#' + self.chartDivId,
-              data: chartData,
+              data: limData,
               zoom: {
-                enabled: true,
+                enabled: false,
                 rescale: true,
                 type: 'drag'
               },
@@ -45,7 +45,7 @@
                   tick: {
                     fit: true,
                     format: function (x) {
-                      var formatSeconds = timeFormat('%Y-%m-%d %H:%S');
+                      var formatSeconds = timeFormat('%Y-%m-%d');
                       return formatSeconds(new Date(x * 1000));
                     },
                     count: 50,
@@ -70,8 +70,8 @@
               },
               color: {
                 pattern: [
-                  'rgba(128,0,0, 0.3)', 'rgba(255, 0, 0, 0.3)', 'rgba(255, 106, 0, 0.3)',
-                  'rgba(255, 216, 0, 0.3)', 'rgba(0, 255, 33, 0.3)', 'rgba(0, 38, 255, 0.3)',
+                  'rgba(128,0,0, 1)', 'rgba(255, 0, 0, 1)', 'rgba(255, 106, 0, 1)',
+                  'rgba(255, 216, 0, 1)', 'rgba(0, 255, 33, 1)', '#3590ae',
                   'rgb(0,0,0)', 'rgb(105,105,105)', '#6b1135', '#9a0410', '#90cb9e', '#fecb9d',
                   '#5f9052', '#3d7d7f', '#8ca227', '#1a0333', '#907510']
               },

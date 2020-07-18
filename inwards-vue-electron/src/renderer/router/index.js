@@ -21,6 +21,11 @@ export default new Router({
       component: require('@/components/UserDashboard/Dashboard').default
     },
     {
+      path: '/knp-dashboard',
+      name: 'knp-dashboard-page',
+      component: require('@/components/KnpDashboard/Dashboard').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

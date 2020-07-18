@@ -91,6 +91,9 @@
     height: 200px;
     overflow-y: auto;
   }
+  .c3-area {
+      opacity:1;
+  }
 </style>
 <script>
   import axios from 'axios';
