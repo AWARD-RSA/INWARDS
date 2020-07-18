@@ -3,7 +3,7 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row" style="height: 100%;">
-        <div class="col-md-3 no-float" style="background: #252526;">
+        <div class="col-md-3 no-float left-panel" style="background: #252526; padding-bottom: 50px;">
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
             <div class="card-body">
               <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
@@ -62,7 +62,7 @@
           </div>
           <div class="v-space"></div>
         </div>
-        <div class="col-md-9 no-float" style="background: #1E1E1E;">
+        <div class="col-md-9 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px;">
           <div class="row">
             <div class="col-md-6">
               <UnverifiedChart ref="chartComponent" style="margin-top: 5px;"/>
