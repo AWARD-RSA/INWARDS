@@ -212,3 +212,10 @@ html {
 #refresh-stations:hover {
   cursor: pointer;
 }
+.jstree-icon .jstree-themeicon .jstree-themeicon-custom {
+  font-size: 0.8rem;
+}
+
+.jstree-node  .jstree-leaf {
+  font-size: 0.8rem;
+}

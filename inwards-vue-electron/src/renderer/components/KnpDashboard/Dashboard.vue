@@ -245,7 +245,6 @@
           axios.get(url, { cancelToken: cancelToken }).then(response => {
             self.mapDashboardRef.loadStationsToMap(response.data);
             self.createCatchmentTree(response.data);
-            fs.writeFileSync(stationFile, JSON.stringify(response.data));
           }).catch(error => {
             console.log(error);
           });

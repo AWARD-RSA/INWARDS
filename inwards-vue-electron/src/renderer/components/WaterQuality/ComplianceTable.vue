@@ -35,7 +35,6 @@
         .then(
           response => {
             this.stations = response.data;
-            console.log(this.stations);
           })
         .catch(function (error) {
           console.log(error);

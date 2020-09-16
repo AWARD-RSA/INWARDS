@@ -26,6 +26,11 @@ export default new Router({
       component: require('@/components/KnpDashboard/Dashboard').default
     },
     {
+      path: '/wq-dashboard',
+      name: 'wq-dashboard-page',
+      component: require('@/components/WaterQuality/Dashboard').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

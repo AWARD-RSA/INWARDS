@@ -3,8 +3,8 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row" style="height: 100%;">
-        <div class="col-md-3 no-float left-panel" style="background: #252526; padding-bottom: 50px;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
+        <div class="col-md-3 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0;">
+          <div class="card rounded-0" style="margin-top: 0px; margin-bottom: 0px; margin-right: 0;">
             <div class="card-body">
               <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
                 <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
@@ -12,9 +12,7 @@
             </div>
           </div>
           <CatchmentTree ref="catchmentTree"/>
-          <div class="v-space"></div>
           <MapDashboard ref="mapDashboard"/>
-          <div class="v-space"></div>
           <div class="card rounded-0">
             <div class="card-body">
               <div class="row">
@@ -60,7 +58,6 @@
               </div>
             </div>
           </div>
-          <div class="v-space"></div>
         </div>
         <div class="col-md-9 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px;">
           <div class="row">

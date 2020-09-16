@@ -33,7 +33,7 @@
                   <div class="btn-group-vertical" style="width:100%">
                     <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button class="btn inwards_button" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Biodiversity Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
@@ -241,10 +241,31 @@
         router.push({ path: 'dashboard' });
       },
       goToUserDefinedDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'user-dashboard' });
       },
       goToKnpDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'knp-dashboard' });
+      },
+      goToWqDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'wq-dashboard' });
       },
       resetApplicationData (e) {
         stateStore.clearAll();
