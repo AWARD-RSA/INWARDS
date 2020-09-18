@@ -8,7 +8,6 @@
         <component :is="child" :key="child.name" :ref="child.id"></component>
       </template>
       <div class="card rounded-0">
-        <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-map" style="padding-right: 10px;"></i>Map</h6></div>
         <div class="card-body">
           <div id="dashboard-map"></div>
         </div>

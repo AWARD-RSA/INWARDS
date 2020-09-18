@@ -71,6 +71,7 @@ cursor: pointer; /* Add a pointer on hover */
   background-color: #4CAF50;
   color: white;
 }
+
 .inwards_card{
     background-color: #177a98;
     border-color: #177a98;
@@ -218,4 +219,8 @@ html {
 
 .jstree-node  .jstree-leaf {
   font-size: 0.8rem;
+}
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
 }

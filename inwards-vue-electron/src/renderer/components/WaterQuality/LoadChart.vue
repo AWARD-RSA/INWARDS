@@ -1,7 +1,8 @@
 <script>
   import 'c3/c3.min.css';
-  import c3 from 'c3';
   import axios from 'axios';
+  import 'jquery/dist/jquery.min.js';
+  import Plotly from 'plotly.js-dist';
   import ChartContainer from './ChartContainer';
   require('promise.prototype.finally').shim();
 
@@ -9,64 +10,133 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Unverified Discharge Duration Curve',
-        chartId: 'unverified-discharge-duration-curve',
-        baseUrl: 'http://inwards.award.org.za/app_json/duration.php'
+        chartTitle: 'Load Duration Curve',
+        chartId: 'load-duration-curve',
+        baseUrl: 'http://inwards.award.org.za/app_json/load_duration.php'
       };
     },
     methods: {
       fetchChartData () {
+        console.log('Fetching...');
         let self = this;
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        if (!self.mounted) {
-          setTimeout(function () {
-            self.fetchChartData();
-          }, 1000);
-          return;
-        }
-        console.log('Fetching Duration Curve...');
+        var variableTitle = this.urlParameters.variable + ' (tons/day)';
+        console.log(url);
         axios.get(url).then(response => {
-          let durationData = response.data;
+          let jsonData = response.data;
+          let boxData = [];
           setTimeout(() => {
-            c3.generate({
-              bindto: '#' + self.chartDivId,
-              data: durationData,
-              axis: {
-                x: {
-                  label: {
-                    text: 'Exceedance Probability (%)',
-                    position: 'outer-center'
-                  },
-                  tick: {
-                    fit: true,
-                    format: function (d) { return Math.ceil(d); },
-                    count: 20
-                  }
-                },
-                y: {
-                  label: {
-                    text: 'Discharge (cumecs)',
-                    position: 'outer-middle'
-                  },
-                  min: 0,
-                  padding: {top: 0, bottom: 0
-                  }
+            let layout = {
+              shapes: [{
+                type: 'rect',
+                xref: 'x',
+                yref: 'paper',
+                x0: 0,
+                y0: 0,
+                x1: 10,
+                y1: 100,
+                fillcolor: 'rgba(0, 38, 255, 0.3)',
+                opacity: 0.2,
+                line: {
+                  width: 0
                 }
               },
-              tooltip: {
-                show: true
+              {
+                type: 'rect',
+                xref: 'x',
+                yref: 'paper',
+                x0: 10,
+                y0: 0,
+                x1: 40,
+                y1: 100,
+                fillcolor: 'rgba(0, 255, 33, 0.3)',
+                opacity: 0.2,
+                line: {
+                  width: 0
+                }
               },
-              point: {
-                show: false
+              {
+                type: 'rect',
+                xref: 'x',
+                yref: 'paper',
+                x0: 40,
+                y0: 0,
+                x1: 60,
+                y1: 100,
+                fillcolor: 'rgba(255, 216, 0, 0.3)',
+                opacity: 0.2,
+                line: {
+                  width: 0
+                }
               },
-              color: {
-                pattern: ['rgb(0,0,0)', 'rgb(105,105,105)', '#6b1135', '#9a0410', '#90cb9e', '#fecb9d', '#5f9052', '#3d7d7f', '#8ca227', '#1a0333', '#907510']
+              {
+                type: 'rect',
+                xref: 'x',
+                yref: 'paper',
+                x0: 60,
+                y0: 0,
+                x1: 90,
+                y1: 100,
+                fillcolor: 'rgba(255, 106, 0, 0.3)',
+                opacity: 0.2,
+                line: {
+                  width: 0
+                }
               },
-              line: {
-                connectNull: false
+              {
+                type: 'rect',
+                xref: 'x',
+                yref: 'paper',
+                x0: 90,
+                y0: 0,
+                x1: 100,
+                y1: 100,
+                fillcolor: 'rgba(255, 0, 0, 0.3',
+                opacity: 0.2,
+                line: {
+                  width: 0
+                }
               }
-            });
+              ],
+              title: false,
+              font: {
+                family: 'Raleway, Calibri',
+                size: 9
+              },
+              tickfont: {
+                size: 0.1
+              },
+              yaxis: {
+                title: variableTitle,
+                autorange: true,
+                showgrid: true,
+                zeroline: true,
+                gridwidth: 1,
+                zerolinecolor: 'rgb(0, 0, 0)',
+                zerolinewidth: 2,
+                type: 'log',
+                rangemode: 'nonnegative'
+              },
+              margin: {
+                l: 40,
+                r: 0,
+                b: 20,
+                t: 20,
+                pad: 4
+              },
+              paper_bgcolor: 'rgb(255, 255, 255)',
+              plot_bgcolor: 'rgb(255, 255, 255)',
+              showlegend: true,
+              legend: {
+                orientation: 'h'
+              }
+            };
+            for (let variable in jsonData) {
+              boxData.push(jsonData[variable]);
+            }
+            document.getElementById(self.chartDivId).innerHTML = '';
+            Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: true});
           }, 1000);
         }).catch(error => {
           console.log(error);

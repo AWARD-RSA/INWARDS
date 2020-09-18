@@ -1,23 +1,9 @@
 <template>
   <div class="card rounded-0 box" v-bind:style="styleObject">
     <div class="card-header inwards_card">
-   <div class="row">
+   <div class="row no-gutters">
     <div class="col-md-12">  
-    <h6 style="color: white; margin-top: 10px; width: 50%; float: left;" class="chart-title">{{ chartTitle }}</h6>
-      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Zoom"><i class="fa fa-search-plus" style="padding-right: 10px;"></i></button>
-            <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Tooltip"><i class="fa fa-question-circle" style="padding-right: 10px;"></i></button>
-            <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download" style="padding-right: 10px;"></i></button>
-            <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Save"><i class="fa fa-floppy-o" style="padding-right: 10px;"></i></button>
-            <span v-if='deletable'>
-              <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Remove from your dashboard" v-on:click="removeFromStore"><i class="fa fa-minus" style="padding-right: 10px;"></i></button>
-            </span>
-            <span v-else>
-              <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Add to your dashboard" v-on:click="addToStore"><i class="fa fa-plus" style="padding-right: 10px;"></i></button>
-            </span>
-          </div>
-      </div>
+    <h6 style="color: white; margin-top: 10px; width: 50%; float: left; font-size: 14px;" class="chart-title">{{ chartTitle }}</h6>
     </div>
     </div>
     </div>
@@ -131,12 +117,13 @@ export default {
       // Override this function get the chart data
       return false;
     },
-    displayChart (stations, variable, sd, ed) {
+    displayChart (stations, variable, sd, ed, unit) {
       this.styleObject.display = 'block';
       this.urlParameters.stations = stations;
       this.urlParameters.variable = variable;
       this.urlParameters.sd = sd;
       this.urlParameters.ed = ed;
+      this.urlParameters.unit = unit;
       this.chartId = this.chartId;
       console.log(this.chartId);
       this.chartDivId = this.chartId.replace(/,/g, '-');

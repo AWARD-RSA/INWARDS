@@ -2,9 +2,9 @@
   <div style="height: 100%;">
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
-      <div class="row" style="height: 100%;">
-        <div class="col-md-3 no-float left-panel" style="background: #252526; padding-bottom: 50px;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
+      <div class="row no-gutters" style="height: 100%;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
+          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
             <div class="card-body">
               <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
                 <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
@@ -13,98 +13,73 @@
           </div>
          <div class="card rounded-0">
             <div class="card-body">
-              <div class="row">
+              <div class="row no-gutters">
                 <div class="col-md-12">
                   <div class="form-group">
-                  <label for="selVar">Select Sample Site Type:</label>
-                  <select class="form-control rounded-0" name="typeSelect" v-model="selectedType" @change="detectType()">
+                  <label for="selVar" style="margin-left: 4px; margin-right: 10px;"><b>Select Sample Site Type:</b></label>
+                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px;" name="typeSelect" v-model="selectedType" @change="detectType()">
                     <option class="dropdown-item" v-for="type in types" v-bind:key="type.type" v-bind:value="type.type"> {{ type.type }} </option>
                   </select>
                 </div>
                 </div>
              </div>
-              </div>
-            </div>
-          <CatchmentTree ref="catchmentTree"/>
-          <MapDashboard ref="mapDashboard"/>
-
-          <div class="card rounded-0">
-            <div class="card-body">
-              <div class="row">
+            <div class="row no-gutters">
                 <div class="col-md-12">
                   <div class="form-group">
-                  <label for="selVar">Select Variable:</label>
-                  <select class="form-control rounded-0" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable">
+                  <label for="selVar" style="margin-left: 4px; margin-right: 10px;"><b>Select Variable:</b></label>
+                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px;" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable">
                     <option class="dropdown-item" v-for="variable in variables" v-bind:key="variable.id" v-bind:value="[variable.mon_variable_abbr,variable.measure_unit_abbr]"> {{ variable.mon_variable_name }} </option>
                   </select>
                 </div>
                 </div>
              </div>
-              <div class="row">
+              <div class="row no-gutters">
                 <div class="col-sm-6" style="padding-right: 2px;">
                   <div class="form-group">
+                    <label style="margin-left: 4px; margin-right: 10px;"><b>Start Date:</b></label>
                     <input class="form-control" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
                   </div>
                 </div>
                 <div class="col-sm-6" style="padding-left: 2px;">
                   <div class="form-group">
+                    <label style="margin-left: 4px; margin-right: 10px;"><b>End Date:</b></label>
                     <input class="form-control" id="dateEnd" style="margin-right: 10px;" placeholder='End Date' onfocus="(this.type='date')">
                   </div>
                 </div>
+              </div>             
               </div>
-
-
-                <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox" style="margin-left: 5px">
-                      <input id="ts" type="checkbox" class="custom-control-input" checked="true">T/S
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                  </div>
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox">
-                      <input id="bx" type="checkbox" class="custom-control-input" checked="true">Boxplot
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                  </div>
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox">
-                      <input id="fdc" type="checkbox" class="custom-control-input" checked="true">FDC
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="row">
+            </div>
+          <CatchmentTree ref="catchmentTree"/>
+          <div class="card rounded-0">
+            <div class="card-body">
+              <div class="row no-gutters">
                 <div class="col-md-12">
                 <button class="btn inwards_button" type="button" style="width: 100%" @click="doAnalysis ()">
-                  <i class="fa fa-line-chart"></i>Anaylse
+                  <i class="fa fa-line-chart"></i>Analyse
                 </button>
                 </div>
               </div>
             </div>
 
-          </div>
+          </div>          
+          <MapDashboard ref="mapDashboard"/>
+
+
         </div>
-        <div class="col-md-9 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px;">
-          <div class="row">
-            <div class="col-md-6">
-                  <BoxChart ref="boxComponent" style="margin-top: 5px;"/>
-              </div>
+        <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
+          <div class="row no-gutters">
             <div class="col-md-6">
                   <TimeseriesChart ref="timeseriesComponent" style="margin-top: 5px;"/>
               </div>
+            <div class="col-md-6" style="padding-left: 2px;">
+                  <BoxChart ref="boxComponent" style="margin-top: 5px;"/>
+              </div>
+
             <div class="col-md-6">
                   <LoadChart ref="loadComponent" style="margin-top: 5px;"/>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6" style="padding-left: 2px;">
                   <DurationChart ref="durationComponent" style="margin-top: 5px;"/>
-              </div>
-              <div class="col-md-6">
-              <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
-                <div class="card-body">
-                  <ComplianceTable ref="complianceTable"/>
-                </div>
-                </div>
               </div>
               <br>
           </div>
@@ -278,9 +253,11 @@
           });
           return;
         }
-        this.$refs.boxComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd));
-        this.$refs.timeseriesComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd));
-        this.$refs.durationComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd));
+
+        this.$refs.boxComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.timeseriesComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.durationComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.loadComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
       },
       detectType () {
         console.log(this.selectedType);
@@ -377,7 +354,7 @@
           );
         };
         var startDate = new Date();
-        startDate.setDate(startDate.getDate() - 14);
+        startDate.setDate(startDate.getDate() - 18250);
         var dd = startDate.getDate();
         var mm = startDate.getMonth() + 1;
         var yyyy = startDate.getFullYear();

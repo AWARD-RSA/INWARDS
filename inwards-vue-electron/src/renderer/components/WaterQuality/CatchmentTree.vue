@@ -1,7 +1,7 @@
 <template>
   <div>
      <div class="card rounded-0">
-        <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-map-marker" style="padding-right: 10px;"></i>Stations
+        <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-map-marker" style="padding-right: 10px;"></i>Select Site
         <span v-if='refreshable'>
           <i class="fa fa-refresh" id="refresh-stations" v-on:click="refreshStations" ref="refreshType"></i>
         </span>
@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="card-body jstree-container" style="max-height:300px; height: 300px;">
-          <div v-if='loading'>Loading...</div>
+          <div v-if='loading'>Select Station Types...</div>
           <div v-else>
               <div id="jstree-div" style="font-size: 14px;">
               </div>

@@ -10,8 +10,8 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Unverified Discharge Boxplot',
-        chartId: 'unverified-discharge-boxplot',
+        chartTitle: 'Boxplot',
+        chartId: 'wq-boxplot',
         baseUrl: 'http://inwards.award.org.za/app_json/wq_boxplot.php'
       };
     },
@@ -21,6 +21,7 @@
         let self = this;
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
+        var variableTitle = this.urlParameters.variable + ' (' + this.urlParameters.unit + ')';
         console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
@@ -30,17 +31,17 @@
               title: false,
               font: {
                 family: 'Raleway, Calibri',
-                size: 12
+                size: 9
               },
               yaxis: {
-                title: 'Concentration',
+                title: variableTitle,
                 autorange: true,
                 showgrid: true,
                 zeroline: true,
-                dtick: 50,
                 gridwidth: 1,
                 zerolinecolor: 'rgb(0, 0, 0)',
-                zerolinewidth: 2
+                zerolinewidth: 2,
+                rangemode: 'nonnegative'
               },
               margin: {
                 l: 50,
@@ -51,7 +52,10 @@
               },
               paper_bgcolor: 'rgb(255, 255, 255)',
               plot_bgcolor: 'rgb(255, 255, 255)',
-              showlegend: false
+              showlegend: true,
+              legend: {
+                orientation: 'h'
+              }
             };
             for (let variable in jsonData) {
               boxData.push(jsonData[variable]);
