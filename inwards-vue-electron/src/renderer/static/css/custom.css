@@ -77,6 +77,7 @@ cursor: pointer; /* Add a pointer on hover */
     border-color: #177a98;
     height: 100%;
     width: 100%;
+    color: #f1f1f1;
 
 }
 .inwards_button .fa {

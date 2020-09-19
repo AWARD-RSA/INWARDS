@@ -22,6 +22,9 @@
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
         var variableTitle = this.urlParameters.variable + ' (tons/day)';
+        if (this.urlParameters.variable === 'EC_Phys_Water') {
+          variableTitle = 'TDS Calculated (tons/day)';
+        }
         console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;

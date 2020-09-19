@@ -50,21 +50,17 @@
               </div>
             </div>
           <CatchmentTree ref="catchmentTree"/>
+         
           <div class="card rounded-0">
             <div class="card-body">
               <div class="row no-gutters">
-                <div class="col-md-12">
                 <button class="btn inwards_button" type="button" style="width: 100%" @click="doAnalysis ()">
                   <i class="fa fa-line-chart"></i>Analyse
                 </button>
                 </div>
               </div>
-            </div>
-
-          </div>          
+              </div>               
           <MapDashboard ref="mapDashboard"/>
-
-
         </div>
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
           <div class="row no-gutters">
@@ -150,7 +146,6 @@
   import router from '@/router/index';
   import MapDashboard from './MapDashboard';
   import CatchmentTree from './CatchmentTree';
-  import ComplianceTable from './ComplianceTable';
   import RiverLog from './RiverLog';
   import BoxChart from './BoxChart';
   import TimeseriesChart from './TimeseriesChart';
@@ -170,7 +165,6 @@
 
     components: {
       MapDashboard,
-      ComplianceTable,
       CatchmentTree,
       BoxChart,
       TimeseriesChart,
@@ -202,7 +196,6 @@
     mounted () {
       let self = this;
       self.mapDashboardRef = self.$refs.mapDashboard;
-      let map = this.$refs.mapDashboard.map;
       self.catchmentTreeRef = self.$refs.catchmentTree;
       stateStore.getState(
         stateStore.keys.selectedWMAs,
@@ -217,6 +210,16 @@
           self.mapDashboardRef.showSelectedWMA(selectedWMAs);
         }
       );
+      self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
+        self.catchmentTreeRef.toggleNode(station, isStationSelected);
+      });
+      self.$bus.$on('refreshStations', () => {
+        self.fetchStations();
+      });
+      self.$bus.$on('addStationsToStore', (stations, chartStoredId) => {
+        self.addStationsToStore(stations, chartStoredId);
+      });
+      let map = this.$refs.mapDashboard.map;
       self.addKnpLayer(map);
     },
     methods: {
@@ -367,6 +370,34 @@
         startDate = yyyy + '-' + mm + '-' + dd;
         document.getElementById('dateStart').setAttribute('value', startDate);
       },
+      addStationsToStore (stations, chartStoredId) {
+        let self = this;
+        stateStore.getState(
+          stateStore.keys.selectedStations,
+          function (selectedStations) {
+            if (!selectedStations || typeof selectedStations === 'undefined') {
+              selectedStations = {};
+            }
+            for (let i = 0; i < stations.length; i++) {
+              if (!selectedStations[stations[i]]) {
+                selectedStations[stations[i]] = {
+                  'feature': self.stationsFeatures[stations[i]],
+                  'stationCoord': self.stationsCoordinates[stations[i]],
+                  'chartStored': [chartStoredId]
+                };
+              } else {
+                if (selectedStations[stations[i]]['chartStored'].indexOf(chartStoredId) < 0) {
+                  selectedStations[stations[i]]['chartStored'].push(chartStoredId);
+                }
+              }
+            }
+            stateStore.setState(
+              stateStore.keys.selectedStations,
+              selectedStations
+            );
+          }
+        );
+      },
       showRiverLog () {
         this.$refs.logComponent.showLogModal();
       },
@@ -410,12 +441,13 @@
           let station = stationsData.features[i]['properties']['station'];
           let place = stationsData.features[i]['properties']['desc'];
           let latestReading = stationsData.features[i]['properties']['latest'];
+          let hydro = stationsData.features[i]['properties']['hydro'];
           this.stationsFeatures[station] = stationsData.features[i];
           this.stationsCoordinates[station] = stationsData.features[i].geometry.coordinates;
           if (catchmentsData.hasOwnProperty(secondary)) {
             let stationName = '';
             if (latestReading != null) {
-              stationName = station + ': ' + place + ': ' + latestReading.toString().slice(0, 10);
+              stationName = station + ' (' + hydro + '): ' + place + ': ' + latestReading.toString().slice(0, 10);
             } else {
               stationName = 'Problem with Station';
             }

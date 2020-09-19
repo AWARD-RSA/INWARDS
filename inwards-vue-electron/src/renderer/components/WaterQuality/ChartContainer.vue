@@ -1,11 +1,6 @@
 <template>
   <div class="card rounded-0 box" v-bind:style="styleObject">
-    <div class="card-header inwards_card">
-   <div class="row no-gutters">
-    <div class="col-md-12">  
-    <h6 style="color: white; margin-top: 10px; width: 50%; float: left; font-size: 14px;" class="chart-title">{{ chartTitle }}</h6>
-    </div>
-    </div>
+    <div class="card-header inwards_card">{{ chartTitle }}
     </div>
     <div class="card-body chart-container">
       <section v-if="errored">
@@ -22,6 +17,7 @@
 </template>
 <script>
 import stateStore from '../../store/state_handler';
+import saveSvgAsPng from 'save-svg-as-png';
 const { dialog } = require('electron').remote;
 export default {
   name: 'chart-container',
@@ -128,6 +124,9 @@ export default {
       console.log(this.chartId);
       this.chartDivId = this.chartId.replace(/,/g, '-');
       this.fetchChartData();
+    },
+    savePNG () {
+      saveSvgAsPng(document.getElementById(this.chartDivId), 'diagram.png');
     }
   }
 };

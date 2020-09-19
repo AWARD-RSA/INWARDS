@@ -166,7 +166,6 @@
           duration: 20
         }
       });
-
       this.map = new Map({
         target: 'dashboard-map',
         layers: [

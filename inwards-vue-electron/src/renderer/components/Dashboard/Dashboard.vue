@@ -394,7 +394,7 @@
           }
         }
         this.mapDashboardRef.toggleSelectedStationsByStationNames(
-          _selectedStations,
+          selectedCatchments,
           _unselectedStations
         );
         this.selectedStations = _selectedStations;
