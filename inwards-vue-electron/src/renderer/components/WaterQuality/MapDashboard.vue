@@ -258,13 +258,14 @@
         this.stationsVectorLayer.getSource().forEachFeature(function (feature) {
           let station = feature.get(self.keys.station);
           const index = self.selectedStations.indexOf(station);
-          if (selectedStationNames.indexOf(station) !== -1) {
+          if (selectedStationNames.indexOf(station.toString()) !== -1) {
+            console.log('Yes Its A Match');
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
             if (index === -1) {
               self.selectedStations.push(station);
             }
-          } else if (unselectedStationNames.indexOf(station) !== -1) {
+          } else if (unselectedStationNames.indexOf(station.toString()) !== -1) {
             feature.set(self.keys.selected, false);
             feature.setStyle(self.stationsDefaultStyle);
             if (index > -1) {
@@ -279,7 +280,6 @@
         let self = this;
         self.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
           let station = feature.get(self.keys.station);
-          console.log(station);
           let isStationSelected = feature.get(self.keys.selected);
           if (!self.connectedToTree) {
             // Just show popup

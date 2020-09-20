@@ -447,7 +447,7 @@
           if (catchmentsData.hasOwnProperty(secondary)) {
             let stationName = '';
             if (latestReading != null) {
-              stationName = station + ' (' + hydro + '): ' + place + ': ' + latestReading.toString().slice(0, 10);
+              stationName = station + ': ' + ' (' + hydro + '): ' + place + ' ' + latestReading.toString().slice(0, 10);
             } else {
               stationName = 'Problem with Station';
             }
@@ -499,6 +499,7 @@
         let _selectedStations = [];
         let selectedBits = [];
         let _unselectedStations = Object.assign([], this.selectedStations);
+        console.log(_unselectedStations);
         for (i = 0; i < data.selected.length; i++) {
           selected = data.instance.get_node(data.selected[i]).text;
           selectedBits = selected.split(':');
