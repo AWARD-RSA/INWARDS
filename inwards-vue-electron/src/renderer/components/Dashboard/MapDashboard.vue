@@ -259,6 +259,8 @@
         let self = this;
         this.stationsVectorLayer.getSource().forEachFeature(function (feature) {
           let station = feature.get(self.keys.station);
+          console.log(station);
+          console.log(selectedStationNames);
           const index = self.selectedStations.indexOf(station);
           if (selectedStationNames.indexOf(station) !== -1) {
             feature.set(self.keys.selected, true);

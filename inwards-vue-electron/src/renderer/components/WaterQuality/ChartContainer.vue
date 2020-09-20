@@ -7,9 +7,9 @@
         <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
       </section>
       <section v-else style="height: 100%;">
-        <div v-if='loading'>Loading...</div>
+        <div v-if='loading'><ring-loader :loading="loading" :color="color" :size="size" class="loading_disks"></ring-loader></div>
         <div v-else style="height: 100%">
-          <div :id="chartDivId" style="height: 100%;">Loading...</div>
+          <div :id="chartDivId" style="height: 100%;"><ring-loader :loading="loading" :color="color" :size="size" class="loading_disks"></ring-loader></div>
         </div>
       </section>
     </div>
@@ -18,8 +18,12 @@
 <script>
 import stateStore from '../../store/state_handler';
 import saveSvgAsPng from 'save-svg-as-png';
+import { RingLoader } from 'vue-spinner/dist/vue-spinner.min.js';
 const { dialog } = require('electron').remote;
 export default {
+  components: {
+    RingLoader
+  },
   name: 'chart-container',
   data () {
     return {
@@ -34,9 +38,15 @@ export default {
         ed: '',
         type: 0
       },
+      color: '#177a98',
+      height: '35px',
+      width: '4px',
+      margin: '2px',
+      size: '100px',
+      loading: false,
+      radius: '2px',
       chartData: null,
       errored: false,
-      loading: true,
       stationsCoordinates: {},
       styleObject: {
         display: 'none'

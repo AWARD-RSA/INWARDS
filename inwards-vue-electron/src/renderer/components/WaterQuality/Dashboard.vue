@@ -63,7 +63,9 @@
           <MapDashboard ref="mapDashboard"/>
         </div>
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
+
           <div class="row no-gutters">
+ 
             <div class="col-md-6">
                   <TimeseriesChart ref="timeseriesComponent" style="margin-top: 5px;"/>
               </div>
@@ -79,6 +81,7 @@
               </div>
               <br>
           </div>
+           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>          
         </div>
       </div>
     </div>
@@ -156,6 +159,7 @@
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
   import {Fill, Stroke, Style} from 'ol/style';
+  import { GridLoader } from 'vue-spinner/dist/vue-spinner.min.js';
   import $ from 'jquery';
   import path from 'path';
   import stateStore from '../../store/state_handler';
@@ -165,6 +169,7 @@
 
     components: {
       MapDashboard,
+      GridLoader,
       CatchmentTree,
       BoxChart,
       TimeseriesChart,
@@ -186,7 +191,14 @@
         types: [],
         selectedVariable: '',
         variableUnit: '',
-        variables: []
+        variables: [],
+        color: '#177a98',
+        height: '35px',
+        width: '4px',
+        margin: '2px',
+        size: '40px',
+        loading: true,
+        radius: '2px'
       };
     },
     beforeMount () {
@@ -256,11 +268,12 @@
           });
           return;
         }
-
+        this.loading = true;
         this.$refs.boxComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.timeseriesComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.durationComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.loadComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.loading = false;
       },
       detectType () {
         console.log(this.selectedType);
@@ -440,14 +453,19 @@
           let secondary = stationsData.features[i]['properties']['secondary'];
           let station = stationsData.features[i]['properties']['station'];
           let place = stationsData.features[i]['properties']['desc'];
+          let sampleSize = stationsData.features[i]['properties']['sample_size'];
           let latestReading = stationsData.features[i]['properties']['latest'];
           let hydro = stationsData.features[i]['properties']['hydro'];
           this.stationsFeatures[station] = stationsData.features[i];
           this.stationsCoordinates[station] = stationsData.features[i].geometry.coordinates;
+          let flow = 'N';
+          if (hydro > 0) {
+            flow = 'Y';
+          }
           if (catchmentsData.hasOwnProperty(secondary)) {
             let stationName = '';
             if (latestReading != null) {
-              stationName = station + ': ' + ' (' + hydro + '): ' + place + ' ' + latestReading.toString().slice(0, 10);
+              stationName = station + ': ' + ' (' + sampleSize + ') ' + ' (' + flow + ') ' + place + ' ' + latestReading.toString().slice(0, 10);
             } else {
               stationName = 'Problem with Station';
             }

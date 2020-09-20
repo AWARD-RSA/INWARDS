@@ -66,6 +66,7 @@
     }
   },
   "dependencies": {
+    "@saeris/vue-spinners": "^1.0.8",
     "custom-electron-titlebar": "^3.2.2-hotfix62",
     "material-design-iconic-font": "^2.2.0",
     "plotly.js-dist": "^1.52.2",
@@ -74,6 +75,7 @@
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
+    "vue-spinner": "^1.0.4",
     "vuex": "^3.0.1",
     "vuex-electron": "^1.0.0"
   },
