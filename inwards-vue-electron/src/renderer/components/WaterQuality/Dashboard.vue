@@ -276,6 +276,7 @@
         this.loading = false;
       },
       detectType () {
+        this.catchmentTreeRef.refreshStations();
         console.log(this.selectedType);
         this.fetchStations();
       },
