@@ -2,9 +2,9 @@
   <div style="height: 100%;">
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
-      <div class="row" style="height: 100%;">
-        <div class="col-md-3 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0;">
-          <div class="card rounded-0" style="margin-top: 0px; margin-bottom: 0px; margin-right: 0;">
+      <div class="row no-gutters" style="height: 100%;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
+          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
             <div class="card-body">
               <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
                 <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
@@ -12,7 +12,9 @@
             </div>
           </div>
           <CatchmentTree ref="catchmentTree"/>
+          <div class="v-space"></div>
           <MapDashboard ref="mapDashboard"/>
+          <div class="v-space"></div>
           <div class="card rounded-0">
             <div class="card-body">
               <div class="row">
@@ -58,19 +60,21 @@
               </div>
             </div>
           </div>
+          <div class="v-space"></div>
         </div>
-        <div class="col-md-9 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px;">
-          <div class="row">
+        <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
+
+          <div class="row no-gutters">
             <div class="col-md-6">
               <UnverifiedChart ref="chartComponent" style="margin-top: 5px;"/>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding-left: 2px;">
               <BoxChart ref="boxComponent" style="margin-top: 5px;"/>
             </div>
             <div class="col-md-6">
               <DurationCurve ref="durationComponent" style="margin-top: 5px;"/>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding-left: 2px;">
                 <Station ref="stationComponent" style="margin-top: 5px;"/>
             </div>
           </div>
@@ -87,9 +91,6 @@
     max-height: 200px;
     height: 200px;
     overflow-y: auto;
-  }
-  .c3-area {
-      opacity:1;
   }
 </style>
 <script>
@@ -394,7 +395,7 @@
           }
         }
         this.mapDashboardRef.toggleSelectedStationsByStationNames(
-          selectedCatchments,
+          _selectedStations,
           _unselectedStations
         );
         this.selectedStations = _selectedStations;

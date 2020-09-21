@@ -2,8 +2,8 @@
   <div style="height: 100%;">
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
-      <div class="row" style="height: 100%;">
-        <div class="col-md-3 no-float left-panel" style="background: #252526; padding-bottom: 50px;">
+      <div class="row no-gutters" style="height: 100%;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
             <div class="card-body">
               <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
@@ -37,7 +37,7 @@
               </div>
                 <div class="row">
                 <div class="col-md-12">
-                <button class="btn inwards_button" type="button" style="width: 100%">
+                <button class="btn inwards_button" type="button" style="width: 100%" @click="updateCharts()">
                   <i class="fa fa-line-chart"></i>Update Dashboard
                 </button>
                 </div>
@@ -52,24 +52,25 @@
             </div>
           </div>
         </div>
-        <div class="col-md-9 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px;">
-          <div class="row">
+        <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
+
+          <div class="row no-gutters">
             <div class="col-md-6">
                   <CrocChart ref="crocComponent" style="margin-top: 5px;"/>
               </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding-left: 2px;">
                   <SabieChart ref="sabieComponent" style="margin-top: 5px;"/>
               </div>
             <div class="col-md-6">
               <BalChart ref="balComponent" style="margin-top: 5px;"/>   
               </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="padding-left: 2px;">
                   <LetChart ref="letComponent" style="margin-top: 5px;"/>
               </div>
               <div class="col-md-6">
                   <OliChart ref="oliComponent" style="margin-top: 5px;"/>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6" style="padding-left: 2px;">
                   <LimChart ref="limComponent" style="margin-top: 5px;"/>
               </div>
               <br>
@@ -152,6 +153,7 @@
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
+  import $ from 'jquery';
   import {Fill, Stroke, Style} from 'ol/style';
   import path from 'path';
   import WmaJson from '@/assets/wma_merge.json';
@@ -187,8 +189,7 @@
       let map = this.$refs.mapDashboard.map;
       this.mapDashboardRef.connectedToTree = false;
       let startDate = new Date();
-      startDate.setDate(startDate.getDate() - 14);
-      startDate = this.formatDate(startDate);
+      startDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       let endDate = this.formatDate(new Date());
       this.$refs.letComponent.displayChart('chartComponent-unverified-timeseries-B8H008H3T', ['B8H008H3T'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016BFW'], this.formatDate(startDate), this.formatDate(endDate));
@@ -288,6 +289,18 @@
       },
       backToMapSelect () {
         router.push({ path: '/' });
+      },
+      updateCharts () {
+        let dateStartString = $('#dateStart').val();
+        let dateEndString = $('#dateEnd').val();
+        let startDate = new Date(dateStartString);
+        let endDate = new Date(dateEndString);
+        this.$refs.letComponent.displayChart('chartComponent-unverified-timeseries-B8H008H3T', ['B8H008H3T'], this.formatDate(startDate), this.formatDate(endDate));
+        this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016BFW'], this.formatDate(startDate), this.formatDate(endDate));
+        this.$refs.sabieComponent.displayChart('chartComponent-unverified-timeseries-X3H021FW', ['X3H021BFW'], this.formatDate(startDate), this.formatDate(endDate));
+        this.$refs.oliComponent.displayChart('chartComponent-unverified-timeseries-B7H015FW', ['B7H015FW'], this.formatDate(startDate), this.formatDate(endDate));
+        this.$refs.balComponent.displayChart('chartComponent-unverified-timeseries-B7H026BFW', ['B7H026BFW'], this.formatDate(startDate), this.formatDate(endDate));
+        this.$refs.limComponent.displayChart('chartComponent-unverified-timeseries-A9H012FW', ['A9H012FW'], this.formatDate(startDate), this.formatDate(endDate));
       }
     }
   };

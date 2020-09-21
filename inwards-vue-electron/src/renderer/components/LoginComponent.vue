@@ -3,10 +3,11 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Please Verify Access</h5>
+          <img class="modal-title" src="@/assets/login_logo.png" style="width: 100%;">
         </div>
         <div class="modal-body">
           <div class="form-group">
+            <h5 class="modal-title"><b>Please Verify Access</b></h5>
             <label for="emailAddress">Email address</label>
             <input type="email" class="form-control rounded-0" id="emailAddress" v-model="emailAddress" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>

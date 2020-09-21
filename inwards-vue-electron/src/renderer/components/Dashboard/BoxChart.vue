@@ -55,7 +55,7 @@
               boxData.push(jsonData[variable]);
             }
             document.getElementById(self.chartDivId).innerHTML = '';
-            Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: false});
+            Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: true});
           }, 1000);
         }).catch(error => {
           console.log(error);

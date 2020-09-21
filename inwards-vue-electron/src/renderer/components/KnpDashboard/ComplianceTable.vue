@@ -6,8 +6,6 @@
 					<th> Status</th>
 					<th> Compliant (%)</th>
 					<th> Non-Complaint (%)</th>
-					<th> Latest Reading</th>
-					<th> Discharge</th>
 					<th> No Readings</th>
 				</tr>
 			</thead>
@@ -16,8 +14,6 @@
                     <td>{{ station.Status }}</td>
                     <td>{{ station.Compliant }}</td>
                     <td>{{ station.Non_Complaint }}</td>        
-                    <td>{{ station.Latest_Reading }}</td> 
-                    <td>{{ station.Discharge }}</td> 
                     <td>{{ station.No_Readings }}</td>             
 			</tr>
 		</table>

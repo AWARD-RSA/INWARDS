@@ -1,8 +1,8 @@
 <script>
   import 'c3/c3.min.css';
-  import c3 from 'c3';
-  import {timeFormat} from 'd3-time-format';
   import axios from 'axios';
+  import 'jquery/dist/jquery.min.js';
+  import Plotly from 'plotly.js-dist';
   import ChartContainer from './ChartContainer';
   require('promise.prototype.finally').shim();
 
@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Unverified timeseries',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/unverified_timeseries.php'
+        baseUrl: 'http://inwards.award.org.za/app_json/plotly_timeseries.php'
       };
     },
     methods: {
@@ -27,58 +27,46 @@
         }
         console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
+        console.log(url);
         axios.get(url).then(response => {
-          let chartData = response.data;
-          self.chartUrl = url;
+          let jsonData = response.data;
+          let boxData = [];
           setTimeout(() => {
-            c3.generate({
-              bindto: '#' + self.chartDivId,
-              data: chartData,
-              zoom: {
-                enabled: true,
-                rescale: true,
-                type: 'drag'
+            let layout = {
+              title: false,
+              font: {
+                family: 'Raleway, Calibri',
+                size: 9
               },
-              axis: {
-                x: {
-                  type: 'timeseries',
-                  tick: {
-                    fit: true,
-                    format: function (x) {
-                      var formatSeconds = timeFormat('%Y-%m-%d %H:%S');
-                      return formatSeconds(new Date(x * 1000));
-                    },
-                    count: 50,
-                    rotate: -45
-                  }
-                },
-                y: {
-                  label: {
-                    text: 'Discharge (cumecs)',
-                    position: 'outer-middle'
-                  },
-                  min: 0,
-                  padding: {top: 0, bottom: 0
-                  }
-                }
+              yaxis: {
+                title: 'Unverified Timeseries',
+                autorange: true,
+                showgrid: true,
+                zeroline: true,
+                gridwidth: 1,
+                zerolinecolor: 'rgb(0, 0, 0)',
+                zerolinewidth: 2,
+                rangemode: 'nonnegative'
               },
-              tooltip: {
-                show: true
+              margin: {
+                l: 50,
+                r: 50,
+                b: 50,
+                t: 50,
+                pad: 4
               },
-              point: {
-                show: false
-              },
-              color: {
-                pattern: [
-                  'rgba(128,0,0, 0.3)', 'rgba(255, 0, 0, 0.3)', 'rgba(255, 106, 0, 0.3)',
-                  'rgba(255, 216, 0, 0.3)', 'rgba(0, 255, 33, 0.3)', 'rgba(0, 38, 255, 0.3)',
-                  'rgb(0,0,0)', 'rgb(105,105,105)', '#6b1135', '#9a0410', '#90cb9e', '#fecb9d',
-                  '#5f9052', '#3d7d7f', '#8ca227', '#1a0333', '#907510']
-              },
-              line: {
-                connectNull: false
+              paper_bgcolor: 'rgb(255, 255, 255)',
+              plot_bgcolor: 'rgb(255, 255, 255)',
+              showlegend: true,
+              legend: {
+                orientation: 'h'
               }
-            });
+            };
+            for (let variable in jsonData) {
+              boxData.push(jsonData[variable]);
+            }
+            document.getElementById(self.chartDivId).innerHTML = '';
+            Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: true});
           }, 1000);
         }).catch(error => {
           console.log(error);
