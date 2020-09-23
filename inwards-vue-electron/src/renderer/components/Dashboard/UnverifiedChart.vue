@@ -39,7 +39,7 @@
                 size: 9
               },
               yaxis: {
-                title: 'Unverified Timeseries',
+                title: 'Discharge (cumecs)',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,
