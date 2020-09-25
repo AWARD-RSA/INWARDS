@@ -24,7 +24,7 @@
               <div class="row">
                 <div class="col-sm-6" style="padding-right: 2px;">
                   <div class="form-group">
-                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label> 
+                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label>
                     <input type="date" class="form-control" id="dateStart" style="margin-left: 4px;">
                   </div>
                 </div>
@@ -48,7 +48,14 @@
                   <i class="fa fa-line-chart"></i>View River Log Book
                 </button>
                 </div>
-              </div>             
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                <button class="btn inwards_button" type="button" style="width: 100%" @click="showOperationalReserve()">
+                  <i class="fa fa-line-chart"></i>Submit Operational Reserve
+                </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +69,7 @@
                   <SabieChart ref="sabieComponent" style="margin-top: 5px;"/>
               </div>
             <div class="col-md-6">
-              <BalChart ref="balComponent" style="margin-top: 5px;"/>   
+              <BalChart ref="balComponent" style="margin-top: 5px;"/>
               </div>
             <div class="col-md-6" style="padding-left: 2px;">
                   <LetChart ref="letComponent" style="margin-top: 5px;"/>
@@ -79,6 +86,7 @@
       </div>
     </div>
     <RiverLog ref="logComponent" style="margin-top: 5px;"/>
+    <OperationalReserve ref="operationalComponent" style="margin-top: 5px;"/>
   </div>
 </template>
 <style>
@@ -142,6 +150,7 @@
   import router from '@/router/index';
   import MapDashboard from './MapDashboard';
   import ComplianceTable from './ComplianceTable';
+  import OperationalReserve from './OperationalReserve';
   import RiverLog from './RiverLog';
   import CrocChart from './CrocChart';
   import SabieChart from './SabieChart';
@@ -171,6 +180,7 @@
       BalChart,
       LimChart,
       RiverLog,
+      OperationalReserve,
       StatusBar
     },
     data () {
@@ -259,6 +269,9 @@
       },
       showRiverLog () {
         this.$refs.logComponent.showLogModal();
+      },
+      showOperationalReserve () {
+        this.$refs.operationalComponent.showOperationalModal();
       },
       addKnpLayer (map) {
         const knpJson = require('@/assets/knp.json');
