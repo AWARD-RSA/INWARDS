@@ -34,6 +34,7 @@
                     <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button class="btn inwards_button" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" type="button">Biodiversity Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
@@ -257,6 +258,12 @@
         }
         stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'knp-dashboard' });
+      },
+      goToIUCMADashboard () {
+        let _selectedWMA = [];
+        _selectedWMA.push('inkomati_usuthu');
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'iucma-dashboard' });
       },
       goToWqDashboard () {
         let self = this;

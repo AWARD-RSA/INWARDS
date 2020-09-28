@@ -31,6 +31,11 @@ export default new Router({
       component: require('@/components/WaterQuality/Dashboard').default
     },
     {
+      path: '/iucma-dashboard',
+      name: 'iucma-dashboard-page',
+      component: require('@/components/IucmaDashboard/Dashboard').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

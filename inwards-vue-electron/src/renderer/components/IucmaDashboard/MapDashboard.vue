@@ -98,11 +98,11 @@
         },
         selectedStyle: new Style({
           stroke: new Stroke({
-            color: [51, 204, 51, 0.4],
+            color: [105, 105, 105, 0.4],
             width: 4
           }),
           fill: new Fill({
-            color: [51, 204, 51, 0.1]
+            color: [105, 105, 105, 0.1]
           }),
           zIndex: 1
         }),
@@ -197,7 +197,18 @@
       showSelectedWMA (data) {
         this.defaultExtent = Extent.createEmpty();
         for (let i = 0; i < data.length; i++) {
-          let wmaJsonFile = `inkomati_usuthu_wma.json`;
+          let wma = data[i];
+          let wmaJsonFile = `${wma}_wma.json`;
+          let selectedStyle = new Style({
+            stroke: new Stroke({
+              color: [169, 169, 169, 0.9],
+              width: 1
+            }),
+            fill: new Fill({
+              color: [169, 169, 169, 0.1]
+            }),
+            zIndex: 1
+          });
           let vectorLayer = new VectorLayer({
             source: new VectorSource({
               features: (new GeoJSON({
@@ -210,6 +221,7 @@
             updateWhileAnimating: true,
             updateWhileInteracting: true
           });
+          vectorLayer.setStyle(selectedStyle);
           Extent.extend(this.defaultExtent, vectorLayer.getSource().getExtent());
           this.layerGroup.getLayers().push(vectorLayer);
         }
