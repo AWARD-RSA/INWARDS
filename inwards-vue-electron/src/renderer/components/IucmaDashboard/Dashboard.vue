@@ -125,7 +125,34 @@
               </div>
             <div class="col-md-12">
               <ExeChart ref="exeterComponent" style="margin-top: 5px;"/>
+              </div>              
+            <div class="col-md-12">
+              <SabieS3 ref="sabieS3Component" style="margin-top: 5px;"/>
               </div>
+            <div class="col-md-12">
+              <SabieS1 ref="sabieS1Component" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-12">
+              <CrocC2 ref="crocC2Component" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-12">
+              <CrocC3 ref="crocC3Component" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-12">
+              <CrocC4 ref="crocC4Component" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-12">
+              <CrocC5 ref="crocC5Component" style="margin-top: 5px;"/>
+              </div>
+             <div class="col-md-12">
+              <CrocC7 ref="crocC7Component" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-12">
+              <MacmacS4 ref="macmacS4Component" style="margin-top: 5px;"/>
+              </div>
+            <div class="col-md-12">
+              <MariteS5 ref="mariteS5Component" style="margin-top: 5px;"/>
+              </div>                                                                                  
               <br>
           </div>
         </div>
@@ -199,6 +226,15 @@
   import CrocChart from './CrocChart';
   import SabieChart from './SabieChart';
   import ExeChart from './ExeChart';
+  import SabieS1 from './SabieS1';
+  import SabieS3 from './SabieS3';
+  import CrocC2 from './CrocC2';
+  import CrocC3 from './CrocC3';
+  import CrocC4 from './CrocC4';
+  import CrocC5 from './CrocC5';
+  import CrocC7 from './CrocC7';
+  import MariteS5 from './MariteS5';
+  import MacmacS4 from './MacmacS4';
   import StatusBar from '../StatusBar';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
@@ -216,6 +252,15 @@
       CrocChart,
       SabieChart,
       ExeChart,
+      CrocC2,
+      CrocC3,
+      CrocC4,
+      CrocC5,
+      CrocC7,
+      SabieS3,
+      SabieS1,
+      MacmacS4,
+      MariteS5,
       RiverLog,
       OperationalReserve,
       StatusBar
@@ -258,6 +303,15 @@
       this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016BFW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
       this.$refs.sabieComponent.displayChart('chartComponent-unverified-timeseries-X3H021FW', ['X3H021BFW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
       this.$refs.exeterComponent.displayChart('chartComponent-unverified-timeseries-X3H008FW', ['X3H008FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.sabieS1Component.displayChart('chartComponent-unverified-timeseries-X3H001FW', ['X3H001FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.sabieS3Component.displayChart('chartComponent-unverified-timeseries-X3H023FW', ['X3H023FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.macmacS4Component.displayChart('chartComponent-unverified-timeseries-X3H003FW', ['X3H003FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.mariteS5Component.displayChart('chartComponent-unverified-timeseries-X3H011FW', ['X3H011FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.crocC2Component.displayChart('chartComponent-unverified-timeseries-X2H070FW', ['X2H070FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.crocC3Component.displayChart('chartComponent-unverified-timeseries-X2H013FW', ['X2H013FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.crocC4Component.displayChart('chartComponent-unverified-timeseries-X2H032FW', ['X2H032FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.crocC7Component.displayChart('chartComponent-unverified-timeseries-X2H022FW', ['X2H022FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+      this.$refs.crocC5Component.displayChart('chartComponent-unverified-timeseries-X2H097FW', ['X2H097FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
       let selectedWMAs = ['inkomati_usuthu'];
       self.mapDashboardRef.showSelectedWMA(selectedWMAs);
       self.addKnpLayer(map);
@@ -390,8 +444,17 @@
         let ninTh = document.getElementById('90th').checked;
         let nininTh = document.getElementById('99th').checked;
         this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016BFW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
-        this.$refs.sabieComponent.displayChart('chartComponent-unverified-timeseries-X3H021FW', ['X3H021BFW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.sabieComponent.displayChart('chartComponent-unverified-timeseries-X3H021FW', ['X3H021FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
         this.$refs.exeterComponent.displayChart('chartComponent-unverified-timeseries-X3H008FW', ['X3H008FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.sabieS1Component.displayChart('chartComponent-unverified-timeseries-X3H001FW', ['X3H001FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.sabieS3Component.displayChart('chartComponent-unverified-timeseries-X3H023FW', ['X3H023FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.macmacS4Component.displayChart('chartComponent-unverified-timeseries-X3H003FW', ['X3H003FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.mariteS5Component.displayChart('chartComponent-unverified-timeseries-X3H011FW', ['X3H011FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.crocC2Component.displayChart('chartComponent-unverified-timeseries-X2H070FW', ['X2H070FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.crocC3Component.displayChart('chartComponent-unverified-timeseries-X2H013FW', ['X2H013FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.crocC4Component.displayChart('chartComponent-unverified-timeseries-X2H032FW', ['X2H032FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.crocC7Component.displayChart('chartComponent-unverified-timeseries-X2H022FW', ['X2H022FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
+        this.$refs.crocC5Component.displayChart('chartComponent-unverified-timeseries-X2H097FW', ['X2H097FW'], this.formatDate(startDate), this.formatDate(endDate), critical, veryHigh, high, medium, low, inform, lastYear, verifiedDischarge, iima, crimib, sixTh, sevTh, eigTh, ninTh, nininTh);
         this.$refs.complianceTable.updateTable();
       }
     }

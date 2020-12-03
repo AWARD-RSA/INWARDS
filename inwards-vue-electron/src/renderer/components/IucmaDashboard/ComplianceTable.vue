@@ -9,11 +9,6 @@
           <th> 90th (%)</th>
           <th> 99th (%)</th>
 					<th> No Readings</th>
-          <th> Critical (%)</th>
-          <th> Very High Worry (%)</th>
-          <th> High Worry (%)</th>
-          <th> Medium Worry (%)</th>
-          <th> Low Worry (%)</th>
 				</tr>
 			</thead>
 			<tr v-for="station in stations" v-bind:key="station.Station" style="font-size: 0.7rem;">
@@ -23,12 +18,7 @@
                     <td>{{ station.eigTh }}</td>
                     <td>{{ station.ninTh }}</td>
                     <td>{{ station.nininTh }}</td>
-                    <td>{{ station.No_Readings }}</td>
-                    <td>{{ station.Critical }}</td> 
-                    <td>{{ station.Very_High_Worry }}</td> 
-                    <td>{{ station.High_Worry }}</td> 
-                    <td>{{ station.Medium_Worry }}</td> 
-                    <td>{{ station.Low_Worry }}</td>              
+                    <td>{{ station.No_Readings }}</td>              
 			</tr>
 		</table>
 </template>
