@@ -36,6 +36,11 @@ export default new Router({
       component: require('@/components/IucmaDashboard/Dashboard').default
     },
     {
+      path: '/fish-dashboard',
+      name: 'fish-dashboard-page',
+      component: require('@/components/FishDashboard/Dashboard').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Vue from 'vue';
 import axios from 'axios';
-
+import vSelect from 'vue-select';
 import $ from 'jquery';
 import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -10,6 +10,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'jquery/dist/jquery.min.js';
 import '@/static/css/font-awesome.min.css';
 import '@/static/css/custom.css';
+import 'vue-select/dist/vue-select.css';
 import '@/utils/helpers.js';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.css';
 
@@ -27,7 +28,7 @@ Vue.prototype.$ = $;
 Vue.prototype.$bus = new Vue();
 Vue.prototype.isLoggedIn = false;
 Vue.prototype.devMode = process.env.NODE_ENV === 'development';
-
+Vue.component('v-select', vSelect);
 /* eslint-disable no-new */
 new Vue({
   components: { App },

@@ -295,6 +295,7 @@
       fetchStations () {
         let self = this;
         let wmaNames = Object.assign([], self.selectedWMAs);
+        console.log(wmaNames);
         let fs = require('fs');
         let dir = path.join(app.getPath('userData'), '/stations');
         // TODO : Create an util class for file storage

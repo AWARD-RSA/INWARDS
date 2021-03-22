@@ -37,7 +37,7 @@
                     <button class="btn inwards_button" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button class="btn inwards_button" style="width: 100%" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" type="button">Biodiversity Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button class="btn inwards_button" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
 
                   </div>
                 </div>
@@ -273,6 +273,15 @@
         }
         stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'wq-dashboard' });
+      },
+      goToFishDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'fish-dashboard' });
       },
       resetApplicationData (e) {
         stateStore.clearAll();

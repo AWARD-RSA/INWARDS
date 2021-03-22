@@ -51,7 +51,7 @@
         let dateEndString = $('#dateEnd').val();
         let startDate = new Date(dateStartString);
         let endDate = new Date(dateEndString);
-        console.log('http://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + this.formatDate(startDate) + '&ed=' + this.formatDate(endDate));
+        // console.log('http://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + this.formatDate(startDate) + '&ed=' + this.formatDate(endDate));
         this.$http.get('http://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + this.formatDate(startDate) + '&ed=' + this.formatDate(endDate))
           .then(
             response => {
