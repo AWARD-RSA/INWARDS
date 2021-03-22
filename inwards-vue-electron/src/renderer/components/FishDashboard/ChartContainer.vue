@@ -123,13 +123,13 @@ export default {
       // Override this function get the chart data
       return false;
     },
-    displayChart (stations, variable, sd, ed, unit) {
+    displayChart (stations, fishSite, sd, ed, species) {
       this.styleObject.display = 'block';
       this.urlParameters.stations = stations;
-      this.urlParameters.variable = variable;
+      this.urlParameters.fishSite = fishSite;
       this.urlParameters.sd = sd;
       this.urlParameters.ed = ed;
-      this.urlParameters.unit = unit;
+      this.urlParameters.species = species;
       this.chartId = this.chartId;
       console.log(this.chartId);
       this.chartDivId = this.chartId.replace(/,/g, '-');

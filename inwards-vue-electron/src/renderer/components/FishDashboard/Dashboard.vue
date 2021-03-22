@@ -36,7 +36,7 @@
                     <div class="row no-gutters">
                 <div class="col-md-12">          
                         <h6>Select Species</h6>
-                 <v-select :options="fishSpecies" style="background-color: white"></v-select>
+                 <v-select :options="fishSpecies" v-model="selectedSpecies" style="background-color: white"></v-select>
                 </div>
                     </div>
               <div class="row">
@@ -134,6 +134,8 @@
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,
         selectedBioStations: [],
+        selectedHydroStations: [],
+        selectedSpecies: '',
         selectedWMAs: [],
         fishSelected: [],
         fishSpecies: [],
@@ -220,14 +222,13 @@
         });
       },
       doAnalysis () {
-        console.log(this.selectedVariable);
+        console.log(this.selectedSpecies);
         console.log(this.selectedBioStations[0]);
-        console.log(this.selectedType);
-        console.log(this.variables);
+        console.log(this.selectedHydroStations[0]);
         if (this.selectedBioStations.length === 0) {
           dialog.showMessageBox(null, {
             type: 'warning',
-            message: 'Please select at least one station',
+            message: 'Please select at least one fish site',
             buttons: ['OK']
           });
           return;
@@ -255,7 +256,7 @@
         this.loading = true;
         this.$refs.siteComponent.siteTable(this.selectedBioStations);
         // this.$refs.boxComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        // this.$refs.timeseriesComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.timeseriesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         // this.$refs.durationComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         // this.$refs.loadComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.loading = false;
@@ -409,6 +410,34 @@
           }
         );
       },
+      addHydroStationsToStore (stations, chartStoredId) {
+        let self = this;
+        stateStore.getState(
+          stateStore.keys.selectedHydroStations,
+          function (selectedHydroStations) {
+            if (!selectedHydroStations || typeof selectedHydroStations === 'undefined') {
+              selectedHydroStations = {};
+            }
+            for (let i = 0; i < stations.length; i++) {
+              if (!selectedHydroStations[stations[i]]) {
+                selectedHydroStations[stations[i]] = {
+                  'feature': self.stationsFeatures[stations[i]],
+                  'stationCoord': self.stationsCoordinates[stations[i]],
+                  'chartStored': [chartStoredId]
+                };
+              } else {
+                if (selectedHydroStations[stations[i]]['chartStored'].indexOf(chartStoredId) < 0) {
+                  selectedHydroStations[stations[i]]['chartStored'].push(chartStoredId);
+                }
+              }
+            }
+            stateStore.setState(
+              stateStore.keys.selectedHydroStations,
+              selectedHydroStations
+            );
+          }
+        );
+      },
       addKnpLayer (map) {
         const knpJson = require('@/assets/knp.json');
         let knpLayer = new VectorLayer({
@@ -511,10 +540,6 @@
             if (_unselectedBioStations.indexOf(selectedBits[0]) !== -1) _unselectedBioStations.splice(_unselectedBioStations.indexOf(selectedBits[0]), 1);
           }
         }
-        this.mapDashboardRef.toggleSelectedHydroStationsByStationNames(
-          _selectedBioStations,
-          _unselectedBioStations
-        );
         this.mapDashboardRef.toggleSelectedBioStationsByStationNames(
           _selectedBioStations,
           _unselectedBioStations
@@ -583,29 +608,30 @@
         // On catchment tree clicked
         let i = [];
         let selected = '';
-        let selectedBio = [];
-        let _selectedBioStations = [];
+        let selectedHydro = [];
+        let _selectedHydroStations = [];
         let selectedBits = [];
-        let _unselectedBioStations = Object.assign([], this.selectedBioStations);
-        console.log(_unselectedBioStations);
+        let _unselectedHydroStations = Object.assign([], this.selectedHydroStations);
+        // console.log(_unselectedHydroStations);
         for (i = 0; i < data.selected.length; i++) {
           selected = data.instance.get_node(data.selected[i]).text;
           selectedBits = selected.split(':');
           let type = data.instance.get_node(data.selected[i]).type;
           if (type === 'layer') {
-            selectedBio.push(selectedBits[0]);
+            selectedHydro.push(selectedBits[0]);
           } else if (type === 'station') {
-            _selectedBioStations.push(selectedBits[0]);
-            if (_unselectedBioStations.indexOf(selectedBits[0]) !== -1) _unselectedBioStations.splice(_unselectedBioStations.indexOf(selectedBits[0]), 1);
+            _selectedHydroStations.push(selectedBits[0]);
+            if (_unselectedHydroStations.indexOf(selectedBits[0]) !== -1) _unselectedHydroStations.splice(_unselectedHydroStations.indexOf(selectedBits[0]), 1);
           }
         }
-        this.mapDashboardRef.toggleselectedBioStationsByStationNames(
-          _selectedBioStations,
-          _unselectedBioStations
+        this.mapDashboardRef.toggleSelectedHydroStationsByStationNames(
+          _selectedHydroStations,
+          _unselectedHydroStations
         );
-        this.selectedBioStations = _selectedBioStations;
-        stateStore.setState(stateStore.keys.selectedBio, this.selectedBioStations);
-        this.mapDashboardRef.selectBio(selectedBio);
+        this.selectedHydroStations = _selectedHydroStations;
+        stateStore.setState(stateStore.keys.selectedHydro, this.selectedHydroStations);
+        this.mapDashboardRef.selectHydro(selectedHydro);
+        this.loadSpecies(_selectedHydroStations);
       }
     }
   };

@@ -10,21 +10,27 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Timeseries',
-        chartId: 'wq-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/wq_timeseries.php'
+        chartTitle: 'Discharge/Fish timeseries',
+        chartId: 'fish-timeseries',
+        baseUrl: 'http://inwards.award.org.za/app_json/fish_timeseries.php'
       };
     },
     methods: {
       fetchChartData () {
-        console.log('Fetching...');
         let self = this;
         this.loading = true;
+        if (!self.mounted) {
+          setTimeout(function () {
+            self.fetchChartData();
+          }, 1000);
+          return;
+        }
+        console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        var variableTitle = this.urlParameters.variable + ' (' + this.urlParameters.unit + ')';
         console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
+          console.log(jsonData);
           let boxData = [];
           setTimeout(() => {
             let layout = {
@@ -34,7 +40,7 @@
                 size: 9
               },
               yaxis: {
-                title: variableTitle,
+                title: 'Discharge (cumecs)',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,

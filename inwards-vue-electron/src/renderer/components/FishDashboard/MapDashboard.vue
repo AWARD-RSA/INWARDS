@@ -297,6 +297,30 @@
           }
         });
       },
+      selectHydro (selectedHydro) {
+        // Style a feature based on selected secondary catchment name
+        // catchments = ['X3', 'X4', ...]
+        for (let f = 0; f < this.selectedFeatures.length; f++) {
+          this.selectedFeatures[f].setStyle(undefined);
+        }
+        this.selectedFeatures = [];
+        if (selectedHydro.length === 0) {
+          this.map.getView().fit(this.defaultExtent);
+          return;
+        }
+        let extent = Extent.createEmpty();
+        for (let i = 0; i < selectedHydro.length; i++) {
+          let catchment = selectedHydro[i];
+          let features = this.featureDict[catchment];
+          for (let f = 0; f < features.length; f++) {
+            let feature = features[f];
+            feature.setStyle(this.selectedStyle);
+            this.selectedFeatures.push(feature);
+            Extent.extend(extent, feature.getGeometry().getExtent());
+          }
+        }
+        this.map.getView().fit(extent);
+      },
       toggleSelectedHydroStationsByStationNames (selectedStationNames, unselectedStationNames) {
         let self = this;
         this.hydroVectorLayer.getSource().forEachFeature(function (feature) {
