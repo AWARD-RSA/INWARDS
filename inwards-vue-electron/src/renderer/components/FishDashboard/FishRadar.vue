@@ -10,9 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Discharge/Fish timeseries',
-        chartId: 'fish-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/fish_timeseries.php'
+        chartTitle: 'Observations Radar Chart',
+        chartId: 'fish-radar',
+        baseUrl: 'http://inwards.award.org.za/app_json/fish_radar.php'
       };
     },
     methods: {
@@ -37,36 +37,12 @@
               title: false,
               font: {
                 family: 'Raleway, Calibri',
-                size: 9
+                size: 15
               },
-              xaxis: {
-                showspikes: true,
-                spikemode: 'toaxis'
-              },
-              yaxis: {
-                title: 'Discharge (cumecs)',
-                autorange: true,
-                showgrid: true,
-                zeroline: true,
-                gridwidth: 1,
-                zerolinecolor: 'rgb(0, 0, 0)',
-                zerolinewidth: 2,
-                rangemode: 'nonnegative',
-                showspikes: true,
-                spikemode: 'toaxis'
-              },
-              margin: {
-                l: 40,
-                r: 0,
-                b: 20,
-                t: 20,
-                pad: 4
-              },
-              paper_bgcolor: 'rgb(255, 255, 255)',
-              plot_bgcolor: 'rgb(255, 255, 255)',
-              showlegend: true,
-              legend: {
-                orientation: 'h'
+              polar: {
+                radialaxis: {
+                  visible: true
+                }
               }
             };
             for (let variable in jsonData) {

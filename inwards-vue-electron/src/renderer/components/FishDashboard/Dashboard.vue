@@ -80,6 +80,9 @@
             <div class="col-md-6">
                   <FishTimeseries ref="timeseriesComponent" style="margin-top: 5px;"/>
               </div>
+             <div class="col-md-6" style="padding-left: 2px;">
+                  <FishRadar ref="radarComponent" style="margin-top: 5px;"/>
+              </div>
               <div class="col-md-6" style="padding-left: 2px;">
                   <FishBox ref="boxComponent" style="margin-top: 5px;"/>
               </div>
@@ -109,6 +112,7 @@
   import MapDashboard from './MapDashboard';
   import SiteOverview from './SiteOverview';
   import FishBox from './FishBox';
+  import FishRadar from './FishRadar';
   import FishDuration from './FishDuration';
   import FishTimeseries from './FishTimeseries';
   import BioTree from './BioTree';
@@ -206,7 +210,8 @@
       StatusBar,
       FishTimeseries,
       FishBox,
-      FishDuration
+      FishDuration,
+      FishRadar
     },
     methods: {
       backToMapSelect () {
@@ -260,6 +265,7 @@
         this.$refs.timeseriesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         // this.$refs.durationComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.durationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.radarComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.loading = false;
       },
       fetchStations () {

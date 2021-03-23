@@ -107,6 +107,10 @@
               tickfont: {
                 size: 0.1
               },
+              xaxis: {
+                showspikes: true,
+                spikemode: 'toaxis'
+              },
               yaxis: {
                 title: variableTitle,
                 autorange: true,
@@ -116,7 +120,9 @@
                 zerolinecolor: 'rgb(0, 0, 0)',
                 zerolinewidth: 2,
                 type: 'log',
-                rangemode: 'nonnegative'
+                rangemode: 'nonnegative',
+                showspikes: true,
+                spikemode: 'toaxis'
               },
               margin: {
                 l: 40,
