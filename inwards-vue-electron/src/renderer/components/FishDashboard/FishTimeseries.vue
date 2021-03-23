@@ -30,7 +30,7 @@
         console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
-          console.log(jsonData);
+          // console.log(jsonData);
           let boxData = [];
           setTimeout(() => {
             let layout = {
@@ -50,10 +50,10 @@
                 rangemode: 'nonnegative'
               },
               margin: {
-                l: 50,
-                r: 50,
-                b: 50,
-                t: 50,
+                l: 40,
+                r: 0,
+                b: 20,
+                t: 20,
                 pad: 4
               },
               paper_bgcolor: 'rgb(255, 255, 255)',

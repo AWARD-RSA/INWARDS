@@ -10,9 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Load Duration Curve',
+        chartTitle: 'Fish Duration Curve',
         chartId: 'load-duration-curve',
-        baseUrl: 'http://inwards.award.org.za/app_json/load_duration.php'
+        baseUrl: 'http://inwards.award.org.za/app_json/fish_duration.php'
       };
     },
     methods: {
@@ -21,10 +21,7 @@
         let self = this;
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        var variableTitle = this.urlParameters.variable + ' (tons/day)';
-        if (this.urlParameters.variable === 'EC_Phys_Water') {
-          variableTitle = 'TDS Calculated (tons/day)';
-        }
+        var variableTitle = 'Discharge (cumecs)';
         console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;

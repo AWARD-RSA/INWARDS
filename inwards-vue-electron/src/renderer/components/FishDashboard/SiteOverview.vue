@@ -1,6 +1,6 @@
 <template>
   <div class="card rounded-0 box">
-    <div class="card-header inwards_card">Site Overview</div>
+    <div class="card-header inwards_card"><img src="@/assets/fbis_icon.png" height="11"> FBIS Site Overview</div>
     <div class="card-body chart-container">
           <table v-for="log in logs" v-bind:key="log.site_code" style="font-size: 0.75rem;" class="table">
                    <tr>

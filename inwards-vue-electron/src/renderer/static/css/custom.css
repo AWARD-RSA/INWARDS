@@ -345,3 +345,8 @@ nav > div a.nav-item.nav-link:focus
     border-radius:0;
     transition: background 0.20s linear;
 }
+.multiselect__tag {
+  background: #272e38;
+  color:#fff;
+  border-radius:0;
+}

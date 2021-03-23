@@ -9,10 +9,12 @@ import 'bootstrap/js/dist/util.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'jquery/dist/jquery.min.js';
 import '@/static/css/font-awesome.min.css';
-import '@/static/css/custom.css';
 import 'vue-select/dist/vue-select.css';
 import '@/utils/helpers.js';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.css';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
+import Multiselect from 'vue-multiselect';
+import '@/static/css/custom.css';
 
 import App from './App';
 import router from './router';
@@ -29,6 +31,8 @@ Vue.prototype.$bus = new Vue();
 Vue.prototype.isLoggedIn = false;
 Vue.prototype.devMode = process.env.NODE_ENV === 'development';
 Vue.component('v-select', vSelect);
+Vue.component('multiselect', Multiselect);
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

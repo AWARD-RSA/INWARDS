@@ -14,7 +14,7 @@
           </div>
           <nav>
          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#tabs-1" role="tab" aria-controls="nav-home" aria-selected="true">Select Fish Site</a>
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#tabs-1" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Select <img src="@/assets/fbis_icon.png" height="11"> FBIS Fish Site</a>
             <a class="nav-item nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-controls="nav-profile" aria-selected="false">Select Hydrological Sites</a>
           </div>
           </nav>
@@ -34,9 +34,8 @@
 
             <div class="card-body">  
                     <div class="row no-gutters">
-                <div class="col-md-12">          
-                        <h6>Select Species</h6>
-                 <v-select :options="fishSpecies" v-model="selectedSpecies" style="background-color: white"></v-select>
+                <div class="col-md-12">
+                 <multiselect placeholder="Select Species" :options="fishSpecies" v-model="selectedSpecies" :multiple="true"></multiselect>
                 </div>
                     </div>
               <div class="row">
@@ -117,6 +116,7 @@
   import stateStore from '../../store/state_handler';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
+  import Multiselect from 'vue-multiselect';
   import GeoJSON from 'ol/format/GeoJSON';
   import {Fill, Stroke, Style} from 'ol/style';
   import { GridLoader } from 'vue-spinner/dist/vue-spinner.min.js';
@@ -135,7 +135,7 @@
         stationsRequest: null,
         selectedBioStations: [],
         selectedHydroStations: [],
-        selectedSpecies: '',
+        selectedSpecies: null,
         selectedWMAs: [],
         fishSelected: [],
         fishSpecies: [],
@@ -201,6 +201,7 @@
       GridLoader,
       BioTree,
       HydroTree,
+      Multiselect,
       SiteOverview,
       StatusBar,
       FishTimeseries,
@@ -258,7 +259,7 @@
         // this.$refs.boxComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.timeseriesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         // this.$refs.durationComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        // this.$refs.loadComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.durationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.loading = false;
       },
       fetchStations () {
