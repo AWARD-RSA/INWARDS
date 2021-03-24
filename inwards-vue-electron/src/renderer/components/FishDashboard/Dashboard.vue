@@ -84,8 +84,14 @@
                   <FishRadar ref="radarComponent" style="margin-top: 5px;"/>
               </div>
               <div class="col-md-6" style="padding-left: 2px;">
-                  <FishBox ref="boxComponent" style="margin-top: 5px;"/>
+                  <LowFlowTimeseries ref="lowComponent" style="margin-top: 5px;"/>
               </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <HighFlowTimeseries ref="highComponent" style="margin-top: 5px;"/>
+              </div>
+              <div class="col-md-6" style="padding-left: 2px;">
+                  <FishBox ref="boxComponent" style="margin-top: 5px;"/>
+              </div>                                        
               <br>
           </div>
            <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>     
@@ -103,6 +109,60 @@
     height: 200px;
     overflow-y: auto;
   }
+  .grid {
+  position: relative;
+  }
+  .muuri-container {
+    overflow-y: auto;
+    padding-top: 20px;
+    margin-bottom: 20px;
+  }
+  .chartDivId.c3-line-[Discharge] {
+    stroke-width: 0.5px;
+  }
+  .item {
+    display: block;
+    position: absolute;
+    margin: 0;
+    z-index: 1;
+    width: 49%;
+    min-height: 480px;
+    padding-right: 0;
+  }
+  .item.muuri-item-dragging {
+    z-index: 3;
+  }
+  .item.muuri-item-releasing {
+    z-index: 2;
+  }
+  .item.muuri-item-hidden {
+    z-index: 0;
+  }
+  .item-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .right-panel {
+      overflow-y: scroll;
+  }
+  .left-panel {
+      overflow-y: scroll;
+  }
+  .c3-line-Reserve {
+      stroke-width: 2px;
+  }
+  .c3-line-Observed {
+      stroke-width: 2px;
+  }
+  .c3-line-Last_Year {
+      stroke-width: 2px;
+      stroke-dasharray: 5.5;
+  }
+  .c3-circle-Events {
+      stroke-width: 15px;
+      stroke: rgb(0, 0, 0);
+  }  
 </style>
 <script>
   import axios from 'axios';
@@ -115,6 +175,8 @@
   import FishRadar from './FishRadar';
   import FishDuration from './FishDuration';
   import FishTimeseries from './FishTimeseries';
+  import LowFlowTimeseries from './LowFlowTimeseries';
+  import HighFlowTimeseries from './HighFlowTimeseries';
   import BioTree from './BioTree';
   import HydroTree from './HydroTree';
   import stateStore from '../../store/state_handler';
@@ -209,6 +271,8 @@
       SiteOverview,
       StatusBar,
       FishTimeseries,
+      LowFlowTimeseries,
+      HighFlowTimeseries,
       FishBox,
       FishDuration,
       FishRadar
@@ -266,6 +330,8 @@
         // this.$refs.durationComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.durationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.$refs.radarComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.lowComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.highComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.loading = false;
       },
       fetchStations () {
