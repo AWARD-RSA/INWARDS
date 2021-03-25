@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Low Flow Indicators',
+        chartTitle: 'Magnitude and duration of annual extreme river conditions: Low Flow Indicators',
         chartId: 'low-flow-timeseries',
         baseUrl: 'http://inwards.award.org.za/app_json/IHA_days.php'
       };

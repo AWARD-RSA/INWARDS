@@ -10,9 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude and duration of annual extreme river conditions: High Flow Indicators',
-        chartId: 'high-flow-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/IHA_High_Days.php'
+        chartTitle: 'Frequency and duration of high and low pulses: Number of high pulses within each water year',
+        chartId: 'high-pulse-timeseries',
+        baseUrl: 'http://inwards.award.org.za/app_json/high_flow_pulses.php'
       };
     },
     methods: {
@@ -44,7 +44,7 @@
                 spikemode: 'toaxis'
               },
               yaxis: {
-                title: 'Discharge (cumecs)',
+                title: 'Number of high pulses within each water year',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,

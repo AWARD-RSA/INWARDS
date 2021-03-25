@@ -10,9 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude and duration of annual extreme river conditions: High Flow Indicators',
-        chartId: 'high-flow-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/IHA_High_Days.php'
+        chartTitle: 'Magnitude and duration of annual extreme river conditions: Number of Zero Flow Days',
+        chartId: 'zero-flow-timeseries',
+        baseUrl: 'http://inwards.award.org.za/app_json/zero_flow.php'
       };
     },
     methods: {
@@ -44,7 +44,7 @@
                 spikemode: 'toaxis'
               },
               yaxis: {
-                title: 'Discharge (cumecs)',
+                title: 'Number of Zero Flow Days',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,

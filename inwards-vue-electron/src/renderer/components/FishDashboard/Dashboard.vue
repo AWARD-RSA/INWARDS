@@ -89,9 +89,24 @@
                <div class="col-md-6" style="padding-left: 2px;">
                   <HighFlowTimeseries ref="highComponent" style="margin-top: 5px;"/>
               </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <ZeroFlows ref="zeroComponent" style="margin-top: 5px;"/>
+              </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <BaseFlowIndex ref="baseComponent" style="margin-top: 5px;"/>
+              </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <JulianMax ref="julianmaxComponent" style="margin-top: 5px;"/>
+              </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <JulianMin ref="julianminComponent" style="margin-top: 5px;"/>
+              </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <HighPulse ref="highpulseComponent" style="margin-top: 5px;"/>
+              </div>
               <div class="col-md-6" style="padding-left: 2px;">
                   <FishBox ref="boxComponent" style="margin-top: 5px;"/>
-              </div>                                        
+              </div>
               <br>
           </div>
            <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>     
@@ -177,6 +192,11 @@
   import FishTimeseries from './FishTimeseries';
   import LowFlowTimeseries from './LowFlowTimeseries';
   import HighFlowTimeseries from './HighFlowTimeseries';
+  import ZeroFlows from './ZeroFlows';
+  import HighPulse from './HighPulse';
+  import JulianMax from './JulianMax';
+  import JulianMin from './JulianMin';
+  import BaseFlowIndex from './BaseFlowIndex';
   import BioTree from './BioTree';
   import HydroTree from './HydroTree';
   import stateStore from '../../store/state_handler';
@@ -271,6 +291,11 @@
       SiteOverview,
       StatusBar,
       FishTimeseries,
+      HighPulse,
+      ZeroFlows,
+      JulianMax,
+      JulianMin,
+      BaseFlowIndex,
       LowFlowTimeseries,
       HighFlowTimeseries,
       FishBox,
@@ -332,6 +357,11 @@
         this.$refs.radarComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.$refs.lowComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.$refs.highComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.zeroComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.baseComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.julianmaxComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.julianminComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.highpulseComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.loading = false;
       },
       fetchStations () {

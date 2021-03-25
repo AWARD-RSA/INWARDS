@@ -10,9 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude and duration of annual extreme river conditions: High Flow Indicators',
-        chartId: 'high-flow-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/IHA_High_Days.php'
+        chartTitle: 'Timing of annual extreme river conditions: Julian date of each annual 1-day maximum',
+        chartId: 'julianmax-flow-timeseries',
+        baseUrl: 'http://inwards.award.org.za/app_json/julian_high.php'
       };
     },
     methods: {
@@ -44,7 +44,7 @@
                 spikemode: 'toaxis'
               },
               yaxis: {
-                title: 'Discharge (cumecs)',
+                title: 'Julian Day',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,

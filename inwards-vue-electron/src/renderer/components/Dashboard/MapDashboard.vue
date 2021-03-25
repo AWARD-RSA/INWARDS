@@ -281,6 +281,7 @@
         // Select and style stations from map based on ol.pixel
         let content = document.getElementById('popup-content');
         let self = this;
+        console.log('YES YOU CLICKED ME');
         self.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
           let station = feature.get(self.keys.station);
           let isStationSelected = feature.get(self.keys.selected);
@@ -288,16 +289,19 @@
             // Just show popup
             content.innerHTML = `<p>${station.split(' ')[0]}</p>`;
             self.overlay.setPosition(feature.getGeometry().getCoordinates());
+            console.log('YES YOU CLICKED ME');
             return false;
           }
           if (!station) return false;
           if (!isStationSelected) {
+            console.log('YES YOU CLICKED ME');
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
             self.selectedStations.push(station);
             content.innerHTML = `<p>${station.split(' ')[0]}</p>`;
             self.overlay.setPosition(feature.getGeometry().getCoordinates());
           } else {
+            console.log('YES YOU CLICKED ME');
             feature.set(self.keys.selected, false);
             feature.setStyle(self.stationsDefaultStyle);
             const index = self.selectedStations.indexOf(station);
