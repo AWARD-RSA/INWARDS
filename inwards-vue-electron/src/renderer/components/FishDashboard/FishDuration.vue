@@ -12,17 +12,17 @@
       return {
         chartTitle: 'Fish Duration Curve',
         chartId: 'load-duration-curve',
-        baseUrl: 'http://inwards.award.org.za/app_json/fish_duration.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/fish_duration.php'
       };
     },
     methods: {
       fetchChartData () {
-        console.log('Fetching...');
+        // console.log('Fetching...');
         let self = this;
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
         var variableTitle = 'Discharge (cumecs)';
-        console.log(url);
+        // console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           let boxData = [];

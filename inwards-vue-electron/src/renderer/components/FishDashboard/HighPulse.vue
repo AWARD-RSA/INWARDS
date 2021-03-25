@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Frequency and duration of high and low pulses: Number of high pulses within each water year',
         chartId: 'high-pulse-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/high_flow_pulses.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/high_flow_pulses.php'
       };
     },
     methods: {
@@ -25,9 +25,9 @@
           }, 1000);
           return;
         }
-        console.log('Fetching Unverified Chart...');
+        // console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
+        // console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           // console.log(jsonData);
@@ -44,7 +44,7 @@
                 spikemode: 'toaxis'
               },
               yaxis: {
-                title: 'Number of high pulses within each water year',
+                title: 'Frequency',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,

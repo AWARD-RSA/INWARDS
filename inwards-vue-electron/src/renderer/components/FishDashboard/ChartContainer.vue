@@ -131,7 +131,7 @@ export default {
       this.urlParameters.ed = ed;
       this.urlParameters.species = species;
       this.chartId = this.chartId;
-      console.log(this.chartId);
+      // console.log(this.chartId);
       this.chartDivId = this.chartId.replace(/,/g, '-');
       this.fetchChartData();
     },

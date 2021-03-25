@@ -6,6 +6,8 @@ const SELECTED_CHARTS = 'selectedCharts';
 const SELECTED_WMAS = 'selectedWMAs';
 const TIMESTAMP = 'timestamp';
 const SELECTED_STATIONS = 'selectedStations';
+const SELECTED_BIOSTATIONS = 'selectedBioStations';
+const SELECTED_HYDROSTATIONS = 'selectedHydroStations';
 
 const stateStore = {
   debug: true,
@@ -17,6 +19,8 @@ const stateStore = {
     dateStart: 'dateStart',
     dateEnd: 'dateEnd',
     selectedStations: 'selectedStations',
+    selectedBioStations: 'selectedBioStations',
+    selectedHydroStations: 'selectedHydroStations',
     loginStatus: 'loginStatus',
     databaseStatus: 'databaseStatus'
   },
@@ -25,6 +29,8 @@ const stateStore = {
     SELECTED_CATCHMENTS,
     SELECTED_WMAS,
     SELECTED_STATIONS,
+    SELECTED_BIOSTATIONS,
+    SELECTED_HYDROSTATIONS,
     TIMESTAMP
   ],
   state: {},
@@ -105,7 +111,7 @@ const stateStore = {
     for (let i = 0; i < this.keysToUpload.length; i++) {
       dataToUpload[this.keysToUpload[i]] = this.state[this.keysToUpload[i]];
     }
-    let url = `http://inwards.award.org.za/user_data/backup.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}&json=${JSON.stringify(dataToUpload)}`;
+    let url = `https://inwards.award.org.za/user_data/backup.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}&json=${JSON.stringify(dataToUpload)}`;
     axios.get(url).then(response => {
       console.log('User states in server has been updated');
       if (callback) {
@@ -116,7 +122,7 @@ const stateStore = {
   updateFromServer (callback) {
     // Get user states from the server, if the server has the latest data then update the local data
     let self = this;
-    let url = `http://inwards.award.org.za/user_data/user_pref.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}`;
+    let url = `https://inwards.award.org.za/user_data/user_pref.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}`;
     axios.get(url).then(response => {
       if (!response) {
         return false;

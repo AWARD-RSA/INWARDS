@@ -12,7 +12,7 @@
       return {
         chartTitle: 'X2H016: Krokodil River @ Tenbosch Kruger National Park',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/tpc_js.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/tpc_js.php'
       };
     },
     methods: {

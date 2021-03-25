@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Unverified timeseries',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/plotly_timeseries.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/plotly_timeseries.php'
       };
     },
     methods: {

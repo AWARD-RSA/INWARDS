@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Unverified Discharge Boxplot',
         chartId: 'unverified-discharge-boxplot',
-        baseUrl: 'http://inwards.award.org.za/app_json/boxplot.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/boxplot.php'
       };
     },
     methods: {

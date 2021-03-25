@@ -1,5 +1,5 @@
 <template>
-  <div class="card rounded-0 box">
+  <div class="card rounded-0 box" v-bind:style="styleObject">
     <div class="card-header inwards_card"><img src="@/assets/fbis_icon.png" height="11"> FBIS Site Overview</div>
     <div class="card-body chart-container">
           <table v-for="log in logs" v-bind:key="log.site_code" style="font-size: 0.75rem;" class="table">
@@ -57,17 +57,21 @@ export default {
   },
   data () {
     return {
-      logs: []
+      logs: [],
+      styleObject: {
+        display: 'none'
+      }
     };
   },
   methods: {
     siteTable (site) {
-      console.log('http://inwards.award.org.za/app_json/fish_site.php?site=' + site);
-      this.$http.get('http://inwards.award.org.za/app_json/fish_site.php?site=' + site)
+      // console.log('http://inwards.award.org.za/app_json/fish_site.php?site=' + site);
+      this.$http.get('https://inwards.award.org.za/app_json/fish_site.php?site=' + site)
         .then(
           response => {
             this.logs = response.data;
-            console.log(this.logs);
+            this.styleObject.display = 'block';
+            // console.log(this.logs);
           })
         .catch(function (error) {
           console.log(error);

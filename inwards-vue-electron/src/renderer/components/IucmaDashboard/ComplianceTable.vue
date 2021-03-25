@@ -34,8 +34,8 @@
     created () {
       let startDate = '2019-10-01';
       let endDate = '2020-09-30';
-      console.log('http://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + startDate + '&ed=' + endDate);
-      this.$http.get('http://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + startDate + '&ed=' + endDate)
+      console.log('https://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + startDate + '&ed=' + endDate);
+      this.$http.get('https://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + startDate + '&ed=' + endDate)
         .then(
           response => {
             this.stations = response.data;
@@ -52,7 +52,7 @@
         let startDate = new Date(dateStartString);
         let endDate = new Date(dateEndString);
         // console.log('http://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + this.formatDate(startDate) + '&ed=' + this.formatDate(endDate));
-        this.$http.get('http://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + this.formatDate(startDate) + '&ed=' + this.formatDate(endDate))
+        this.$http.get('https://inwards.award.org.za/app_json/iucma_compliance.php?sd=' + this.formatDate(startDate) + '&ed=' + this.formatDate(endDate))
           .then(
             response => {
               this.stations = response.data;

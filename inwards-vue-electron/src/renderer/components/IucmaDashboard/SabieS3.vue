@@ -12,7 +12,7 @@
       return {
         chartTitle: 'X3H023: Sabie River @ Emmet EWR S3',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/iucma_reserve.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/iucma_reserve.php'
       };
     },
     methods: {

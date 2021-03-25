@@ -80,7 +80,7 @@ export default {
       let loginModal = $('#login-modal');
       button.prop('disabled', true);
       button.html(`Submitting...`);
-      $.get('http://inwards.award.org.za/app_json/user_verification.php?email=' + this.emailAddress + '&code=' + this.uniqueCode, function (data) {
+      $.get('https://inwards.award.org.za/app_json/user_verification.php?email=' + this.emailAddress + '&code=' + this.uniqueCode, function (data) {
         if (data === 'true') {
           loginModal.modal('hide');
           stateStore.setState(stateStore.keys.loginStatus, {

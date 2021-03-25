@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Concentration Duration Curve',
         chartId: 'wq-duration-curve',
-        baseUrl: 'http://inwards.award.org.za/app_json/wq_cdc.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/wq_cdc.php'
       };
     },
     methods: {

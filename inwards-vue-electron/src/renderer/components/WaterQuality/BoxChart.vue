@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Boxplot',
         chartId: 'wq-boxplot',
-        baseUrl: 'http://inwards.award.org.za/app_json/wq_boxplot.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/wq_boxplot.php'
       };
     },
     methods: {

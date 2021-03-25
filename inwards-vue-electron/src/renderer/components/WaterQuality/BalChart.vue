@@ -12,7 +12,7 @@
       return {
         chartTitle: 'B7H026: Olifants at Balule',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/tpc_inwards.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/tpc_inwards.php'
       };
     },
     methods: {

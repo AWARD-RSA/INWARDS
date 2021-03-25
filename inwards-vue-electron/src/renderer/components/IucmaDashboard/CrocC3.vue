@@ -12,7 +12,7 @@
       return {
         chartTitle: 'X2H013: Crocodile @ Montrose EWR C3',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/iucma_reserve.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/iucma_reserve.php'
       };
     },
     methods: {

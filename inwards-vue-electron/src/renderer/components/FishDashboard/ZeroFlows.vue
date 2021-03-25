@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Magnitude and duration of annual extreme river conditions: Number of Zero Flow Days',
         chartId: 'zero-flow-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/zero_flow.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/zero_flow.php'
       };
     },
     methods: {
@@ -25,9 +25,9 @@
           }, 1000);
           return;
         }
-        console.log('Fetching Unverified Chart...');
+        // console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
+        // console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           // console.log(jsonData);
@@ -44,7 +44,7 @@
                 spikemode: 'toaxis'
               },
               yaxis: {
-                title: 'Number of Zero Flow Days',
+                title: 'Frequency (Days)',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,

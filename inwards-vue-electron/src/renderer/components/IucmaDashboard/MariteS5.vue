@@ -12,7 +12,7 @@
       return {
         chartTitle: 'X3H011: Outflow from Injaka Dam EWR S5',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/iucma_reserve.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/iucma_reserve.php'
       };
     },
     methods: {

@@ -12,7 +12,7 @@
       return {
         chartTitle: 'X2H032: Crocodile @ Weltevrede EWR C4',
         chartId: 'unverified-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/iucma_reserve.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/iucma_reserve.php'
       };
     },
     methods: {

@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Unverified Discharge Duration Curve',
         chartId: 'unverified-discharge-duration-curve',
-        baseUrl: 'http://inwards.award.org.za/app_json/plotly_duration.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/plotly_duration.php'
       };
     },
     methods: {

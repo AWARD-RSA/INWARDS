@@ -10,20 +10,27 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'X2H016: Krokodil River @ Tenbosch Kruger National Park',
-        chartId: 'unverified-timeseries',
-        baseUrl: 'https://inwards.award.org.za/app_json/iucma_reserve.php'
+        chartTitle: 'Frequency and duration of high and low pulses: Number of extreme low pulses within each water year',
+        chartId: 'extreme-pulse-timeseries',
+        baseUrl: 'https://inwards.award.org.za/app_json/extreme_low_frequency.php'
       };
     },
     methods: {
       fetchChartData () {
-        console.log('Fetching...');
         let self = this;
         this.loading = true;
+        if (!self.mounted) {
+          setTimeout(function () {
+            self.fetchChartData();
+          }, 1000);
+          return;
+        }
+        // console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
         console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
+          // console.log(jsonData);
           let boxData = [];
           setTimeout(() => {
             let layout = {
@@ -32,21 +39,28 @@
                 family: 'Raleway, Calibri',
                 size: 9
               },
+              xaxis: {
+                showspikes: true,
+                spikemode: 'toaxis'
+              },
+              barmode: 'group',
               yaxis: {
-                title: 'Discharge (cumecs)',
+                title: 'Frequency',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,
                 gridwidth: 1,
                 zerolinecolor: 'rgb(0, 0, 0)',
                 zerolinewidth: 2,
-                rangemode: 'nonnegative'
+                rangemode: 'nonnegative',
+                showspikes: true,
+                spikemode: 'toaxis'
               },
               margin: {
-                l: 50,
-                r: 50,
-                b: 50,
-                t: 50,
+                l: 40,
+                r: 0,
+                b: 20,
+                t: 20,
                 pad: 4
               },
               paper_bgcolor: 'rgb(255, 255, 255)',

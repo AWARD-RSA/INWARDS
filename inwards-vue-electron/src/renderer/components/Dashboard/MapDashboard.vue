@@ -259,8 +259,8 @@
         let self = this;
         this.stationsVectorLayer.getSource().forEachFeature(function (feature) {
           let station = feature.get(self.keys.station);
-          console.log(station);
-          console.log(selectedStationNames);
+          // console.log(station);
+          // console.log(selectedStationNames);
           const index = self.selectedStations.indexOf(station);
           if (selectedStationNames.indexOf(station) !== -1) {
             feature.set(self.keys.selected, true);
@@ -289,19 +289,19 @@
             // Just show popup
             content.innerHTML = `<p>${station.split(' ')[0]}</p>`;
             self.overlay.setPosition(feature.getGeometry().getCoordinates());
-            console.log('YES YOU CLICKED ME');
+            // console.log('YES YOU CLICKED ME');
             return false;
           }
           if (!station) return false;
           if (!isStationSelected) {
-            console.log('YES YOU CLICKED ME');
+            // console.log('YES YOU CLICKED ME');
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
             self.selectedStations.push(station);
             content.innerHTML = `<p>${station.split(' ')[0]}</p>`;
             self.overlay.setPosition(feature.getGeometry().getCoordinates());
           } else {
-            console.log('YES YOU CLICKED ME');
+            // console.log('YES YOU CLICKED ME');
             feature.set(self.keys.selected, false);
             feature.setStyle(self.stationsDefaultStyle);
             const index = self.selectedStations.indexOf(station);

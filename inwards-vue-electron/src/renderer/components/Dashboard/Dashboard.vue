@@ -113,7 +113,7 @@
   export default {
     data () {
       return {
-        stationsApi: 'http://inwards.award.org.za/app_json/stations.php',
+        stationsApi: 'https://inwards.award.org.za/app_json/stations.php',
         stationsCoordinates: {}, // To stored all stations with their coordinates
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,

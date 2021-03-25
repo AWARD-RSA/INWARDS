@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Discharge/Fish timeseries',
         chartId: 'fish-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/fish_timeseries.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/fish_timeseries.php'
       };
     },
     methods: {
@@ -25,9 +25,9 @@
           }, 1000);
           return;
         }
-        console.log('Fetching Unverified Chart...');
+        // console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
+        // console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           // console.log(jsonData);

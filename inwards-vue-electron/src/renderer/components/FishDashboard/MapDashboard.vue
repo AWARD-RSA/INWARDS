@@ -282,7 +282,7 @@
           let station = feature.get(self.keys.station);
           const index = self.selectedStations.indexOf(station);
           if (selectedStationNames.indexOf(station.toString()) !== -1) {
-            console.log('Yes Its A Match');
+            // console.log('Yes Its A Match');
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
             if (index === -1) {
@@ -327,7 +327,7 @@
           let station = feature.get(self.keys.station);
           const index = self.selectedStations.indexOf(station);
           if (selectedStationNames.indexOf(station.toString()) !== -1) {
-            console.log('Yes Its A Match');
+            // console.log('Yes Its A Match');
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
             if (index === -1) {

@@ -180,8 +180,8 @@
     },
     data () {
       return {
-        stationsApi: 'http://inwards.award.org.za/app_json/app_wq_stations.php',
-        boxplotApi: 'http://inwards.award.org.za/app_json/wq_boxplot.php',
+        stationsApi: 'https://inwards.award.org.za/app_json/app_wq_stations.php',
+        boxplotApi: 'https://inwards.award.org.za/app_json/wq_boxplot.php',
         stationsCoordinates: {}, // To stored all stations with their coordinates
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,

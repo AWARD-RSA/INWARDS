@@ -51,7 +51,7 @@
     methods: {
       updateTable (stations) {
         console.log('Updating for:' + stations);
-        this.$http.get('http://inwards.award.org.za/app_json/tpc_compliance.php?stations=' + stations)
+        this.$http.get('https://inwards.award.org.za/app_json/tpc_compliance.php?stations=' + stations)
           .then(
             response => {
               this.stations = response.data;

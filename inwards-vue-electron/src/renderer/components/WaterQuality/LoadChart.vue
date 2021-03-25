@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Load Duration Curve',
         chartId: 'load-duration-curve',
-        baseUrl: 'http://inwards.award.org.za/app_json/load_duration.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/load_duration.php'
       };
     },
     methods: {

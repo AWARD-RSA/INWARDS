@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Timing of annual extreme river conditions: Julian date of each annual 1-day minimum',
         chartId: 'julianmin-flow-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/julian_low.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/julian_low.php'
       };
     },
     methods: {
@@ -25,9 +25,9 @@
           }, 1000);
           return;
         }
-        console.log('Fetching Unverified Chart...');
+        // console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
+        // console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           // console.log(jsonData);
@@ -44,7 +44,7 @@
                 spikemode: 'toaxis'
               },
               yaxis: {
-                title: 'Julian Day',
+                title: 'Julian Day (1 - 366)',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,

@@ -104,6 +104,12 @@
                <div class="col-md-6" style="padding-left: 2px;">
                   <HighPulse ref="highpulseComponent" style="margin-top: 5px;"/>
               </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <HighFlowDuration ref="highdurationComponent" style="margin-top: 5px;"/>
+              </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <ExtremeLowPulses ref="extremepulsesComponent" style="margin-top: 5px;"/>
+              </div>
               <div class="col-md-6" style="padding-left: 2px;">
                   <FishBox ref="boxComponent" style="margin-top: 5px;"/>
               </div>
@@ -194,6 +200,8 @@
   import HighFlowTimeseries from './HighFlowTimeseries';
   import ZeroFlows from './ZeroFlows';
   import HighPulse from './HighPulse';
+  import ExtremeLowPulses from './ExtremeLowPulses';
+  import HighFlowDuration from './HighFlowDuration';
   import JulianMax from './JulianMax';
   import JulianMin from './JulianMin';
   import BaseFlowIndex from './BaseFlowIndex';
@@ -214,8 +222,8 @@
   export default {
     data () {
       return {
-        fishAPI: 'http://inwards.award.org.za/app_json/fish_sites.php',
-        verifiedAPI: 'http://inwards.award.org.za/app_json/verified_stations.php',
+        fishAPI: 'https://inwards.award.org.za/app_json/fish_sites.php',
+        verifiedAPI: 'https://inwards.award.org.za/app_json/verified_stations.php',
         stationsCoordinates: {}, // To stored all stations with their coordinates
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,
@@ -249,12 +257,16 @@
             return false;
           }
           self.selectedWMAs = selectedWMAs;
-          console.log(selectedWMAs);
+          // console.log(selectedWMAs);
           self.mapDashboardRef.showSelectedWMA(selectedWMAs);
+          self.fetchStations();
         }
       );
       self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
         self.bioTreeRef.toggleNode(station, isStationSelected);
+      });
+      self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
+        self.hydroTreeRef.toggleNode(station, isStationSelected);
       });
       self.$bus.$on('refreshStations', () => {
         self.fetchStations();
@@ -280,6 +292,7 @@
       this.bioTreeRef.refreshStations();
       this.hydroTreeRef.refreshStations();
       self.fetchStations();
+      this.loading = false;
     },
     components: {
       Header,
@@ -295,6 +308,8 @@
       ZeroFlows,
       JulianMax,
       JulianMin,
+      HighFlowDuration,
+      ExtremeLowPulses,
       BaseFlowIndex,
       LowFlowTimeseries,
       HighFlowTimeseries,
@@ -310,16 +325,16 @@
         this.$refs.selectComponent.showLogModal();
       },
       loadSpecies (fishSelected) {
-        console.log('http://inwards.award.org.za/app_json/fish_species.php?site=' + fishSelected);
+        // console.log('http://inwards.award.org.za/app_json/fish_species.php?site=' + fishSelected);
         axios.get('http://inwards.award.org.za/app_json/fish_species.php?site=' + fishSelected).then(response => {
           this.fishSpecies = response.data;
         }).catch(e => {
         });
       },
       doAnalysis () {
-        console.log(this.selectedSpecies);
-        console.log(this.selectedBioStations[0]);
-        console.log(this.selectedHydroStations[0]);
+        // console.log(this.selectedSpecies);
+        // console.log(this.selectedBioStations[0]);
+        // console.log(this.selectedHydroStations[0]);
         if (this.selectedBioStations.length === 0) {
           dialog.showMessageBox(null, {
             type: 'warning',
@@ -362,12 +377,14 @@
         this.$refs.julianmaxComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.$refs.julianminComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.$refs.highpulseComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.highdurationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.extremepulsesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.loading = false;
       },
       fetchStations () {
         let self = this;
         let wmaNames = Object.assign([], self.selectedWMAs);
-        console.log(self.selectedWMAs);
+        // console.log(self.selectedWMAs);
         let fs = require('fs');
         let dir = path.join(app.getPath('userData'), '/stations');
         // TODO : Create an util class for file storage
@@ -389,7 +406,7 @@
 
         // console.log(url);
         let bioFile = `${dir}/${bioUrl.hashCode()}.json`;
-        console.log(bioFile);
+        // console.log(bioFile);
         // Check if online
         if (navigator.onLine) {
           let cancelToken = null;
@@ -439,6 +456,9 @@
         }
         self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
           self.hydroTreeRef.toggleNode(station, isStationSelected);
+        });
+        self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
+          self.bioTreeRef.toggleNode(station, isStationSelected);
         });
         self.$bus.$on('refreshStations', () => {
           self.fetchStations();

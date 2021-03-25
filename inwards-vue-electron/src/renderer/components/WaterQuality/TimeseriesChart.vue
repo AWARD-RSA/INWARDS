@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Timeseries',
         chartId: 'wq-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/wq_timeseries.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/wq_timeseries.php'
       };
     },
     methods: {

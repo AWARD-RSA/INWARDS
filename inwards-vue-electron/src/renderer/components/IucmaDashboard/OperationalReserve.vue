@@ -75,7 +75,7 @@ export default {
       let dateStart = new Date(dateStartString);
       let dateEnd = new Date(dateEndString);
       let discharge = $('#dischargeValue').val();
-      let api = 'http://inwards.award.org.za/app_json/operational_reserve.php?email=' + verifyEmail + '&station=' + stationSelected + '&sd=' + this.formatDate(dateStart) + '&ed=' + this.formatDate(dateEnd) + '&discharge=' + discharge;
+      let api = 'https://inwards.award.org.za/app_json/operational_reserve.php?email=' + verifyEmail + '&station=' + stationSelected + '&sd=' + this.formatDate(dateStart) + '&ed=' + this.formatDate(dateEnd) + '&discharge=' + discharge;
       console.log(api);
       $.get(api, function (data) {
         if (data === 'true') {

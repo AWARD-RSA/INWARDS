@@ -12,7 +12,7 @@
       return {
         chartTitle: 'Magnitude and duration of annual extreme river conditions: Base Flow Index',
         chartId: 'base-flow-timeseries',
-        baseUrl: 'http://inwards.award.org.za/app_json/base_flow_index.php'
+        baseUrl: 'https://inwards.award.org.za/app_json/base_flow_index.php'
       };
     },
     methods: {
@@ -25,9 +25,9 @@
           }, 1000);
           return;
         }
-        console.log('Fetching Unverified Chart...');
+        // console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
+        // console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           // console.log(jsonData);
