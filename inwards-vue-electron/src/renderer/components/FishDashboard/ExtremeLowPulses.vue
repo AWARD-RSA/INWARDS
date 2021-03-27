@@ -27,7 +27,7 @@
         }
         // console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
+        // console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           // console.log(jsonData);
@@ -43,7 +43,6 @@
                 showspikes: true,
                 spikemode: 'toaxis'
               },
-              barmode: 'group',
               yaxis: {
                 title: 'Frequency',
                 autorange: true,
