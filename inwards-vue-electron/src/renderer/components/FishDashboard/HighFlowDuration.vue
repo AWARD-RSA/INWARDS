@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Frequency and duration of high and low pulses: Mean duration of low pulses (days)',
+        chartTitle: 'Mean duration of high pulses (days)',
         chartId: 'high-duration-timeseries',
         baseUrl: 'https://inwards.award.org.za/app_json/high_flow_pulse_duration.php'
       };

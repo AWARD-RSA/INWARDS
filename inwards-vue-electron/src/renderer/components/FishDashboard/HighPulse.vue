@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Frequency and duration of high and low pulses: Number of high pulses within each water year',
+        chartTitle: 'Number of high pulses within each water year',
         chartId: 'high-pulse-timeseries',
         baseUrl: 'https://inwards.award.org.za/app_json/high_flow_pulses.php'
       };

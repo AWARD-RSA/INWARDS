@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Frequency and duration of high and low pulses: Number of extreme low pulses within each water year',
+        chartTitle: 'Number of extreme low pulses within each water year',
         chartId: 'extreme-pulse-timeseries',
         baseUrl: 'https://inwards.award.org.za/app_json/extreme_low_frequency.php'
       };
