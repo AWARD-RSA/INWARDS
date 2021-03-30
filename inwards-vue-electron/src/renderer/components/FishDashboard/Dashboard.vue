@@ -83,6 +83,9 @@
              <div class="col-md-6" style="padding-left: 2px;">
                   <FishRadar ref="radarComponent" style="margin-top: 5px;"/>
               </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <MonthlyMeans ref="monthlyComponent" style="margin-top: 5px;"/>
+              </div>
               <div class="col-md-6" style="padding-left: 2px;">
                   <LowFlowTimeseries ref="lowComponent" style="margin-top: 5px;"/>
               </div>
@@ -109,6 +112,9 @@
               </div>
                <div class="col-md-6" style="padding-left: 2px;">
                   <ExtremeLowPulses ref="extremepulsesComponent" style="margin-top: 5px;"/>
+              </div>
+               <div class="col-md-6" style="padding-left: 2px;">
+                  <ExtremeLowDuration ref="extremedurationComponent" style="margin-top: 5px;"/>
               </div>
               <div class="col-md-6" style="padding-left: 2px;">
                   <FishBox ref="boxComponent" style="margin-top: 5px;"/>
@@ -196,12 +202,14 @@
   import FishRadar from './FishRadar';
   import FishDuration from './FishDuration';
   import FishTimeseries from './FishTimeseries';
+  import MonthlyMeans from './MonthlyMeans';
   import LowFlowTimeseries from './LowFlowTimeseries';
   import HighFlowTimeseries from './HighFlowTimeseries';
   import ZeroFlows from './ZeroFlows';
   import HighPulse from './HighPulse';
   import ExtremeLowPulses from './ExtremeLowPulses';
   import HighFlowDuration from './HighFlowDuration';
+  import ExtremeLowDuration from './ExtremeLowDuration';
   import JulianMax from './JulianMax';
   import JulianMin from './JulianMin';
   import BaseFlowIndex from './BaseFlowIndex';
@@ -218,7 +226,7 @@
   import path from 'path';
   const { dialog, app } = require('electron').remote;
   require('promise.prototype.finally').shim();
-  
+
   export default {
     data () {
       return {
@@ -305,11 +313,13 @@
       StatusBar,
       FishTimeseries,
       HighPulse,
+      MonthlyMeans,
       ZeroFlows,
       JulianMax,
       JulianMin,
       HighFlowDuration,
       ExtremeLowPulses,
+      ExtremeLowDuration,
       BaseFlowIndex,
       LowFlowTimeseries,
       HighFlowTimeseries,
@@ -379,6 +389,8 @@
         this.$refs.highpulseComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.$refs.highdurationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.$refs.extremepulsesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.extremedurationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.monthlyComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         this.loading = false;
       },
       fetchStations () {
