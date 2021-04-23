@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude and duration of annual extreme river conditions: High Flow Indicators',
+        chartTitle: 'Magnitude and duration of annual extremes: High Flow Indicators',
         chartId: 'high-flow-timeseries',
         baseUrl: 'https://inwards.award.org.za/app_json/IHA_High_Days.php'
       };

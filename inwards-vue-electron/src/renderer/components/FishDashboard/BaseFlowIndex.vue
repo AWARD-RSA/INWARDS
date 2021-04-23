@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude and duration of annual extreme river conditions: Base Flow Index',
+        chartTitle: 'Magnitude and duration of annual extremes: Base Flow Index',
         chartId: 'base-flow-timeseries',
         baseUrl: 'https://inwards.award.org.za/app_json/base_flow_index.php'
       };

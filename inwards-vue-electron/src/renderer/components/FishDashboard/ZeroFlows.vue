@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude and duration of annual extreme river conditions: Number of Zero Flow Days',
+        chartTitle: 'Magnitude and duration of annual extremes: Number of Zero Flow Days',
         chartId: 'zero-flow-timeseries',
         baseUrl: 'https://inwards.award.org.za/app_json/zero_flow.php'
       };

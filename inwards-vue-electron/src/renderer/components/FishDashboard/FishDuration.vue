@@ -119,7 +119,6 @@
                 gridwidth: 1,
                 zerolinecolor: 'rgb(0, 0, 0)',
                 zerolinewidth: 2,
-                type: 'log',
                 rangemode: 'nonnegative',
                 showspikes: true,
                 spikemode: 'toaxis'

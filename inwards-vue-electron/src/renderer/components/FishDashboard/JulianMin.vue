@@ -10,7 +10,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Timing of annual extreme river conditions: Julian date of each annual 1-day minimum',
+        chartTitle: 'Timing of annual extremes: Julian date of each annual 1-day minimum',
         chartId: 'julianmin-flow-timeseries',
         baseUrl: 'https://inwards.award.org.za/app_json/julian_low.php'
       };

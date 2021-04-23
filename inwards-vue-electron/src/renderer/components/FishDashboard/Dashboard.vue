@@ -73,6 +73,9 @@
             <div class="col-md-6">
                   <SiteOverview ref="siteComponent" style="margin-top: 5px;"/>
               </div>
+              <div class="col-md-6" style="padding-left: 2px;">
+                  <FishRadar ref="radarComponent" style="margin-top: 5px;"/>
+              </div>             
             <div class="col-md-6" style="padding-left: 2px;">
                   <FishDuration ref="durationComponent" style="margin-top: 5px;"/>
               </div>
@@ -80,9 +83,7 @@
             <div class="col-md-6">
                   <FishTimeseries ref="timeseriesComponent" style="margin-top: 5px;"/>
               </div>
-             <div class="col-md-6" style="padding-left: 2px;">
-                  <FishRadar ref="radarComponent" style="margin-top: 5px;"/>
-              </div>
+
                <div class="col-md-6" style="padding-left: 2px;">
                   <MonthlyMeans ref="monthlyComponent" style="margin-top: 5px;"/>
               </div>
@@ -416,7 +417,7 @@
         // console.log(wmaNames[0]);
         let bioUrl = `${self.fishAPI}?wma=${wmaNames.join()}`;
 
-        // console.log(url);
+        // console.log(bioUrl);
         let bioFile = `${dir}/${bioUrl.hashCode()}.json`;
         // console.log(bioFile);
         // Check if online
@@ -766,7 +767,6 @@
         this.selectedHydroStations = _selectedHydroStations;
         stateStore.setState(stateStore.keys.selectedHydro, this.selectedHydroStations);
         this.mapDashboardRef.selectHydro(selectedHydro);
-        this.loadSpecies(_selectedHydroStations);
       }
     }
   };
