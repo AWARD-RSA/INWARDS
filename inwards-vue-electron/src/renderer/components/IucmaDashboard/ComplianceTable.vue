@@ -8,7 +8,7 @@
           <th> 80th (%)</th>
           <th> 90th (%)</th>
           <th> 99th (%)</th>
-					<th> No Readings</th>
+					<th> # Readings</th>
 				</tr>
 			</thead>
 			<tr v-for="station in stations" v-bind:key="station.Station" style="font-size: 0.7rem;">

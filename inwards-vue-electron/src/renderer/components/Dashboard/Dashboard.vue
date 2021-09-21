@@ -265,6 +265,7 @@
           wmaNames[i] = `'${wmaNames[i]}'`;
         }
         let url = `${self.stationsApi}?wma=${wmaNames.join()}`;
+        console.log(url);
         let stationFile = `${dir}/${url.hashCode()}.json`;
         // Check if online
         if (navigator.onLine) {

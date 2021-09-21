@@ -1,6 +1,5 @@
 <template>
   <div>
-
           <div style="float:right" class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></div>
@@ -16,7 +15,6 @@
           </div>
         </div>
       </div>
-      
   </div>
 </template>
 <script>
