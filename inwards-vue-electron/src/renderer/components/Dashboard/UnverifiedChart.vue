@@ -3,6 +3,7 @@
   import axios from 'axios';
   import 'jquery/dist/jquery.min.js';
   import Plotly from 'plotly.js-dist';
+  import $ from 'jquery';
   import ChartContainer from './ChartContainer';
   require('promise.prototype.finally').shim();
 
@@ -25,9 +26,7 @@
           }, 1000);
           return;
         }
-        console.log('Fetching Unverified Chart...');
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           let boxData = [];
@@ -66,6 +65,9 @@
               boxData.push(jsonData[variable]);
             }
             document.getElementById(self.chartDivId).innerHTML = '';
+            let stations = this.urlParameters.stations;
+            let chartTitle = $(this.$el).find('.chart-title');
+            chartTitle.html('Gauging station:' + stations[0]);
             Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: true});
           }, 1000);
         }).catch(error => {

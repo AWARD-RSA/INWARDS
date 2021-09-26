@@ -1,16 +1,9 @@
 <template>
   <div style="height: 100%;">
     <StatusBar/>
-    <div class="container-fluid" style="height: 100%;">
+    <div class="container-fluid" style="height: 100%; margin-left: 0; width: 100%; padding: 0;">
       <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
-            <div class="card-body">
-              <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
-                <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
-              </button>
-            </div>
-          </div>
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px; margin-top: 5px;">
           <CatchmentTree ref="catchmentTree"/>
           <div class="v-space"></div>
           <MapDashboard ref="mapDashboard"/>
@@ -20,7 +13,7 @@
               <div class="row">
                 <div class="col-sm-6" style="padding-right: 2px;">
                   <div class="form-group">
-                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label> 
+                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label>
                     <input type="date" class="form-control" id="dateStart" style="margin-left: 4px;">
                   </div>
                 </div>
@@ -79,6 +72,7 @@
             </div>
           </div>
         </div>
+        <NavButtons/>
       </div>
     </div>
   </div>
@@ -96,13 +90,13 @@
 <script>
   import axios from 'axios';
   import Header from '@/components/Header';
+  import NavButtons from '@/components/NavButtons';
   import MapDashboard from './MapDashboard';
   import CatchmentTree from './CatchmentTree';
   import UnverifiedChart from './UnverifiedChart';
   import DurationCurve from './DurationCurve';
   import BoxChart from './BoxChart';
   import Station from './Station';
-  import router from '@/router/index';
   import $ from 'jquery';
   import stateStore from '../../store/state_handler';
   import StatusBar from '../StatusBar';
@@ -189,6 +183,7 @@
     },
     components: {
       Header,
+      NavButtons,
       MapDashboard,
       CatchmentTree,
       BoxChart,
@@ -198,9 +193,6 @@
       StatusBar
     },
     methods: {
-      backToMapSelect () {
-        router.push({ path: '/' });
-      },
       fetchUnverified () {
         const selectedStations = this.mapDashboardRef.getSelectedStations();
         if (selectedStations.length === 0) {
@@ -360,7 +352,6 @@
             catchmentsData[secondary].sort();
           }
         }
-        console.log(catchmentsData);
         let treeData = self.generateTreeData(catchmentsData);
         this.catchmentTreeRef.createTree(treeData, this.onCatchmentTreeSelectedHandler, this.onTreeReady);
       },

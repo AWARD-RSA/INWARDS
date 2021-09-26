@@ -31,20 +31,21 @@
                 <div class="row">
                 <div class="col-md-12">
                   <div class="btn-group-vertical" style="width:100%">
-                    <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="home" class="btn inwards_button" style="width: 100%; display:none;" @click="goHome()" type="button">Home<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="unverified" class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="wqDash" class="btn inwards_button" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="knpDash" class="btn inwards_button" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="iucmaDash" class="btn inwards_button" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="userDash" class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="verifiedDash" class="btn inwards_button" style="width: 100%" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="fishDash" class="btn inwards_button" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
 
                   </div>
                 </div>
                 </div>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
     <div class="map-container">
@@ -54,8 +55,8 @@
           </div>
         </div>
       </div>
-      <div v-if="devMode" class="reset-application-data-container" style="position: absolute; bottom: 0; margin-bottom: 50px; margin-left: 20px;">
-        <div class="btn inwards_button" v-on:click="resetApplicationData">Reset application data</div>
+      <div class="reset-application-data-container" style="position: absolute; bottom: 0; margin-bottom: 50px; margin-left: 20px;">
+        <div id='reset' style="display:none;" class="btn inwards_button" v-on:click="resetApplicationData">Reset application data</div>
       </div>
     </div>
 </template>
@@ -283,6 +284,9 @@
         stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'fish-dashboard' });
       },
+      goHome () {
+        router.push({ path: '/' });
+      },
       resetApplicationData (e) {
         stateStore.clearAll();
         setTimeout(() => {
@@ -322,4 +326,4 @@
       Header
     }
   };
-</script> 
+</script>

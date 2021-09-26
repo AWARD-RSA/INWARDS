@@ -1,7 +1,9 @@
 'use strict';
 
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu, MenuItem } from 'electron';
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
+app.commandLine.appendSwitch('auto-detect', 'false');
+app.commandLine.appendSwitch('no-proxy-server');
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -9,12 +11,90 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
 }
-
-let mainWindow;
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`;
+const menu = new Menu();
+menu.append(new MenuItem({
+  label: 'Home',
+  click: () => realTime('home')
+}));
 
+menu.append(new MenuItem({
+  label: 'Dashboards',
+  submenu: [
+    {
+      label: 'Real-time Discharge',
+      type: 'checkbox',
+      checked: true,
+      click: () => realTime('unverified')
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Verified Discharge',
+      type: 'checkbox',
+      checked: true,
+      click: () => realTime('home')
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Kruger National Park (KNP) TPC Dashboard',
+      type: 'checkbox',
+      checked: true,
+      click: () => realTime('knpDash')
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'IUCMA Operational Dashboard',
+      type: 'checkbox',
+      checked: true,
+      click: () => realTime('iucmaDash')
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Water Quality Dashboard',
+      type: 'checkbox',
+      checked: true,
+      click: () => realTime('wqDash')
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Fish Dashboard',
+      type: 'checkbox',
+      checked: true,
+      click: () => realTime('fishDash')
+    },
+    {
+      type: 'separator'
+    }
+  ]
+}));
+menu.append(new MenuItem({
+  label: 'Your Dashboard',
+  type: 'checkbox',
+  click: () => realTime('userDash')
+}));
+menu.append(new MenuItem({
+  label: 'Options',
+  submenu: [
+    {
+      label: 'Reset Application',
+      type: 'checkbox',
+      checked: true,
+      click: () => realTime('reset')
+    }]
+}));
+let mainWindow;
 function createWindow () {
   /**
    * Initial window options
@@ -36,7 +116,10 @@ function createWindow () {
   });
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  Menu.setApplicationMenu(menu);
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -46,10 +129,14 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (mainWindow === null) {
+    Menu.setApplicationMenu(menu);
     createWindow();
   }
 });
-
+function realTime (dash) {
+  // mainWindow.webContents.send('goToKnpDashboard', 'Yay');
+  mainWindow.webContents.executeJavaScript(`document.getElementById('` + dash + `').click();`);
+}
 /**
  * Auto Updater
  *

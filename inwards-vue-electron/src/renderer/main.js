@@ -15,7 +15,7 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.css';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Multiselect from 'vue-multiselect';
 import '@/static/css/custom.css';
-
+import { Titlebar, Color } from 'custom-electron-titlebar';
 import App from './App';
 import router from './router';
 import store from './store';
@@ -40,11 +40,7 @@ new Vue({
   store,
   template: '<App/>'
 }).$mount('#app');
-
-const path = require('path');
-const url = require('url');
-const customTitlebar = require('custom-electron-titlebar');
-new customTitlebar.Titlebar({
-  backgroundColor: customTitlebar.Color.fromHex('#3C3C3C'),
-  icon: url.format(path.join(__dirname, '/assets', '/icon.png'))
+const titleBar = new Titlebar({
+  backgroundColor: Color.fromHex('#3C3C3C'),
+  icon: require('@/assets/icon.png')
 });

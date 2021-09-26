@@ -4,22 +4,16 @@
     <div class="container-fluid" style="height: 100%;">
       <div class="row" style="height: 100%;">
         <div class="col-md-3 no-float" style="background: #252526;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
-            <div class="card-body">
-              <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
-                <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
-              </button>
-            </div>
-          </div>
           <CatchmentTree ref="catchmentTree"/>
           <div class="v-space"></div>
           <MapDashboard ref="mapDashboard"/>
           <div class="v-space"></div>
         </div>
-        <div class="col-md-9 no-float muuri-container" style="background: #1E1E1E;">
+        <div class="col-md-9 no-float muuri-container" style="background: #1E1E1E; height: 100%;">
           <div class="grid row"></div>
         </div>
       </div>
+      <NavButtons/>
     </div>
   </div>
 </template>
@@ -64,13 +58,12 @@ import BoxChart from '../Dashboard/BoxChart';
 import MapDashboard from '../Dashboard/MapDashboard';
 import CatchmentTree from '../Dashboard/CatchmentTree';
 import StationImage from '../Dashboard/Station';
-import router from '@/router/index';
 import $ from 'jquery';
 import Muuri from 'muuri';
 import Vue from 'vue';
 import StatusBar from '../StatusBar';
+import NavButtons from '@/components/NavButtons';
 const { getCurrentWindow } = require('electron').remote;
-
 export default {
   data () {
     return {
@@ -83,11 +76,13 @@ export default {
       currentCharts: {},
       grid: null,
       currentStations: {},
-      stationsFromStoredCharts: []
+      stationsFromStoredCharts: [],
+      selectedWMAs: []
     };
   },
   components: {
     MapDashboard,
+    NavButtons,
     CatchmentTree,
     StatusBar
   },
@@ -100,12 +95,22 @@ export default {
     this.getSelectedCharts();
   },
   methods: {
-    backToMapSelect () {
-      router.push({ path: '/' });
-    },
     getStations () {
       let self = this;
       let stationsChanged = false;
+      stateStore.getState(
+        stateStore.keys.selectedWMAs,
+        function (selectedWMAs) {
+          if (!selectedWMAs) {
+            return false;
+          }
+          if (selectedWMAs.length === 0) {
+            return false;
+          }
+          self.selectedWMAs = selectedWMAs;
+          self.mapDashboardRef.showSelectedWMA(selectedWMAs);
+        }
+      );
       stateStore.getState(
         stateStore.keys.selectedStations,
         function (selectedStations) {
@@ -213,7 +218,6 @@ export default {
           // Sort the items before the initial layout
           // and do the initial layout
           self.grid.sort('id', {layout: 'instant'});
-
           self.grid.on('move', self.afterMoved);
         }
       );

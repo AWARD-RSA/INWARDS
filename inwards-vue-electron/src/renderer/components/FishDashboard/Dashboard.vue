@@ -5,13 +5,6 @@
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
         <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
-            <div class="card-body">
-              <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
-                <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
-              </button>
-            </div>
-          </div>
           <nav>
          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#tabs-1" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Select <img src="@/assets/fbis_icon.png" height="11"> FBIS Fish Site</a>
@@ -125,6 +118,7 @@
            <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>     
         </div>
       </div>
+      <NavButtons/>
   </div>
   </div>
 </template>
@@ -195,7 +189,7 @@
 <script>
   import axios from 'axios';
   import Header from '@/components/Header';
-  import router from '@/router/index';
+  import NavButtons from '@/components/NavButtons';
   import StatusBar from '../StatusBar';
   import MapDashboard from './MapDashboard';
   import SiteOverview from './SiteOverview';
@@ -284,7 +278,6 @@
         self.addStationsToStore(stations, chartStoredId);
       });
       let map = this.$refs.mapDashboard.map;
-      self.addKnpLayer(map);
       var startDate = new Date();
       startDate.setDate(startDate.getDate() - 14);
       var dd = startDate.getDate();
@@ -301,10 +294,12 @@
       this.bioTreeRef.refreshStations();
       this.hydroTreeRef.refreshStations();
       self.fetchStations();
+      self.addKnpLayer(map);
       this.loading = false;
     },
     components: {
       Header,
+      NavButtons,
       MapDashboard,
       GridLoader,
       BioTree,
@@ -329,9 +324,6 @@
       FishRadar
     },
     methods: {
-      backToMapSelect () {
-        router.push({ path: '/' });
-      },
       showSelectMap () {
         this.$refs.selectComponent.showLogModal();
       },
@@ -585,10 +577,9 @@
               featureProjection: 'EPSG:3857'
             })
           }),
-          updateWhileAnimating: true,
+          updateWhileAnimating: false,
           updateWhileInteracting: false
         });
-        map.addLayer(knpLayer);
         let knpStyle = new Style({
           stroke: new Stroke({
             color: [51, 204, 51, 0.6],
@@ -597,7 +588,7 @@
           fill: new Fill({
             color: [51, 204, 51, 0.2]
           }),
-          zIndex: 1
+          zIndex: -1
         });
         knpLayer.setStyle(knpStyle);
       },

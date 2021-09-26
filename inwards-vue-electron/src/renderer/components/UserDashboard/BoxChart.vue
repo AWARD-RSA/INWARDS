@@ -4,20 +4,19 @@
   import 'jquery/dist/jquery.min.js';
   import Plotly from 'plotly.js-dist';
   import ChartContainer from './ChartContainer';
-  import $ from 'jquery';
   require('promise.prototype.finally').shim();
-
   export default {
     extends: ChartContainer,
     data () {
       return {
         chartTitle: 'Unverified Discharge Boxplot',
         chartId: 'unverified-discharge-boxplot',
-        baseUrl: 'https://inwards.award.org.za/app_json/boxplot.php'
+        baseUrl: 'http://inwards.award.org.za/app_json/boxplot.php'
       };
     },
     methods: {
       fetchChartData () {
+        console.log('Fetching...');
         let self = this;
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
@@ -55,10 +54,7 @@
               boxData.push(jsonData[variable]);
             }
             document.getElementById(self.chartDivId).innerHTML = '';
-            let stations = this.urlParameters.stations;
-            let chartTitle = $(this.$el).find('.chart-title');
-            chartTitle.html('Gauging station:' + stations[0]);
-            Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: true});
+            Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: false});
           }, 1000);
         }).catch(error => {
           console.log(error);

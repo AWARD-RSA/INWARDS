@@ -10,6 +10,9 @@
       <div class="card rounded-0">
         <div class="card-body">
           <div id="dashboard-map"></div>
+          <div id="tooltip" class="ol-tooltip">
+            <div id="tooltip-content"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -72,6 +75,43 @@
     width: 100%;
     height: 350px;
   }
+  .ol-tooltip {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 17px;
+    left: -50px;
+    min-width: 190px;
+  }
+  .ol-tooltip:after, .ol-tooltip:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .ol-tooltip:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+  }
+  .ol-tooltip:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+  }
+   .ol-tooltip p {
+     margin-top: 0;
+     margin-bottom: 0;
+   }
 </style>
 <script>
   /* eslint-disable no-unused-vars */
@@ -158,6 +198,8 @@
     mounted () {
       let container = document.getElementById('popup');
       let closer = document.getElementById('popup-closer');
+      var tooltipContainer = document.getElementById('tooltip');
+      var tooltipContent = document.getElementById('tooltip-content');
       let self = this;
       /**
       * Add a click handler to hide the popup.
@@ -197,6 +239,40 @@
       this.map.addLayer(this.hydroVectorLayer);
       this.map.addLayer(this.bioVectorLayer);
       this.map.on('click', this._mapClicked);
+      var tooltip = new Overlay({
+        element: tooltipContainer,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: 250
+        }
+      });
+      this.map.addOverlay(tooltip);
+
+      var featureId = '';
+
+      this.map.on('pointermove', function (e) {
+        var feature = this.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+          if (featureId === feature.get('station')) {
+            return feature;
+          };
+          featureId = feature.get('station');
+          if (featureId !== undefined) {
+            var coordinates = feature.getGeometry().getCoordinates();
+            var siteDesc = feature.get('place');
+            if (siteDesc === undefined) {
+              siteDesc = feature.get('site');
+            }
+            tooltipContent.innerHTML = '<p>' + featureId + '</p></p>' + siteDesc + '</p>';
+            tooltip.setPosition(coordinates);
+            return feature;
+          } else {
+            tooltip.setPosition(undefined);
+          }
+        });
+        if (!feature && (featureId !== '')) {
+          featureId = '';
+        };
+      });
     },
     methods: {
       _mapClicked (e) {
@@ -260,7 +336,6 @@
         }
         this.selectedFeatures = [];
         if (selectedBio.length === 0) {
-          this.map.getView().fit(this.defaultExtent);
           return;
         }
         let extent = Extent.createEmpty();
@@ -305,7 +380,7 @@
         }
         this.selectedFeatures = [];
         if (selectedHydro.length === 0) {
-          this.map.getView().fit(this.defaultExtent);
+          // this.map.getView().fit(this.defaultExtent);
           return;
         }
         let extent = Extent.createEmpty();

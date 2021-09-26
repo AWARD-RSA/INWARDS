@@ -4,13 +4,6 @@
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
         <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
-            <div class="card-body">
-              <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
-                <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
-              </button>
-            </div>
-          </div>
           <MapDashboard ref="mapDashboard"/>
           <div class="v-space"></div>
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
@@ -84,6 +77,7 @@
           </div>
         </div>
       </div>
+      <NavButtons/>
     </div>
     <RiverLog ref="logComponent" style="margin-top: 5px;"/>
     <OperationalReserve ref="operationalComponent" style="margin-top: 5px;"/>
@@ -147,7 +141,7 @@
 </style>
 <script>
   import axios from 'axios';
-  import router from '@/router/index';
+  import NavButtons from '@/components/NavButtons';
   import MapDashboard from './MapDashboard';
   import ComplianceTable from './ComplianceTable';
   import OperationalReserve from './OperationalReserve';
@@ -172,6 +166,7 @@
 
     components: {
       MapDashboard,
+      NavButtons,
       ComplianceTable,
       CrocChart,
       SabieChart,
@@ -299,9 +294,6 @@
           zIndex: 1
         });
         knpLayer.setStyle(knpStyle);
-      },
-      backToMapSelect () {
-        router.push({ path: '/' });
       },
       updateCharts () {
         let dateStartString = $('#dateStart').val();

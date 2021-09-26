@@ -11,6 +11,9 @@
         <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-map" style="padding-right: 10px;"></i>Map</h6></div>
         <div class="card-body">
           <div id="dashboard-map"></div>
+          <div id="tooltip" class="ol-tooltip">
+            <div id="tooltip-content"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,7 +76,45 @@
     width: 100%;
     height: 350px;
   }
+  .ol-tooltip {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 17px;
+    left: -50px;
+    min-width: 190px;
+  }
+  .ol-tooltip:after, .ol-tooltip:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .ol-tooltip:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+  }
+  .ol-tooltip:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+  }
+   .ol-tooltip p {
+     margin-top: 0;
+     margin-bottom: 0;
+   }
 </style>
+
 <script>
   /* eslint-disable no-unused-vars */
   import Vue from 'vue';
@@ -118,14 +159,14 @@
         }),
         stationsSelectedStyle: new Style({
           image: new CircleStyle({
-            radius: 5,
+            radius: 7,
             fill: new Fill({color: [51, 204, 51, 0.8]}),
             stroke: new Stroke({color: 'green', width: 1})
           })
         }),
         stationsDefaultStyle: new Style({
           image: new CircleStyle({
-            radius: 5,
+            radius: 7,
             fill: new Fill({color: 'rgba(255,0,0,0.5)'}),
             stroke: new Stroke({color: 'red', width: 1})
           })
@@ -135,7 +176,7 @@
           style: function (feature) {
             return new Style({
               image: new CircleStyle({
-                radius: 5,
+                radius: 7,
                 fill: new Fill({color: 'rgba(255,0,0,0.5)'}),
                 stroke: new Stroke({color: 'red', width: 1})
               })
@@ -145,6 +186,8 @@
       };
     },
     mounted () {
+      var tooltipContainer = document.getElementById('tooltip');
+      var tooltipContent = document.getElementById('tooltip-content');
       let container = document.getElementById('popup');
       let closer = document.getElementById('popup-closer');
       let self = this;
@@ -186,6 +229,37 @@
       this.map.addLayer(this.layerGroup);
       this.map.addLayer(this.stationsVectorLayer);
       this.map.on('click', this._mapClicked);
+
+      var tooltip = new Overlay({
+        element: tooltipContainer,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: 250
+        }
+      });
+      this.map.addOverlay(tooltip);
+
+      var featureId = '';
+
+      this.map.on('pointermove', function (e) {
+        var feature = this.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+          if (featureId === feature.get('station')) {
+            return feature;
+          };
+          featureId = feature.get('station');
+          if (featureId !== undefined) {
+            var coordinates = feature.getGeometry().getCoordinates();
+            tooltipContent.innerHTML = '<p>' + featureId + '</p></p>' + feature.get('place') + '</p>';
+            tooltip.setPosition(coordinates);
+            return feature;
+          } else {
+            tooltip.setPosition(undefined);
+          }
+        });
+        if (!feature && (featureId !== '')) {
+          featureId = '';
+        };
+      });
     },
     methods: {
       _mapClicked (e) {
@@ -239,7 +313,7 @@
         }
         this.selectedFeatures = [];
         if (catchments.length === 0) {
-          this.map.getView().fit(this.defaultExtent);
+          // this.map.getView().fit(this.defaultExtent);
           return;
         }
         let extent = Extent.createEmpty();
@@ -253,14 +327,12 @@
             Extent.extend(extent, feature.getGeometry().getExtent());
           }
         }
-        this.map.getView().fit(extent);
+        // this.map.getView().fit(extent);
       },
       toggleSelectedStationsByStationNames (selectedStationNames, unselectedStationNames) {
         let self = this;
         this.stationsVectorLayer.getSource().forEachFeature(function (feature) {
           let station = feature.get(self.keys.station);
-          // console.log(station);
-          // console.log(selectedStationNames);
           const index = self.selectedStations.indexOf(station);
           if (selectedStationNames.indexOf(station) !== -1) {
             feature.set(self.keys.selected, true);
@@ -281,27 +353,23 @@
         // Select and style stations from map based on ol.pixel
         let content = document.getElementById('popup-content');
         let self = this;
-        console.log('YES YOU CLICKED ME');
         self.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
           let station = feature.get(self.keys.station);
           let isStationSelected = feature.get(self.keys.selected);
           if (!self.connectedToTree) {
-            // Just show popup
             content.innerHTML = `<p>${station.split(' ')[0]}</p>`;
             self.overlay.setPosition(feature.getGeometry().getCoordinates());
-            // console.log('YES YOU CLICKED ME');
             return false;
           }
           if (!station) return false;
           if (!isStationSelected) {
-            // console.log('YES YOU CLICKED ME');
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
             self.selectedStations.push(station);
             content.innerHTML = `<p>${station.split(' ')[0]}</p>`;
             self.overlay.setPosition(feature.getGeometry().getCoordinates());
+            // console.log(feature.getGeometry().getCoordinates());
           } else {
-            // console.log('YES YOU CLICKED ME');
             feature.set(self.keys.selected, false);
             feature.setStyle(self.stationsDefaultStyle);
             const index = self.selectedStations.indexOf(station);
@@ -315,7 +383,6 @@
       },
       getCatchmentsData () {
         // Return catchment data as dict of dict
-        // e.g {'X': {'X2': { 'X23': ['X231']}}}
         let catchmentsData = {};
         let layers = this.layerGroup.getLayers().getArray();
         for (let i = 0; i < layers.length; i++) {

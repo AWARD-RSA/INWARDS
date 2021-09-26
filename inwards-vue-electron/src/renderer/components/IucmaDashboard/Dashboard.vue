@@ -3,14 +3,7 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
-            <div class="card-body">
-              <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
-                <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
-              </button>
-            </div>
-          </div>
+        <div class="col-md-4 no-float left-panel" style="background: #252526; margin-top: 5px; padding-bottom: 50px; margin-right: 0px;">
           <MapDashboard ref="mapDashboard"/>
 
           <div class="v-space"></div>
@@ -91,12 +84,12 @@
       <div class="form-check form-check-inline">
         <input name="chart_components_3" id="iima" type="checkbox" class="form-check-input"> 
         <label for="iima" class="form-check-label">IIMA</label>
-    </div>    
+    </div>
       <div class="form-check form-check-inline">
         <input name="chart_components_3" id="crimib" type="checkbox" class="form-check-input"> 
         <label for="crimib" class="form-check-label">CRMIB</label>
       </div>
-  </div>  
+  </div>
 </div>
                 <div class="row">
                 <div class="col-md-12">
@@ -112,7 +105,7 @@
             <div class="card-body">
               <ComplianceTable ref="complianceTable"/>
             </div>
-          </div>          
+          </div>
         </div>
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
 
@@ -125,7 +118,7 @@
               </div>
             <div class="col-md-12">
               <ExeChart ref="exeterComponent" style="margin-top: 5px;"/>
-              </div>              
+              </div>
             <div class="col-md-12">
               <SabieS3 ref="sabieS3Component" style="margin-top: 5px;"/>
               </div>
@@ -152,10 +145,11 @@
               </div>
             <div class="col-md-12">
               <MariteS5 ref="mariteS5Component" style="margin-top: 5px;"/>
-              </div>                                                                                  
+              </div>
               <br>
           </div>
         </div>
+        <NavButtons/>
       </div>
     </div>
   </div>
@@ -218,7 +212,7 @@
 </style>
 <script>
   import axios from 'axios';
-  import router from '@/router/index';
+  import NavButtons from '@/components/NavButtons';
   import MapDashboard from './MapDashboard';
   import ComplianceTable from './ComplianceTable';
   import OperationalReserve from './OperationalReserve';
@@ -248,6 +242,7 @@
 
     components: {
       MapDashboard,
+      NavButtons,
       ComplianceTable,
       CrocChart,
       SabieChart,
@@ -419,9 +414,6 @@
           zIndex: 1
         });
         riverLayer.setStyle(riverStyle);
-      },
-      backToMapSelect () {
-        router.push({ path: '/' });
       },
       updateCharts () {
         let dateStartString = $('#dateStart').val();

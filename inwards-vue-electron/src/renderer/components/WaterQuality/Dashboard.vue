@@ -6,13 +6,6 @@
         <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
             <div class="card-body">
-              <button class="btn rounded-0 inwards_button" @click="backToMapSelect()" type="button">
-                <i class="fa fa-chevron-left"></i>Back to Dashboard Selection
-              </button>
-            </div>
-          </div>
-         <div class="card rounded-0">
-            <div class="card-body">
               <div class="row no-gutters">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -84,6 +77,7 @@
            <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>          
         </div>
       </div>
+      <NavButtons/> 
     </div>
     <RiverLog ref="logComponent" style="margin-top: 5px;"/>
   </div>
@@ -146,7 +140,7 @@
 </style>
 <script>
   import axios from 'axios';
-  import router from '@/router/index';
+  import NavButtons from '@/components/NavButtons';
   import MapDashboard from './MapDashboard';
   import CatchmentTree from './CatchmentTree';
   import RiverLog from './RiverLog';
@@ -169,6 +163,7 @@
 
     components: {
       MapDashboard,
+      NavButtons,
       GridLoader,
       CatchmentTree,
       BoxChart,
@@ -430,7 +425,7 @@
           updateWhileAnimating: true,
           updateWhileInteracting: false
         });
-        map.addLayer(knpLayer);
+        // map.addLayer(knpLayer);
         let knpStyle = new Style({
           stroke: new Stroke({
             color: [51, 204, 51, 0.6],
@@ -442,9 +437,6 @@
           zIndex: 1
         });
         knpLayer.setStyle(knpStyle);
-      },
-      backToMapSelect () {
-        router.push({ path: '/' });
       },
       createCatchmentTree (stationsData) {
         let self = this;
