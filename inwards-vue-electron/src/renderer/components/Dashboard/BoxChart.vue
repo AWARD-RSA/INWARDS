@@ -29,7 +29,7 @@
               title: false,
               font: {
                 family: 'Raleway, Calibri',
-                size: 12
+                size: 9
               },
               yaxis: {
                 title: 'Discharge (cumecs)',

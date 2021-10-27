@@ -157,7 +157,7 @@
         }),
         stationsSelectedStyle: new Style({
           image: new CircleStyle({
-            radius: 5,
+            radius: 8,
             fill: new Fill({color: [121, 7, 242, 0.8]}),
             stroke: new Stroke({color: 'purple', width: 1})
           })
@@ -241,7 +241,7 @@
       this.map.on('click', this._mapClicked);
       var tooltip = new Overlay({
         element: tooltipContainer,
-        autoPan: true,
+        autoPan: false,
         autoPanAnimation: {
           duration: 250
         }
@@ -360,6 +360,7 @@
             // console.log('Yes Its A Match');
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
+            self.map.getView().fit(feature.getGeometry(), { 'maxZoom': 12 });
             if (index === -1) {
               self.selectedStations.push(station);
             }

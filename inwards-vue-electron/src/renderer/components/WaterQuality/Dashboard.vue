@@ -3,47 +3,45 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px;">
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
+            <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-bar-chart" style="padding-right: 10px;"></i>Parameters</h6></div>
             <div class="card-body">
-              <div class="row no-gutters">
+              <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
-                  <label for="selVar" style="margin-left: 4px; margin-right: 10px;"><b>Select Sample Site Type:</b></label>
-                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px;" name="typeSelect" v-model="selectedType" @change="detectType()">
+                  <div class="form-group" style="margin-right: 0.5rem;">
+                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" name="typeSelect" v-model="selectedType" @change="detectType()">
+                    <option value="" disabled selected hidden>Select a site type (e.g. River, WWTW etc)</option>
                     <option class="dropdown-item" v-for="type in types" v-bind:key="type.type" v-bind:value="type.type"> {{ type.type }} </option>
                   </select>
                 </div>
                 </div>
              </div>
-            <div class="row no-gutters">
+            <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
-                  <label for="selVar" style="margin-left: 4px; margin-right: 10px;"><b>Select Variable:</b></label>
+                  <div class="form-group" style="margin-right: 0.5rem;">
                   <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px;" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable">
+                    <option value="" disabled selected hidden>Select a variable</option>
                     <option class="dropdown-item" v-for="variable in variables" v-bind:key="variable.id" v-bind:value="[variable.mon_variable_abbr,variable.measure_unit_abbr]"> {{ variable.mon_variable_name }} </option>
                   </select>
                 </div>
                 </div>
              </div>
-              <div class="row no-gutters">
-                <div class="col-sm-6" style="padding-right: 2px;">
+              <div class="row">
+                <div class="col-sm-6" style="padding-right: 5px;">
                   <div class="form-group">
-                    <label style="margin-left: 4px; margin-right: 10px;"><b>Start Date:</b></label>
-                    <input class="form-control" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
+                    <input class="form-control rounded-0" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
                   </div>
                 </div>
                 <div class="col-sm-6" style="padding-left: 2px;">
-                  <div class="form-group">
-                    <label style="margin-left: 4px; margin-right: 10px;"><b>End Date:</b></label>
-                    <input class="form-control" id="dateEnd" style="margin-right: 10px;" placeholder='End Date' onfocus="(this.type='date')">
+                  <div class="form-group" style="margin-right: 0.2rem;">
+                    <input class="form-control rounded-0" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
                   </div>
                 </div>
-              </div>             
+              </div>
               </div>
             </div>
           <CatchmentTree ref="catchmentTree"/>
-         
           <div class="card rounded-0">
             <div class="card-body">
               <div class="row no-gutters">
@@ -52,7 +50,7 @@
                 </button>
                 </div>
               </div>
-              </div>               
+              </div>
           <MapDashboard ref="mapDashboard"/>
         </div>
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
@@ -192,7 +190,7 @@
         width: '4px',
         margin: '2px',
         size: '40px',
-        loading: true,
+        loading: false,
         radius: '2px'
       };
     },

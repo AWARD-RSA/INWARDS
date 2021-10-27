@@ -3,7 +3,7 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px; margin-top: 6px;">
           <MapDashboard ref="mapDashboard"/>
           <div class="v-space"></div>
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
@@ -38,14 +38,14 @@
               <div class="row">
                 <div class="col-md-12">
                 <button class="btn inwards_button" type="button" style="width: 100%" @click="showRiverLog()">
-                  <i class="fa fa-line-chart"></i>View River Log Book
+                  <i class="fa fa-book"></i>View River Log Book
                 </button>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" style="block: none;">
                 <div class="col-md-12">
                 <button class="btn inwards_button" type="button" style="width: 100%" @click="showOperationalReserve()">
-                  <i class="fa fa-line-chart"></i>Submit Operational Reserve
+                  <i class="fa fa-pencil-square-o"></i>Submit Log
                 </button>
                 </div>
               </div>

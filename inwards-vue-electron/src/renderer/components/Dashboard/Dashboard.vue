@@ -1,30 +1,26 @@
 <template>
   <div style="height: 100%;">
     <StatusBar/>
-    <div class="container-fluid" style="height: 100%; margin-left: 0; width: 100%; padding: 0;">
+    <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px; margin-top: 5px;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px;">
           <CatchmentTree ref="catchmentTree"/>
-          <div class="v-space"></div>
-          <MapDashboard ref="mapDashboard"/>
-          <div class="v-space"></div>
+          <div>
           <div class="card rounded-0">
             <div class="card-body">
-              <div class="row">
-                <div class="col-sm-6" style="padding-right: 2px;">
-                  <div class="form-group">
-                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label>
-                    <input type="date" class="form-control" id="dateStart" style="margin-left: 4px;">
+              <div class="row" style="margin-top: 2px">
+                <div class="col-sm-6" style="padding-right: 5px;">
+                  <div class="form-group" style="margin-right: 0.5rem;">
+                    <input class="form-control rounded-0" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
                   </div>
                 </div>
                 <div class="col-sm-6" style="padding-left: 2px;">
-                  <div class="form-group">
-                    <label for="dateEnd" style="padding-left: 8px;">End Date:</label>
-                    <input type="date" class="form-control" id="dateEnd" style="margin-right: 10px;" @onload="setDates()">
+                  <div class="form-group" style="margin-right: 0.2rem;">
+                    <input class="form-control rounded-0" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
                   </div>
                 </div>
               </div>
-              <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+              <div class="row" style="margin-top: 5px;">
                   <div class="col-md-4">
                      <label class="custom-control custom-checkbox" style="margin-left: 5px">
                       <input id="ts" type="checkbox" class="custom-control-input" checked="true">T/S
@@ -51,11 +47,13 @@
                 </button>
                 </div>
               </div>
+              </div>
+              </div>
             </div>
+          <MapDashboard ref="mapDashboard"/>
+
           </div>
-          <div class="v-space"></div>
-        </div>
-        <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
+       <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
 
           <div class="row no-gutters">
             <div class="col-md-6">
@@ -67,15 +65,15 @@
             <div class="col-md-6">
               <DurationCurve ref="durationComponent" style="margin-top: 5px;"/>
             </div>
-            <div class="col-md-6" style="padding-left: 2px;">
-                <Station ref="stationComponent" style="margin-top: 5px;"/>
+            <div class="col-md-6" style="padding-left: 2px; margin-top: 5px;">
+                <Station ref="stationComponent"/>
             </div>
           </div>
         </div>
         <NavButtons/>
       </div>
-    </div>
-  </div>
+      </div>
+      </div>
 </template>
 <style>
   .v-space {

@@ -8,9 +8,8 @@
         <component :is="child" :key="child.name" :ref="child.id"></component>
       </template>
       <div class="card rounded-0">
-        <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-map" style="padding-right: 10px;"></i>Map</h6></div>
         <div class="card-body">
-          <div id="dashboard-map"></div>
+          <div id="dashboard-map-unverified"></div>
           <div id="tooltip" class="ol-tooltip">
             <div id="tooltip-content"></div>
           </div>
@@ -72,9 +71,9 @@
     max-width: 90px;;
     margin-bottom: 0 !important;
   } 
-  #dashboard-map {
+  #dashboard-map-unverified {
     width: 100%;
-    height: 350px;
+    height: 410px;
   }
   .ol-tooltip {
     position: absolute;
@@ -159,7 +158,7 @@
         }),
         stationsSelectedStyle: new Style({
           image: new CircleStyle({
-            radius: 7,
+            radius: 9,
             fill: new Fill({color: [51, 204, 51, 0.8]}),
             stroke: new Stroke({color: 'green', width: 1})
           })
@@ -212,7 +211,7 @@
       });
 
       this.map = new Map({
-        target: 'dashboard-map',
+        target: 'dashboard-map-unverified',
         layers: [
           new TileLayer({
             source: new XYZ({
@@ -232,7 +231,7 @@
 
       var tooltip = new Overlay({
         element: tooltipContainer,
-        autoPan: true,
+        autoPan: false,
         autoPanAnimation: {
           duration: 250
         }
@@ -337,6 +336,7 @@
           if (selectedStationNames.indexOf(station) !== -1) {
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
+            self.map.getView().fit(feature.getGeometry(), { 'maxZoom': 12 });
             if (index === -1) {
               self.selectedStations.push(station);
             }

@@ -3,7 +3,7 @@
     <div class="card-header inwards_card">
    <div class="row">
     <div class="col-md-12">  
-    <h6 style="color: white; margin-top: 10px; width: 50%; float: left;" class="chart-title">{{ chartTitle }}</h6>
+    <h6 style="color: white; margin-top: 10px; width: 70%; float: left;" class="chart-title">{{ chartTitle }}</h6>
       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
         <div class="btn-group mr-2" role="group" aria-label="First group">
             <span v-if='deletable'>

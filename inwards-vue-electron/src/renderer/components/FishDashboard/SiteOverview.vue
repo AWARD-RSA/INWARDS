@@ -43,13 +43,16 @@
                     <th> National Critical Biodiversity</th>
                     <td>{{ log.national_critical_biodiversity }}</td>       
                     </tr>
-
+                     <tr style="width: 100%; margin: 0 auto;"> 
+                     <td style="width: 100%; margin: 0 auto;" colspan="2"> <button class="btn inwards_button" type="button" style="width: 100%; margin: 0; font-size: 11px" v-on:click="redirectFbis(log.site_code)">View Site on FBIS</button></td>
+                    </tr>
 		</table> 
     </div>
   </div>
 </template>
 <script type="text/javascript">
 import { RingLoader } from 'vue-spinner/dist/vue-spinner.min.js';
+import {shell} from 'electron';
 // import $ from 'jquery';
 export default {
   components: {
@@ -76,6 +79,10 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    redirectFbis (siteCode) {
+      let urlFbis = 'https://freshwaterbiodiversity.org/map/#site-detail/taxon=&search=' + siteCode + '&siteId=&collector=&category=&yearFrom=&yearTo=&months=&boundary=&userBoundary=&referenceCategory=&spatialFilter=&reference=&endemic=&conservationStatus=&modules=1&validated=&sourceCollection=&abioticData=&ecologicalCategory=&rank=&siteIdOpen=&orderBy=&polygon=';
+      shell.openExternal(urlFbis);
     }
   }
 };

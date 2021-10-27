@@ -9,7 +9,7 @@
          <div class="row">
                              <div class="col-sm-6" style="padding-right: 2px;">
                   <div class="form-group">
-                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label> 
+                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label>
                     <input type="date" class="form-control" id="dateStart" style="margin-left: 4px;">
                   </div>
                 </div>
@@ -40,10 +40,10 @@
                     <td>{{ log.date }}</td>
                     <td>{{ log.mg_options }}</td>
                     <td>{{ log.mg_actions }}</td>
-                    <td>{{ log.result }}</td>        
-                    <td>{{ log.image }}</td> 
-                    <td>{{ log.attachments }}</td> 
-                    <td>{{ log.No_Readings }}</td>             
+                    <td>{{ log.result }}</td>
+                    <td>{{ log.image }}</td>
+                    <td>{{ log.attachments }}</td>
+                    <td>{{ log.No_Readings }}</td>
 			</tr>
 		</table>
           </div>

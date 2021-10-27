@@ -3,13 +3,13 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row" style="height: 100%;">
-        <div class="col-md-3 no-float" style="background: #252526;">
+        <div class="col-md-3 no-float left-panel" style="background: #252526;">
           <CatchmentTree ref="catchmentTree"/>
           <div class="v-space"></div>
           <MapDashboard ref="mapDashboard"/>
           <div class="v-space"></div>
         </div>
-        <div class="col-md-9 no-float muuri-container" style="background: #1E1E1E; height: 100%;">
+        <div class="col-md-9 no-float right-panel muuri-container" style="background: #1E1E1E; height: 100%;  margin-top: 0rem; padding-top: 0.1rem;">
           <div class="grid row"></div>
         </div>
       </div>
@@ -20,11 +20,14 @@
 <style>
 .grid {
   position: relative;
+  padding-top: 0;
+  margin-top: 0rem;
 }
 .muuri-container {
   overflow-y: auto;
-  padding-top: 20px;
-  margin-bottom: 20px;
+  padding-top: 2px;
+  margin-bottom: 2px;
+  margin-top: 0rem;
 }
 .item {
   display: block;
@@ -34,6 +37,8 @@
   width: 49%;
   min-height: 480px;
   padding-right: 0;
+  margin-top: 0rem;
+  padding-top: 0;
 }
 .item.muuri-item-dragging {
   z-index: 3;
@@ -212,7 +217,9 @@ export default {
               if (target.hasClass('inwards_button_group') || target.parent().hasClass('inwards_button_group')) {
                 return false;
               }
-              return true;
+              if (target.hasClass('chart-title')) {
+                return true;
+              }
             }
           });
           // Sort the items before the initial layout

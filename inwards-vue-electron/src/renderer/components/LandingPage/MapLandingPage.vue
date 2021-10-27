@@ -37,7 +37,7 @@
                     <button id="knpDash" class="btn inwards_button" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button id="iucmaDash" class="btn inwards_button" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button id="userDash" class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="verifiedDash" class="btn inwards_button" style="width: 100%" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="verifiedDash" class="btn inwards_button" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button id="fishDash" class="btn inwards_button" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
 
                   </div>
@@ -48,10 +48,25 @@
         </div>
       </div>
     </div>
+    <div id="overlay-logos">
+      <div class="container-fluid container-fluid-logo" style = "margin-top: 0; margin-bottom: 0; position: absolute; bottom: 0; ">
+          <div class="grid grid-logo" style="margin-bottom: 2px;">
+            <div><img src="@/assets/award.svg" alt=""></div>
+            <div><img src="@/assets/knp.png" alt=""></div>
+            <div><img src="@/assets/iucma.png" alt=""></div>
+            <div><img src="@/assets/dws.png" alt=""></div>
+            <div><img src="@/assets/jrs-logo.svg" alt=""></div>
+            <div><img src="@/assets/usaid.png" alt=""></div>
+            <div><img src="@/assets/fbis_logo.png" alt=""></div>
+            <div><img src="@/assets/kartoza.png" alt=""></div>
+            <div><img src="@/assets/frc.svg" alt=""></div>
+          </div>	
+        </div>
+    </div>
     <div class="map-container">
       <div class="container-fluid" style="height: 100%; width:100%">
         <div class="col-md-12" style="width: 100%; height: 100%; margin: 0; padding: 0;">
-          <div id="map"></div>
+          <div id="map" style="width: 100%; height: 100%; position:fixed"></div>
           </div>
         </div>
       </div>
