@@ -41,6 +41,11 @@ export default new Router({
       component: require('@/components/FishDashboard/Dashboard').default
     },
     {
+      path: '/eba-dashboard',
+      name: 'eba-dashboard-page',
+      component: require('@/components/EbaDashboard/Dashboard').default
+    },
+    {
       path: '*',
       redirect: '/'
     }

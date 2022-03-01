@@ -39,6 +39,7 @@
                     <button id="userDash" class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button id="verifiedDash" class="btn inwards_button" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button id="fishDash" class="btn inwards_button" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="ebaDash" class="btn inwards_button" style="width: 100%" @click="goToEbaDashboard()" type="button">EBA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
 
                   </div>
                 </div>
@@ -298,6 +299,9 @@
         }
         stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'fish-dashboard' });
+      },
+      goToEbaDashboard () {
+        router.push({ path: 'eba-dashboard' });
       },
       goHome () {
         router.push({ path: '/' });
