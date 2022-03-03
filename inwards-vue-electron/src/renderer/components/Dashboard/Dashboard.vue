@@ -105,7 +105,7 @@
   export default {
     data () {
       return {
-        stationsApi: 'https://inwards.award.org.za/app_json/stations.php',
+        stationsApi: 'https://uwasp.award.org.za/app_json/stations.php',
         stationsCoordinates: {}, // To stored all stations with their coordinates
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,
@@ -253,6 +253,7 @@
         wmaNames = wmaNames.sort();
         for (let i = 0; i < wmaNames.length; i++) {
           wmaNames[i] = `'${wmaNames[i]}'`;
+          console.log(wmaNames[i]);
         }
         let url = `${self.stationsApi}?wma=${wmaNames.join()}`;
         console.log(url);

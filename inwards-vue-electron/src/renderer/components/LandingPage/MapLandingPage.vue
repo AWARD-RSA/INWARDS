@@ -11,35 +11,17 @@
           <div class="row justify-content-md-center" style="margin-top: 5px; margin-bottom: 5px;">
                   <div class="col-md-12"> 
                      <label class="custom-control wma-toggle custom-checkbox">
-                      <input id="limpopo" type="checkbox" class="custom-control-input">Limpopo
+                      <input id="pongola_mtamvuna" type="checkbox" class="custom-control-input">uMhlathuze
                       <span class="custom-control-indicator"></span>
                   </label>
                   </div>
-                  <div class="col-md-12">
-                     <label class="custom-control wma-toggle custom-checkbox">
-                      <input id="olifants_letaba" type="checkbox" class="custom-control-input">Olifants-Letaba
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                  </div>
-                  <div class="col-md-12"> 
-                     <label class="custom-control wma-toggle custom-checkbox">
-                      <input id="inkomati_usuthu" type="checkbox" class="custom-control-input">Inkomati-Usuthu
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                </div>
                 </div>
                 <div class="row">
                 <div class="col-md-12">
                   <div class="btn-group-vertical" style="width:100%">
                     <button id="home" class="btn inwards_button" style="width: 100%; display:none;" @click="goHome()" type="button">Home<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="unverified" class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="wqDash" class="btn inwards_button" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="knpDash" class="btn inwards_button" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="iucmaDash" class="btn inwards_button" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="unverified" class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button"><div><img src="@/assets/dws_site.jpg" alt="" style="height:100px;"></div>Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                     <button id="userDash" class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="verifiedDash" class="btn inwards_button" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="fishDash" class="btn inwards_button" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="ebaDash" class="btn inwards_button" style="width: 100%" @click="goToEbaDashboard()" type="button">EBA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
 
                   </div>
                 </div>
@@ -52,16 +34,18 @@
     <div id="overlay-logos">
       <div class="container-fluid container-fluid-logo" style = "margin-top: 0; margin-bottom: 0; position: absolute; bottom: 0; ">
           <div class="grid grid-logo" style="margin-bottom: 2px;">
-            <div><img src="@/assets/award.svg" alt=""></div>
-            <div><img src="@/assets/knp.png" alt=""></div>
-            <div><img src="@/assets/iucma.png" alt=""></div>
             <div><img src="@/assets/dws.png" alt=""></div>
-            <div><img src="@/assets/jrs-logo.svg" alt=""></div>
-            <div><img src="@/assets/usaid.png" alt=""></div>
-            <div><img src="@/assets/fbis_logo.png" alt=""></div>
+            <div><img src="@/assets/award.svg" alt=""></div>
+            <div><img src="@/assets/uwasp_logo.png" alt=""></div>
+            <div><img src="@/assets/nbi_logo.jpg" alt=""></div>
+            <div><img src="@/assets/wwf_logo.jpg" alt=""></div>
+            <div><img src="@/assets/giz_logo.png" alt=""></div>
+            <div><img src="@/assets/giz_imp.png" alt=""></div>
+            <div><img src="@/assets/natres_logo.png" alt=""></div>
             <div><img src="@/assets/kartoza.png" alt=""></div>
-            <div><img src="@/assets/frc.svg" alt=""></div>
-          </div>	
+            <div><img src="@/assets/usaid.png" alt=""></div>
+            <div><img src="@/assets/jrs-logo.svg" alt=""></div>
+          </div>
         </div>
     </div>
     <div class="map-container">
@@ -85,7 +69,7 @@
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
   import {Fill, Stroke, Style} from 'ol/style';
-  import WmaJson from '@/assets/wma_merge.json';
+  import WmaJson from '@/assets/umhlatuze_catchment_dissolve.json';
   import Header from '@/components/Header';
   import $ from 'jquery';
   import stateStore from '../../store/state_handler';
@@ -168,34 +152,10 @@
         }),
         zIndex: 1
       });
-      document.getElementById('limpopo').addEventListener('change', function (element) {
-        let check = document.getElementById('limpopo').checked;
+      document.getElementById('pongola_mtamvuna').addEventListener('change', function (element) {
+        let check = document.getElementById('pongola_mtamvuna').checked;
         let features = vectorLayer.getSource().getFeatures();
         let feature = features[0];
-        if (check === false) {
-          delete self.selectedFeatures[feature.ol_uid];
-          feature.setStyle(undefined);
-        } else {
-          self.selectedFeatures[feature.ol_uid] = feature;
-          feature.setStyle(selectedStyle);
-        }
-      });
-      document.getElementById('olifants_letaba').addEventListener('change', function (element) {
-        let check = document.getElementById('olifants_letaba').checked;
-        let features = vectorLayer.getSource().getFeatures();
-        let feature = features[1];
-        if (check === false) {
-          delete self.selectedFeatures[feature.ol_uid];
-          feature.setStyle(undefined);
-        } else {
-          self.selectedFeatures[feature.ol_uid] = feature;
-          feature.setStyle(selectedStyle);
-        }
-      });
-      document.getElementById('inkomati_usuthu').addEventListener('change', function (element) {
-        let check = document.getElementById('inkomati_usuthu').checked;
-        let features = vectorLayer.getSource().getFeatures();
-        let feature = features[2];
         if (check === false) {
           delete self.selectedFeatures[feature.ol_uid];
           feature.setStyle(undefined);
@@ -267,42 +227,6 @@
         stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'user-dashboard' });
       },
-      goToKnpDashboard () {
-        let self = this;
-        let _selectedWMA = [];
-        for (let id in self.selectedFeatures) {
-          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
-        }
-        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
-        router.push({ path: 'knp-dashboard' });
-      },
-      goToIUCMADashboard () {
-        let _selectedWMA = [];
-        _selectedWMA.push('inkomati_usuthu');
-        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
-        router.push({ path: 'iucma-dashboard' });
-      },
-      goToWqDashboard () {
-        let self = this;
-        let _selectedWMA = [];
-        for (let id in self.selectedFeatures) {
-          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
-        }
-        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
-        router.push({ path: 'wq-dashboard' });
-      },
-      goToFishDashboard () {
-        let self = this;
-        let _selectedWMA = [];
-        for (let id in self.selectedFeatures) {
-          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
-        }
-        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
-        router.push({ path: 'fish-dashboard' });
-      },
-      goToEbaDashboard () {
-        router.push({ path: 'eba-dashboard' });
-      },
       goHome () {
         router.push({ path: '/' });
       },
@@ -311,33 +235,6 @@
         setTimeout(() => {
           window.location.reload();
         }, 500);
-      },
-      addKnpLayer (map) {
-        const knpJson = require('@/assets/knp.json');
-        let knpLayer = new VectorLayer({
-          source: new VectorSource({
-            features: (new GeoJSON({
-              defaultDataProjection: 'EPSG:4326'
-            })).readFeatures(knpJson, {
-              dataProjection: 'EPSG:4326',
-              featureProjection: 'EPSG:3857'
-            })
-          }),
-          updateWhileAnimating: true,
-          updateWhileInteracting: true
-        });
-        map.addLayer(knpLayer);
-        let knpStyle = new Style({
-          stroke: new Stroke({
-            color: [51, 204, 51, 0.6],
-            width: 1
-          }),
-          fill: new Fill({
-            color: [51, 204, 51, 0.2]
-          }),
-          zIndex: 1
-        });
-        knpLayer.setStyle(knpStyle);
       }
     },
     components: {

@@ -27,7 +27,7 @@
         let img = $('<img style="height: 100%; width: 100%; display: block; margin: 0;">');
         div.html(img);
         div.css('background', 'rgba(222, 226, 230, 0.41)');
-        img.attr('src', 'https://inwards.award.org.za/images/' + stations[0].substring(0, 6) + '.jpg');
+        img.attr('src', 'https://uwasp.award.org.za/images/' + stations[0].substring(0, 6) + '.jpg');
       }
     }
   };

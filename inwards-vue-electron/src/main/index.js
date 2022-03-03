@@ -28,54 +28,6 @@ menu.append(new MenuItem({
       type: 'checkbox',
       checked: true,
       click: () => realTime('unverified')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Verified Discharge',
-      type: 'checkbox',
-      checked: true,
-      click: () => realTime('home')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Kruger National Park (KNP) TPC Dashboard',
-      type: 'checkbox',
-      checked: true,
-      click: () => realTime('knpDash')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'IUCMA Operational Dashboard',
-      type: 'checkbox',
-      checked: true,
-      click: () => realTime('iucmaDash')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Water Quality Dashboard',
-      type: 'checkbox',
-      checked: true,
-      click: () => realTime('wqDash')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Fish Dashboard',
-      type: 'checkbox',
-      checked: true,
-      click: () => realTime('fishDash')
-    },
-    {
-      type: 'separator'
     }
   ]
 }));

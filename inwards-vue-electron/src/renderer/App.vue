@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'INWARDS'
+    name: 'INWARDS_uMhlathuze'
   };
 </script>
 
