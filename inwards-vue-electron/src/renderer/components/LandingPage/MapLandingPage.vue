@@ -20,8 +20,8 @@
                 <div class="col-md-12">
                   <div class="btn-group-vertical" style="width:100%">
                     <button id="home" class="btn inwards_button" style="width: 100%; display:none;" @click="goHome()" type="button">Home<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="unverified" class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button"><div><img src="@/assets/dws_site.jpg" alt="" style="height:100px;"></div>Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="userDash" class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="unverified" class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button"><i class="fa fa-line-chart" aria-hidden="true"></i>Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="userDash" class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button"><i class="fa fa-user" aria-hidden="true"></i>User Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
 
                   </div>
                 </div>

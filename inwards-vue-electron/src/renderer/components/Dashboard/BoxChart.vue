@@ -13,7 +13,7 @@
       return {
         chartTitle: 'Unverified Discharge Boxplot',
         chartId: 'unverified-discharge-boxplot',
-        baseUrl: 'https://inwards.award.org.za/app_json/boxplot.php'
+        baseUrl: 'https://uwasp.award.org.za/app_json/boxplot.php'
       };
     },
     methods: {
@@ -21,6 +21,7 @@
         let self = this;
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
+        console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           let boxData = [];

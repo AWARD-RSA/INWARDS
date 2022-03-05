@@ -23,8 +23,8 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {
-    "productName": "INWARDS",
-    "appId": "org.award.inwards",
+    "productName": "INWARDS uMhlathuze",
+    "appId": "org.award.uMhlathuze",
     "directories": {
       "output": "build"
     },

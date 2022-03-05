@@ -5,7 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 let db;
 export let dbFilePath = path.join(remote.app.getPath('userData'), '/inwards_template.sqlite3');
-export let dbUrl = 'http://inwards.award.org.za/db/db_download.php';
+export let dbUrl = 'http://uwasp.award.org.za/db/db_download.php';
 export let dbReady = false;
 
 function conn () {
