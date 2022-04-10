@@ -1,5 +1,6 @@
 <template>
   <div style="width: 100%; height: 100%; margin: 0; padding: 0;">
+    <StatusBar/>
     <Header/>
     <div id="overlay">
       <div class="row" style="height: 100%;">
@@ -8,70 +9,70 @@
         <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-map" style="padding-right: 10px;"></i>Your selected WMAs</h6></div>
         <div class="card-body">
           <div class="row justify-content-md-center" style="margin-top: 5px; margin-bottom: 5px;">
-                  <div class="col-md-12"> 
-                     <label class="custom-control custom-checkbox" style="margin-left: 2px">
-                      <input id="limpopo" type="checkbox" class="custom-control-input">Limpopo
-                      <span class="custom-control-indicator"></span>
+                  <div class="col-md-12">
+                     <label class="custom-control wma-toggle custom-checkbox">
+                      <input id="limpopo" type="checkbox" class="custom-control-input">Limpopo WMA
+                      <span class="custom-control-indicator" style="padding-left: 10px; float : right;"></span>
                   </label>
                   </div>
                   <div class="col-md-12">
-                     <label class="custom-control custom-checkbox" style="margin-left: 2px">
-                      <input id="olifants_letaba" type="checkbox" class="custom-control-input">Olifants-Letaba
-                      <span class="custom-control-indicator"></span>
+                     <label class="custom-control wma-toggle custom-checkbox">
+                      <input id="olifants_letaba" type="checkbox" class="custom-control-input">Olifants-Letaba WMA
+                      <span class="custom-control-indicator" style="padding-left: 10px; float : right;"></span>
                   </label>
                   </div>
-                  <div class="col-md-12"> 
-                     <label class="custom-control custom-checkbox" style="margin-left: 2px">
-                      <input id="inkomati_usuthu" type="checkbox" class="custom-control-input">Inkomati-Usuthu
-                      <span class="custom-control-indicator"></span>
+                  <div class="col-md-12">
+                     <label class="custom-control wma-toggle custom-checkbox">
+                      <input id="inkomati_usuthu" type="checkbox" class="custom-control-input">Inkomati-Usuthu WMA
+                      <span class="custom-control-indicator" style="padding-left: 10px; float : right;"></span>
                   </label>
                 </div>
                 </div>
                 <div class="row">
                 <div class="col-md-12">
                   <div class="btn-group-vertical" style="width:100%">
-                    <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button">Biodiversity Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="home" class="btn inwards_button text-left" style="width: 100%; display:none;" @click="goHome()" type="button">Home<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="unverified" class="btn inwards_button text-left" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="wqDash" class="btn inwards_button text-left" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="knpDash" class="btn inwards_button text-left" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="iucmaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Hydro Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="iucmaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToIUCMAWqDashboard()" type="button">IUCMA WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="userDash" class="btn inwards_button text-left" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="verifiedDash" class="btn inwards_button text-left" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="fishDash" class="btn inwards_button text-left" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="ebaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToEbaDashboard()" type="button">EBA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                   </div>
                 </div>
                 </div>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
+    <div id="overlay-logos">
+      <div class="container-fluid container-fluid-logo" style = "margin-top: 0; margin-bottom: 0; position: absolute; bottom: 0; ">
+          <div class="grid grid-logo" style="margin-bottom: 2px;">
+            <div><img src="../../assets/award.svg" alt=""></div>
+            <div><img src="../../assets/knp.png" alt=""></div>
+            <div><img src="../../assets/iucma.png" alt=""></div>
+            <div><img src="../../assets/dws.png" alt=""></div>
+            <div><img src="../../assets/jrs-logo.svg" alt=""></div>
+            <div><img src="../../assets/usaid.png" alt=""></div>
+            <div><img src="../../assets/fbis_logo.png" alt=""></div>
+            <div><img src="../../assets/kartoza.png" alt=""></div>
+            <div><img src="../../assets/frc.svg" alt=""></div>
+          </div>
+        </div>
+    </div>
     <div class="map-container">
-      <div class="container-fluid" style="height: 1010px; width:100%">
+      <div class="container-fluid" style="height: 100%; width:100%">
         <div class="col-md-12" style="width: 100%; height: 100%; margin: 0; padding: 0;">
-          <div id="map"></div>
+          <div id="map" style="width: 100%; height: 100%; position:fixed"></div>
           </div>
         </div>
       </div>
-      <div class="modal rounded-0 fade modal_center" tabindex="-1" id="login" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Please Verify Access</h5>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="emailAddress">Email address</label>
-                  <input type="email" class="form-control rounded-0" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter email">
-                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
-                  <label for="uniqueCode">Unique Code</label>
-                  <input type="text" class="form-control rounded-0" id="uniqueCode" placeholder="Unique Code">
-                </div>
-                <button id="verifyCode" type="submit" class="btn rounded-0 inwards_button">Submit</button>
-                <button href="mailto:hugo@award.org.za" type="submit" class="btn rounded-0 inwards_button">Request Access</button>
-              </form>
-            </div>
-          </div>
-        </div>
+      <div class="reset-application-data-container" style="position: absolute; bottom: 0; margin-bottom: 50px; margin-left: 20px;">
+        <div id='reset' style="display:none;" class="btn inwards_button" v-on:click="resetApplicationData">Reset application data</div>
       </div>
     </div>
 </template>
@@ -84,13 +85,13 @@
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
   import {Fill, Stroke, Style} from 'ol/style';
-  import knpJson from '@/assets/knp.json';
-  import WmaJson from '@/assets/wma_merge.json';
-  import Header from '@/components/Header';
+  import WmaJson from '../../assets/wma_merge.json';
+  import Header from '../../components/Header';
   import $ from 'jquery';
   import stateStore from '../../store/state_handler';
-  import router from '@/router/index';
-
+  import router from '../../router/index';
+  import StatusBar from '../StatusBar';
+  const { getCurrentWindow } = require('electron').remote;
   export default {
     data () {
       return {
@@ -114,18 +115,6 @@
           center: [0, 0],
           zoom: 2
         })
-      });
-      let knpLayer = new VectorLayer({
-        source: new VectorSource({
-          features: (new GeoJSON({
-            defaultDataProjection: 'EPSG:4326'
-          })).readFeatures(knpJson, {
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-          })
-        }),
-        updateWhileAnimating: true,
-        updateWhileInteracting: true
       });
       let vectorLayer = new VectorLayer({
         source: new VectorSource({
@@ -152,20 +141,9 @@
         zIndex: 1
       });
       let highlightedFeature = null;
-      map.addLayer(knpLayer);
-      let knpStyle = new Style({
-        stroke: new Stroke({
-          color: [51, 204, 51, 0.6],
-          width: 1
-        }),
-        fill: new Fill({
-          color: [51, 204, 51, 0.2]
-        }),
-        zIndex: 1
-      });
-      knpLayer.setStyle(knpStyle);
       map.addLayer(vectorLayer);
       map.getView().fit(vectorLayer.getSource().getExtent());
+      // Map on hover
       map.on('pointermove', function (e) {
         if (highlightedFeature !== null && !self.selectedFeatures.hasOwnProperty(highlightedFeature.ol_uid)) {
           highlightedFeature.setStyle(undefined);
@@ -190,24 +168,7 @@
         }),
         zIndex: 1
       });
-      $(document).ready(function () {
-        $('#login').modal('show');
-      });
-      document.getElementById('verifyCode').addEventListener('click', function (element) {
-        let email = document.getElementById('emailAddress').value;
-        let code = document.getElementById('uniqueCode').value;
-        $.get('http://inwards.award.org.za/app_json/user_verification.php?email=' + email + '&code=' + code, function (data) {
-          if (data === 'true') {
-            $('#login').modal('hide');
-            alert('Successfully Verified!');
-          } else {
-            alert('Failed to Verifiy!');
-          }
-        });
-        console.log(email + 'code:' + code);
-      });
       document.getElementById('limpopo').addEventListener('change', function (element) {
-        console.log(document.getElementById('limpopo').checked);
         let check = document.getElementById('limpopo').checked;
         let features = vectorLayer.getSource().getFeatures();
         let feature = features[0];
@@ -220,7 +181,6 @@
         }
       });
       document.getElementById('olifants_letaba').addEventListener('change', function (element) {
-        console.log(document.getElementById('olifants_letaba').checked);
         let check = document.getElementById('olifants_letaba').checked;
         let features = vectorLayer.getSource().getFeatures();
         let feature = features[1];
@@ -233,7 +193,6 @@
         }
       });
       document.getElementById('inkomati_usuthu').addEventListener('change', function (element) {
-        console.log(document.getElementById('inkomati_usuthu').checked);
         let check = document.getElementById('inkomati_usuthu').checked;
         let features = vectorLayer.getSource().getFeatures();
         let feature = features[2];
@@ -249,12 +208,16 @@
       stateStore.getState(
         stateStore.keys.selectedWMAs,
         function (selectedWMAs) {
+          if (!selectedWMAs) {
+            return;
+          }
           let features = vectorLayer.getSource().getFeatures();
           for (let i = 0; i < features.length; i++) {
             let feature = features[i];
             if (selectedWMAs.indexOf(feature.get('wma')) !== -1) {
               feature.setStyle(selectedStyle);
               self.selectedFeatures[feature.ol_uid] = feature;
+              document.getElementById(feature.get('wma')).checked = true;
             }
           }
           if (Object.keys(self.selectedFeatures).length > 0) {
@@ -266,7 +229,6 @@
         // Check if there is a feature
         map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
           if (!self.selectedFeatures.hasOwnProperty(feature.ol_uid)) {
-            console.log(feature.values_.wma);
             let check = feature.values_.wma;
             document.getElementById(check).checked = true;
             self.selectedFeatures[feature.ol_uid] = feature;
@@ -274,7 +236,6 @@
           } else {
             delete self.selectedFeatures[feature.ol_uid];
             feature.setStyle(undefined);
-            console.log(feature.values_.wma);
             let check = feature.values_.wma;
             document.getElementById(check).checked = false;
           }
@@ -296,10 +257,96 @@
         }
         stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'dashboard' });
+      },
+      goToUserDefinedDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'user-dashboard' });
+      },
+      goToKnpDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'knp-dashboard' });
+      },
+      goToIUCMADashboard () {
+        let _selectedWMA = [];
+        _selectedWMA.push('inkomati_usuthu');
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'iucma-dashboard' });
+      },
+      goToIUCMAWqDashboard () {
+        let _selectedWMA = [];
+        _selectedWMA.push('inkomati_usuthu');
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'iucma-wq-dashboard' });
+      },
+      goToWqDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'wq-dashboard' });
+      },
+      goToFishDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'fish-dashboard' });
+      },
+      goToEbaDashboard () {
+        router.push({ path: 'eba-dashboard' });
+      },
+      goHome () {
+        router.push({ path: '/' });
+      },
+      resetApplicationData (e) {
+        stateStore.clearAll();
+        getCurrentWindow().reload();
+      },
+      addKnpLayer (map) {
+        const knpJson = require('../../assets/knp.json');
+        let knpLayer = new VectorLayer({
+          source: new VectorSource({
+            features: (new GeoJSON({
+              defaultDataProjection: 'EPSG:4326'
+            })).readFeatures(knpJson, {
+              dataProjection: 'EPSG:4326',
+              featureProjection: 'EPSG:3857'
+            })
+          }),
+          updateWhileAnimating: true,
+          updateWhileInteracting: true
+        });
+        map.addLayer(knpLayer);
+        let knpStyle = new Style({
+          stroke: new Stroke({
+            color: [51, 204, 51, 0.6],
+            width: 1
+          }),
+          fill: new Fill({
+            color: [51, 204, 51, 0.2]
+          }),
+          zIndex: 1
+        });
+        knpLayer.setStyle(knpStyle);
       }
     },
     components: {
+      StatusBar,
       Header
     }
   };
-</script> 
+</script>

@@ -12,8 +12,8 @@
 
 <style>
   /* CSS */
-  @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
   body {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: 'Open Sans', sans-serif;
   }
 </style>
