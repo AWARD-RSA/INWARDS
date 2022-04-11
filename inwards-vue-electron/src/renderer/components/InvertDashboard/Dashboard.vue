@@ -2,33 +2,34 @@
 <template>
   <div style="height: 100%;">
     <StatusBar/>
+    <div id="content">
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
         <div class="col-md-4 no-float left-panel" style="background: #252526; padding-bottom: 50px; margin-right: 0px;">
           <nav>
          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#tabs-1" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Select <img src="../../assets/fbis_icon.png" height="11"> FBIS Fish Site</a>
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#tabs-1" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Select <img src="../../assets/fbis_icon.png" height="11"> FBIS Invert Site</a>
             <a class="nav-item nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-controls="nav-profile" aria-selected="false">Select Hydrological Sites</a>
           </div>
           </nav>
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
             <div class="tab-pane fade show active" id="tabs-1" role="tabpanel">
-              <BioTree ref="bioTree"/>
+              <InvertTree ref="invertTree"/>
             </div>
             <div class="tab-pane fade" id="tabs-2" role="tabpanel">
               <HydroTree ref="hydroTree"/>
             </div>
           </div>
           <div class="v-space"></div>
-           <MapDashboard ref="mapDashboard"/>                
+           <MapDashboard ref="mapDashboard"/>
           <div class="v-space"></div>
 
           <div class="card rounded-0">
 
-            <div class="card-body">  
+            <div class="card-body">
                     <div class="row no-gutters">
                 <div class="col-md-12">
-                 <multiselect placeholder="Select Species" :options="fishSpecies" v-model="selectedSpecies" :multiple="true"></multiselect>
+                 <multiselect placeholder="Select Family" :options="invertFamily" v-model="selectedFamily" :multiple="true"></multiselect>
                 </div>
                     </div>
               <div class="row">
@@ -43,12 +44,12 @@
                     <label for="dateEnd" style="padding-left: 8px;">End Date:</label>
                     <input type="date" class="form-control" id="dateEnd" style="margin-right: 10px;" @onload="setDates()">
                   </div>
-                </div>                
+                </div>
               </div>
               </div>
           <div class="v-space"></div>
           <div class="card rounded-0">
-            <div class="card-body">              
+            <div class="card-body">
               <div class="row">
                 <div class="col-md-12">
                 <button class="btn inwards_button" type="button" style="width: 100%" @click="doAnalysis()">
@@ -64,17 +65,17 @@
 
           <div class="row no-gutters">
             <div class="col-md-6">
-                  <SiteOverview ref="siteComponent" style="margin-top: 5px;"/>
+                  <InvertSiteOverview ref="invertsiteComponent" style="margin-top: 5px;"/>
               </div>
               <div class="col-md-6" style="padding-left: 2px;">
-                  <FishRadar ref="radarComponent" style="margin-top: 5px;"/>
-              </div>             
+                  <InvertRadar ref="radarComponent" style="margin-top: 5px;"/>
+              </div>
             <div class="col-md-6" style="padding-left: 2px;">
-                  <FishDuration ref="durationComponent" style="margin-top: 5px;"/>
+                  <InvertDuration ref="invertdurationComponent" style="margin-top: 5px;"/>
               </div>
 
             <div class="col-md-6">
-                  <FishTimeseries ref="timeseriesComponent" style="margin-top: 5px;"/>
+                  <InvertTimeseries ref="inverttimeseriesComponent" style="margin-top: 5px;"/>
               </div>
 
                <div class="col-md-6" style="padding-left: 2px;">
@@ -111,14 +112,15 @@
                   <ExtremeLowDuration ref="extremedurationComponent" style="margin-top: 5px;"/>
               </div>
               <div class="col-md-6" style="padding-left: 2px;">
-                  <FishBox ref="boxComponent" style="margin-top: 5px;"/>
+                  <InvertBox ref="boxComponent" style="margin-top: 5px;"/>
               </div>
               <br>
           </div>
-           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>     
+           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>
         </div>
       </div>
       <NavButtons/>
+  </div>
   </div>
   </div>
 </template>
@@ -161,11 +163,11 @@
   import NavButtons from '../../components/NavButtons';
   import StatusBar from '../StatusBar';
   import MapDashboard from './MapDashboard';
-  import SiteOverview from './SiteOverview';
-  import FishBox from './FishBox';
-  import FishRadar from './FishRadar';
-  import FishDuration from './FishDuration';
-  import FishTimeseries from './FishTimeseries';
+  import InvertSiteOverview from './InvertSiteOverview';
+  import InvertBox from './InvertBox';
+  import InvertRadar from './InvertRadar';
+  import InvertDuration from './InvertDuration';
+  import InvertTimeseries from './InvertTimeseries';
   import MonthlyMeans from './MonthlyMeans';
   import LowFlowTimeseries from './LowFlowTimeseries';
   import HighFlowTimeseries from './HighFlowTimeseries';
@@ -177,7 +179,7 @@
   import JulianMax from './JulianMax';
   import JulianMin from './JulianMin';
   import BaseFlowIndex from './BaseFlowIndex';
-  import BioTree from './BioTree';
+  import InvertTree from './InvertTree';
   import HydroTree from './HydroTree';
   import stateStore from '../../store/state_handler';
   import VectorLayer from 'ol/layer/Vector';
@@ -194,17 +196,17 @@
   export default {
     data () {
       return {
-        fishAPI: 'https://inwards.award.org.za/app_json/fish_sites.php',
+        invertAPI: 'https://inwards.award.org.za/app_json/invert_sites.php',
         verifiedAPI: 'https://inwards.award.org.za/app_json/verified_stations.php',
         stationsCoordinates: {}, // To stored all stations with their coordinates
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,
-        selectedBioStations: [],
+        selectedInvertStations: [],
         selectedHydroStations: [],
-        selectedSpecies: null,
+        selectedFamily: null,
         selectedWMAs: [],
-        fishSelected: [],
-        fishSpecies: [],
+        invertSelected: [],
+        invertFamily: [],
         color: '#177a98',
         height: '35px',
         width: '4px',
@@ -217,7 +219,7 @@
     mounted () {
       let self = this;
       self.mapDashboardRef = self.$refs.mapDashboard;
-      self.bioTreeRef = self.$refs.bioTree;
+      self.invertTreeRef = self.$refs.invertTree;
       self.hydroTreeRef = self.$refs.hydroTree;
       stateStore.getState(
         stateStore.keys.selectedWMAs,
@@ -235,7 +237,7 @@
         }
       );
       self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
-        self.bioTreeRef.toggleNode(station, isStationSelected);
+        self.invertTreeRef.toggleNode(station, isStationSelected);
       });
       self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
         self.hydroTreeRef.toggleNode(station, isStationSelected);
@@ -260,7 +262,7 @@
       }
       startDate = yyyy + '-' + mm + '-' + dd;
       document.getElementById('dateStart').setAttribute('value', startDate);
-      this.bioTreeRef.refreshStations();
+      this.invertTreeRef.refreshStations();
       this.hydroTreeRef.refreshStations();
       self.fetchStations();
       self.addKnpLayer(map);
@@ -271,12 +273,12 @@
       NavButtons,
       MapDashboard,
       GridLoader,
-      BioTree,
+      InvertTree,
       HydroTree,
       Multiselect,
-      SiteOverview,
+      InvertSiteOverview,
       StatusBar,
-      FishTimeseries,
+      InvertTimeseries,
       HighPulse,
       MonthlyMeans,
       ZeroFlows,
@@ -288,29 +290,29 @@
       BaseFlowIndex,
       LowFlowTimeseries,
       HighFlowTimeseries,
-      FishBox,
-      FishDuration,
-      FishRadar
+      InvertBox,
+      InvertDuration,
+      InvertRadar
     },
     methods: {
       showSelectMap () {
         this.$refs.selectComponent.showLogModal();
       },
-      loadSpecies (fishSelected) {
-        // console.log('http://inwards.award.org.za/app_json/fish_species.php?site=' + fishSelected);
-        axios.get('http://inwards.award.org.za/app_json/fish_species.php?site=' + fishSelected).then(response => {
-          this.fishSpecies = response.data;
+      loadFamily (invertSelected) {
+        // console.log('http://inwards.award.org.za/app_json/invert_family.php?site=' + invertSelected);
+        axios.get('http://inwards.award.org.za/app_json/invert_family.php?site=' + invertSelected).then(response => {
+          this.invertFamily = response.data;
         }).catch(e => {
         });
       },
       doAnalysis () {
-        // console.log(this.selectedSpecies);
-        // console.log(this.selectedBioStations[0]);
+        // console.log(this.selectedFamily);
+        // console.log(this.selectedInvertStations[0]);
         // console.log(this.selectedHydroStations[0]);
-        if (this.selectedBioStations.length === 0) {
+        if (this.selectedInvertStations.length === 0) {
           dialog.showMessageBox(null, {
             type: 'warning',
-            message: 'Please select at least one fish site',
+            message: 'Please select at least one invert site',
             buttons: ['OK']
           });
           return;
@@ -336,23 +338,23 @@
           return;
         }
         this.loading = true;
-        this.$refs.siteComponent.siteTable(this.selectedBioStations);
-        // this.$refs.boxComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.$refs.timeseriesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        // this.$refs.durationComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.$refs.durationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.radarComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.lowComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.highComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.zeroComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.baseComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.julianmaxComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.julianminComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.highpulseComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.highdurationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.extremepulsesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.extremedurationComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
-        this.$refs.monthlyComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
+        this.$refs.invertsiteComponent.invertsiteTable(this.selectedInvertStations);
+        // this.$refs.boxComponent.displayChart(this.selectedInvertStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.inverttimeseriesComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        // this.$refs.durationComponent.displayChart(this.selectedInvertStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.invertdurationComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.radarComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.lowComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.highComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.zeroComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.baseComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.julianmaxComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.julianminComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.highpulseComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.highdurationComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.extremepulsesComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.extremedurationComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
+        this.$refs.monthlyComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);
         this.loading = false;
       },
       fetchStations () {
@@ -376,37 +378,38 @@
           wmaNames[i] = `'${wmaNames[i]}'`;
         }
         // console.log(wmaNames[0]);
-        let bioUrl = `${self.fishAPI}?wma=${wmaNames.join()}`;
+        let invertUrl = `${self.invertAPI}?wma=${wmaNames.join()}`;
+        
 
-        console.log(bioUrl);
-        let bioFile = `${dir}/${bioUrl.hashCode()}.json`;
-        // console.log(bioFile);
+        // console.log(invertUrl);
+        let invertFile = `${dir}/${invertUrl.hashCode()}.json`;
+        // console.log(invertFile);
         // Check if online
         if (navigator.onLine) {
           let cancelToken = null;
           if (self.stationsRequest) {
             cancelToken = self.stationsRequest.token;
           }
-          axios.get(bioUrl, { cancelToken: cancelToken }).then(response => {
-            self.mapDashboardRef.loadBioStationsToMap(response.data);
-            fs.writeFileSync(bioFile, JSON.stringify(response.data));
-            self.createBioTree(response.data);
+          axios.get(invertUrl, { cancelToken: cancelToken }).then(response => {
+            self.mapDashboardRef.loadInvertStationsToMap(response.data);
+            fs.writeFileSync(invertFile, JSON.stringify(response.data));
+            self.createInvertTree(response.data);
           }).catch(error => {
             console.log(error);
           });
         } else {
-          if (fs.existsSync(bioFile)) {
-            let jsonData = fs.readFileSync(bioFile, 'utf-8');
+          if (fs.existsSync(invertFile)) {
+            let jsonData = fs.readFileSync(invertFile, 'utf-8');
             let stationsData = JSON.parse(jsonData);
-            self.mapDashboardRef.loadBioStationsToMap(stationsData);
-            self.createBioTree(stationsData);
+            self.mapDashboardRef.loadInvertStationsToMap(stationsData);
+            self.createInvertTree(stationsData);
           }
         }
         let hydroUrl = `${self.verifiedAPI}?wma=${wmaNames.join()}`;
 
         // console.log(url);
         let hydroFile = `${dir}/${hydroUrl.hashCode()}.json`;
-        // console.log(bioFile);
+        // console.log(invertFile);
         // Check if online
         if (navigator.onLine) {
           let cancelToken = null;
@@ -432,7 +435,7 @@
           self.hydroTreeRef.toggleNode(station, isStationSelected);
         });
         self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
-          self.bioTreeRef.toggleNode(station, isStationSelected);
+          self.invertTreeRef.toggleNode(station, isStationSelected);
         });
         self.$bus.$on('refreshStations', () => {
           self.fetchStations();
@@ -482,27 +485,27 @@
       addStationsToStore (stations, chartStoredId) {
         let self = this;
         stateStore.getState(
-          stateStore.keys.selectedBioStations,
-          function (selectedBioStations) {
-            if (!selectedBioStations || typeof selectedBioStations === 'undefined') {
-              selectedBioStations = {};
+          stateStore.keys.selectedInvertStations,
+          function (selectedInvertStations) {
+            if (!selectedInvertStations || typeof selectedInvertStations === 'undefined') {
+              selectedInvertStations = {};
             }
             for (let i = 0; i < stations.length; i++) {
-              if (!selectedBioStations[stations[i]]) {
-                selectedBioStations[stations[i]] = {
+              if (!selectedInvertStations[stations[i]]) {
+                selectedInvertStations[stations[i]] = {
                   'feature': self.stationsFeatures[stations[i]],
                   'stationCoord': self.stationsCoordinates[stations[i]],
                   'chartStored': [chartStoredId]
                 };
               } else {
-                if (selectedBioStations[stations[i]]['chartStored'].indexOf(chartStoredId) < 0) {
-                  selectedBioStations[stations[i]]['chartStored'].push(chartStoredId);
+                if (selectedInvertStations[stations[i]]['chartStored'].indexOf(chartStoredId) < 0) {
+                  selectedInvertStations[stations[i]]['chartStored'].push(chartStoredId);
                 }
               }
             }
             stateStore.setState(
-              stateStore.keys.selectedBioStations,
-              selectedBioStations
+              stateStore.keys.selectedInvertStations,
+              selectedInvertStations
             );
           }
         );
@@ -561,10 +564,10 @@
         });
         knpLayer.setStyle(knpStyle);
       },
-      createBioTree (stationsData) {
+      createInvertTree (stationsData) {
         let self = this;
         // Start adding stations data to catchment
-        let bioData = self.mapDashboardRef.getCatchmentsData();
+        let invertData = self.mapDashboardRef.getCatchmentsData();
         for (let i = 0; i < stationsData.features.length; i++) {
           // let primary = stationsData.features[i]['properties']['primary'];
           let secondary = stationsData.features[i]['properties']['secondary'];
@@ -574,29 +577,29 @@
           this.stationsFeatures[station] = stationsData.features[i];
           this.stationsCoordinates[station] = stationsData.features[i].geometry.coordinates;
 
-          if (bioData.hasOwnProperty(secondary)) {
+          if (invertData.hasOwnProperty(secondary)) {
             let stationName = station + ': ' + place;
-            bioData[secondary].push(stationName);
-            bioData[secondary].sort();
+            invertData[secondary].push(stationName);
+            invertData[secondary].sort();
           }
         }
         // console.log(catchmentsData);
-        let treeData = self.generateBioTreeData(bioData);
-        this.bioTreeRef.createTree(treeData, this.onBioTreeSelectedHandler, this.onBioTreeReady);
+        let treeData = self.generateInvertTreeData(invertData);
+        this.invertTreeRef.createTree(treeData, this.onInvertTreeSelectedHandler, this.onInvertTreeReady);
       },
-      onBioTreeReady (event, data) {
+      onInvertTreeReady (event, data) {
         const self = this;
         stateStore.getState(
-          stateStore.keys.selectedBio,
-          function (selectedBio) {
-            if (!selectedBio) {
+          stateStore.keys.selectedInvert,
+          function (selectedInvert) {
+            if (!selectedInvert) {
               return false;
             }
-            self.bioTreeRef.toggleMultipleNodes(selectedBio, true);
+            self.invertTreeRef.toggleMultipleNodes(selectedInvert, true);
           }
         );
       },
-      generateBioTreeData (dictionary) {
+      generateInvertTreeData (dictionary) {
         let treeData = [];
         let self = this;
         $.each(dictionary, function (key, catchment) {
@@ -610,40 +613,40 @@
             type: hasChildren ? 'layer' : 'station'
           };
           if (hasChildren) {
-            c['children'] = self.generateBioTreeData(catchment);
+            c['children'] = self.generateInvertTreeData(catchment);
           };
           treeData.push(c);
         });
         return treeData;
       },
-      onBioTreeSelectedHandler (event, data) {
+      onInvertTreeSelectedHandler (event, data) {
         // On catchment tree clicked
         let i = [];
         let selected = '';
-        let selectedBio = [];
-        let _selectedBioStations = [];
+        let selectedInvert = [];
+        let _selectedInvertStations = [];
         let selectedBits = [];
-        let _unselectedBioStations = Object.assign([], this.selectedBioStations);
-        // console.log(_unselectedBioStations);
+        let _unselectedInvertStations = Object.assign([], this.selectedInvertStations);
+        // console.log(_unselectedInvertStations);
         for (i = 0; i < data.selected.length; i++) {
           selected = data.instance.get_node(data.selected[i]).text;
           selectedBits = selected.split(':');
           let type = data.instance.get_node(data.selected[i]).type;
           if (type === 'layer') {
-            selectedBio.push(selectedBits[0]);
+            selectedInvert.push(selectedBits[0]);
           } else if (type === 'station') {
-            _selectedBioStations.push(selectedBits[0]);
-            if (_unselectedBioStations.indexOf(selectedBits[0]) !== -1) _unselectedBioStations.splice(_unselectedBioStations.indexOf(selectedBits[0]), 1);
+            _selectedInvertStations.push(selectedBits[0]);
+            if (_unselectedInvertStations.indexOf(selectedBits[0]) !== -1) _unselectedInvertStations.splice(_unselectedInvertStations.indexOf(selectedBits[0]), 1);
           }
         }
-        this.mapDashboardRef.toggleSelectedBioStationsByStationNames(
-          _selectedBioStations,
-          _unselectedBioStations
+        this.mapDashboardRef.toggleSelectedInvertStationsByStationNames(
+          _selectedInvertStations,
+          _unselectedInvertStations
         );
-        this.selectedBioStations = _selectedBioStations;
-        stateStore.setState(stateStore.keys.selectedBio, this.selectedBioStations);
-        this.mapDashboardRef.selectBio(selectedBio);
-        this.loadSpecies(_selectedBioStations);
+        this.selectedInvertStations = _selectedInvertStations;
+        stateStore.setState(stateStore.keys.selectedInvert, this.selectedInvertStations);
+        this.mapDashboardRef.selectInvert(selectedInvert);
+        this.loadFamily(_selectedInvertStations);
       },
       createHydroTree (stationsData) {
         let self = this;

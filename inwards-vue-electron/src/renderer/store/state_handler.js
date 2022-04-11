@@ -8,7 +8,7 @@ const TIMESTAMP = 'timestamp';
 const SELECTED_STATIONS = 'selectedStations';
 const SELECTED_BIOSTATIONS = 'selectedBioStations';
 const SELECTED_HYDROSTATIONS = 'selectedHydroStations';
-
+const SELECTED_INVERTSTATIONS = 'selectedInvertStations';
 const stateStore = {
   debug: true,
   keys: {
@@ -20,6 +20,7 @@ const stateStore = {
     dateEnd: 'dateEnd',
     selectedStations: 'selectedStations',
     selectedBioStations: 'selectedBioStations',
+    selectedInvertStations: 'selectedInvertStations',
     selectedHydroStations: 'selectedHydroStations',
     loginStatus: 'loginStatus',
     databaseStatus: 'databaseStatus'
@@ -31,6 +32,7 @@ const stateStore = {
     SELECTED_STATIONS,
     SELECTED_BIOSTATIONS,
     SELECTED_HYDROSTATIONS,
+    SELECTED_INVERTSTATIONS,
     TIMESTAMP
   ],
   state: {},

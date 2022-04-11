@@ -7,6 +7,7 @@ import KnpDashboard from '@/components/KnpDashboard/Dashboard.vue'
 import WaterQuality from '@/components/WaterQuality/Dashboard.vue'
 import IucmaDashboard from '@/components/IucmaDashboard/Dashboard.vue'
 import FishDashboard from '@/components/FishDashboard/Dashboard.vue'
+import InvertDashboard from '@/components/InvertDashboard/Dashboard.vue'
 import EbaDashboard from '@/components/EbaDashboard/Dashboard.vue'
 import IucmaWqDashboard from '@/components/IucmaWaterQuality/Dashboard.vue'
 
@@ -50,6 +51,11 @@ export default new Router({
       path: '/fish-dashboard',
       name: 'fish-dashboard-page',
       component: FishDashboard
+    },
+    {
+      path: '/invert-dashboard',
+      name: 'invert-dashboard-page',
+      component: InvertDashboard
     },
     {
       path: '/eba-dashboard',

@@ -29,7 +29,7 @@ position: fixed; /* Sit on top of the page content */
 width: 250px; /* Full width (cover the whole page) */
 height: 10px; /* Full height (cover the whole page) */
 top: 5%;
-left: 80%;
+left: 2%;
 right: 0;
 bottom: 0;
 background-color: rgba(0,0,0,0.5); /* Black background with opacity */
@@ -466,13 +466,24 @@ grid-area: 1/1/2/2;
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+#content, html, body {
+  height: 98%;
+}
 .left-panel {
   margin: 0 auto;
-  overflow-y: hidden;
+  float: left;
+  width: 50%;
+  background: red;
+  height: 100%;
+  overflow: scroll;
 }
 .right-panel {
   margin: 0 auto;
-  overflow-y: hidden;
+  float: left;
+  width: 50%;
+  background: blue;
+  height: 100%;
+  overflow: scroll;
 }
 .grid {
   position: relative;

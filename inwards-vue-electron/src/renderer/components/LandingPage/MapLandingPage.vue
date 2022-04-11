@@ -40,6 +40,7 @@
                     <button id="userDash" class="btn inwards_button text-left" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="verifiedDash" class="btn inwards_button text-left" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="fishDash" class="btn inwards_button text-left" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="invertDash" class="btn inwards_button text-left" style="width: 100%" @click="goToInvertDashboard()" type="button">Invert Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="ebaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToEbaDashboard()" type="button">EBA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                   </div>
                 </div>
@@ -305,6 +306,15 @@
         }
         stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
         router.push({ path: 'fish-dashboard' });
+      },
+      goToInvertDashboard () {
+        let self = this;
+        let _selectedWMA = [];
+        for (let id in self.selectedFeatures) {
+          _selectedWMA.push(self.selectedFeatures[id].get('wma'));
+        }
+        stateStore.setState(stateStore.keys.selectedWMAs, _selectedWMA);
+        router.push({ path: 'invert-dashboard' });
       },
       goToEbaDashboard () {
         router.push({ path: 'eba-dashboard' });
