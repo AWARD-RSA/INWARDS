@@ -82,7 +82,7 @@
     "webpack-dev-server": "3.11.2"
   },
   "license": "MIT",
-  "main": "src/main.js",
+  "main": "./src/main.js",
   "private": true,
   "productName": "INWARDS",
   "name": "inwards",

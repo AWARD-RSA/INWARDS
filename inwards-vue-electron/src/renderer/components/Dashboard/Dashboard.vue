@@ -9,38 +9,46 @@
           <div class="card rounded-0">
             <div class="card-body">
               <div class="row" style="margin-top: 2px">
-                <div class="col-sm-6" style="padding-right: 5px;">
-                  <div class="form-group" style="margin-right: 0.5rem;">
-                    <input class="form-control rounded-0" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
+                  <hr>
+                <div class="col-md-6">
+                <div class="form-inline" style="padding-left: 2px;">
+                  <div class="form-group">
+                    <label class="datepicker" for="dateStart" style="padding-left: 0px;">Start Date:</label>
+                    <input class="form-control datepicker" id="dateStart" style="margin-left: 4px; width: 65%" placeholder='Start Date' onfocus="(this.type='date')">
                   </div>
                 </div>
-                <div class="col-sm-6" style="padding-left: 2px;">
-                  <div class="form-group" style="margin-right: 0.2rem;">
-                    <input class="form-control rounded-0" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
-                  </div>
                 </div>
-              </div>
-              <div class="row" style="margin-top: 5px;">
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox" style="margin-left: 5px">
-                      <input id="ts" type="checkbox" class="custom-control-input" checked="true">T/S
-                      <span class="custom-control-indicator"></span>
-                  </label>
+                <div class="col-md-6">
+                <div class="form-inline" style="padding-left: 0px;">
+                  <div class="form-group">
+                    <label class="datepicker" for="dateEnd" style="margin-right: 2px;">End Date:</label>
+                    <input class="form-control datepicker" id="dateEnd" style="margin-right: 2px; width: 65%;" placeholder='End Date' onfocus="(this.type='date')">
                   </div>
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox">
-                      <input id="bx" type="checkbox" class="custom-control-input" checked="true">Boxplot
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                  </div>
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox">
-                      <input id="fdc" type="checkbox" class="custom-control-input" checked="true">FDC
-                      <span class="custom-control-indicator"></span>
-                  </label>
                 </div>
               </div>
-                <div class="row">
+              </div>
+              <hr>
+                  <div class="row" style="margin-bottom: 0.1rem;">
+                  <div class="col-md-12">
+                    <div class="funkyradio">
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                      <input id="ts" type="checkbox" class="form-check-input" checked="true">
+                      <label for="ts" class="form-check-label" style="width: 11rem; font-size: 11px;">Timeseries</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                      <input id="bx" type="checkbox" class="form-check-input" checked="true">
+                      <label for="bx" class="form-check-label" style="width: 11rem; font-size: 11px;">Boxplot</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                      <input id="fdc" type="checkbox" class="form-check-input" checked="true">
+                      <label for="fdc" class="form-check-label" style="width: 11rem; font-size: 11px;">Flow Duration</label>
+                      </div>
+                </div>
+              </div>
+
+              </div>
+              <hr>
+                              <div class="row">
                 <div class="col-md-12">
                 <button class="btn inwards_button" @click="fetchUnverified()" type="button" style="width: 100%">
                   <i class="fa fa-line-chart"></i>Chart Unverified
@@ -49,7 +57,8 @@
               </div>
               </div>
               </div>
-            </div>
+              </div>
+              <hr>
           <MapDashboard ref="mapDashboard"/>
 
           </div>

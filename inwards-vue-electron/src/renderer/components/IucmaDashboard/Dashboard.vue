@@ -5,92 +5,99 @@
       <div class="row no-gutters" style="height: 100%;">
         <div class="col-md-4 no-float left-panel" style="background: #252526; margin-top: 5px; padding-bottom: 50px; margin-right: 0px;">
           <MapDashboard ref="mapDashboard"/>
-
-          <div class="v-space"></div>
+          <hr>
           <div class="card rounded-0">
+           <div class="card-header inwards_card rounded-0"><h6 style="color: white;"><i class="fa fa-tasks" style="padding-right: 10px;"></i>Select Chart Components</h6></div>
             <div class="card-body">
-              <div class="row">
-                <div class="col-sm-6" style="padding-right: 2px;">
+              <div class="row" style="margin-top: 0.1em;">
+                  <hr>
+                <div class="col-md-6">
+                <div class="form-inline" style="padding-left: 2px;">
                   <div class="form-group">
-                    <label for="dateStart" style="padding-left: 8px;">Start Date:</label>
-                    <input type="date" class="form-control" id="dateStart" style="margin-left: 4px;">
+                    <label class="datepicker" for="dateStart" style="padding-left: 0px;">Start Date:</label>
+                    <input type="date" class="form-control datepicker" id="dateStart" style="margin-left: 4px; width: 65%">
                   </div>
                 </div>
-                <div class="col-sm-6" style="padding-left: 2px;">
+                </div>
+                <div class="col-md-6">
+                <div class="form-inline" style="padding-left: 0px;">
                   <div class="form-group">
-                    <label for="dateEnd" style="padding-left: 8px;">End Date:</label>
-                    <input type="date" class="form-control" id="dateEnd" style="margin-right: 10px;" @onload="setDates()">
+                    <label class="datepicker" for="dateEnd" style="padding-right: 4px;">End Date:</label>
+                    <input type="date" class="form-control datepicker" id="dateEnd" style="margin-right: 2px; width: 65%;" @onload="setDates()">
                   </div>
+                </div>
                 </div>
               </div>
-   <label><b>Select Chart Components:</b></label> 
+              <hr>
+                  <div class="row" style="margin-bottom: 0.1rem;">
+                  <div class="col-md-12">
+                    <div class="funkyradio">
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="60th" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="60th" class="form-check-label">60th</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="70th" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="70th" class="form-check-label">70th</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="80th" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="80th" class="form-check-label">80th</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="90th" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="90th" class="form-check-label">90th</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="99th" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="99th" class="form-check-label">99th</label>
+                      </div>
 
-  <div class="row"> 
-  <div class="col-md-12">
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="60th" type="checkbox"  checked="checked" class="form-check-input"> 
-        <label for="60th" class="form-check-label">60th</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="70th" type="checkbox" class="form-check-input"> 
-        <label for="70th" class="form-check-label">70th</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="80th" type="checkbox" class="form-check-input"> 
-        <label for="80th" class="form-check-label">80th</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="90th" type="checkbox" class="form-check-input"> 
-        <label for="90th" class="form-check-label">90th</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="99th" type="checkbox" class="form-check-input"> 
-        <label for="99th" class="form-check-label">99th</label>
-      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="critical" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="critical" class="form-check-label">Critical</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="veryHigh" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="veryHigh" class="form-check-label">Very High Worry</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="high" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="high" class="form-check-label">High Worry</label>
+                      </div>
 
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="critical" type="checkbox" class="form-check-input"> 
-        <label for="critical" class="form-check-label">Critical</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="veryHigh" type="checkbox" class="form-check-input"> 
-        <label for="veryHigh" class="form-check-label">Very High Worry</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components" id="high" type="checkbox" class="form-check-input"> 
-        <label for="high" class="form-check-label">High Worry</label>
-      </div>
-
-      <div class="form-check  form-check-inline">
-        <input name="chart_components_2" id="inform" type="checkbox" class="form-check-input"> 
-        <label for="inform" class="form-check-label">Inform</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components_2" id="medium" type="checkbox" class="form-check-input"> 
-        <label for="medium" class="form-check-label">Medium Worry</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components_2" id="low" type="checkbox" class="form-check-input"> 
-        <label for="low" class="form-check-label">Low Worry</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components_3" id="lastYear" type="checkbox" class="form-check-input"> 
-        <label for="lastYear" class="form-check-label">Last Year Discharge</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components_3" id="verifiedDischarge" type="checkbox" checked="checked" class="form-check-input"> 
-        <label for="verifiedDischarge" class="form-check-label">Verified Discharge</label>
-    </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components_3" id="iima" type="checkbox" class="form-check-input"> 
-        <label for="iima" class="form-check-label">IIMA</label>
-    </div>
-      <div class="form-check form-check-inline">
-        <input name="chart_components_3" id="crimib" type="checkbox" class="form-check-input"> 
-        <label for="crimib" class="form-check-label">CRMIB</label>
-      </div>
-  </div>
-</div>
+                      <div class="form-check  form-check-inline funkyradio-primary">
+                        <input name="chart_components_2" id="inform" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="inform" class="form-check-label">Inform</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components_2" id="medium" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="medium" class="form-check-label">Medium Worry</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components_2" id="low" type="checkbox" class="form-check-input"> 
+                        <label for="low" class="form-check-label">Low Worry</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components_3" id="lastYear" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="lastYear" class="form-check-label">Last Year</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components_3" id="verifiedDischarge" type="checkbox" checked="checked" class="form-check-input form-check-input"> 
+                        <label for="verifiedDischarge" class="form-check-label">Verified</label>
+                    </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components_3" id="iima" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="iima" class="form-check-label">IIMA</label>
+                    </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components_3" id="crimib" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="crimib" class="form-check-label">CRMIB</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
                 <div class="row">
                 <div class="col-md-12">
                 <button class="btn inwards_button" type="button" style="width: 100%" @click="updateCharts()">
@@ -100,13 +107,14 @@
               </div>
             </div>
           </div>
-          <div class="v-space"></div>
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px;">
+          <hr>
+          <div class="card rounded-0" style="margin-top: 0px; margin-bottom: 5px;">
             <div class="card-body">
               <ComplianceTable ref="complianceTable"/>
             </div>
           </div>
         </div>
+        <hr>
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
 
           <div class="row no-gutters">

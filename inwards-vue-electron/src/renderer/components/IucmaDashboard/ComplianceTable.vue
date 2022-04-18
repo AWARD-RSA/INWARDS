@@ -1,7 +1,7 @@
 <template>
 		<table class="table">
 			<thead class="inwards_card">
-				<tr style="color: white; font-size: 0.7rem;">
+				<tr style="color: white; font-size: 0.7rem; font-weight:normal;">
 					<th> Station</th>
 					<th> 60th (%)</th>
           <th> 70th (%)</th>
@@ -18,7 +18,7 @@
                     <td>{{ station.eigTh }}</td>
                     <td>{{ station.ninTh }}</td>
                     <td>{{ station.nininTh }}</td>
-                    <td>{{ station.No_Readings }}</td>              
+                    <td>{{ station.No_Readings }}</td>
 			</tr>
 		</table>
 </template>
