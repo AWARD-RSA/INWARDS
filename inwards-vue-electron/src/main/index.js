@@ -41,39 +41,8 @@ menu.append(new MenuItem({
       type: 'separator'
     },
     {
-      label: 'Verified Discharge',
+      label: 'uMhlathuze Dashboard',
       click: () => realTime('home')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Kruger National Park (KNP) TPC Dashboard',
-      click: () => realTime('knpDash')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'IUCMA Operational Dashboard',
-      click: () => realTime('iucmaDash')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Water Quality Dashboard',
-      click: () => realTime('wqDash')
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Fish Dashboard',
-      click: () => realTime('fishDash')
-    },
-    {
-      type: 'separator'
     }
   ]
 }));
@@ -128,7 +97,7 @@ function createWindow() {
   /**
    * Initial window options
    */
-  mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
     backgroundColor: '#fff',
     width: 960,
     height: 540,

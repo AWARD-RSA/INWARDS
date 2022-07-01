@@ -10,6 +10,7 @@ import FishDashboard from '@/components/FishDashboard/Dashboard.vue'
 import InvertDashboard from '@/components/InvertDashboard/Dashboard.vue'
 import EbaDashboard from '@/components/EbaDashboard/Dashboard.vue'
 import IucmaWqDashboard from '@/components/IucmaWaterQuality/Dashboard.vue'
+import UmhlathuzeDashboard from '@/components/UmhlathuzeDashboard/Dashboard.vue'
 
 Vue.use(Router)
 
@@ -66,6 +67,11 @@ export default new Router({
       path: '/iucma-wq-dashboard',
       name: 'iucma-wq-dashboard-page',
       component: IucmaWqDashboard
+    },
+    {
+      path: '/umhlathuze-dashboard',
+      name: 'umhlathuze-dashboard-page',
+      component: UmhlathuzeDashboard
     },
     {
       path: '*',

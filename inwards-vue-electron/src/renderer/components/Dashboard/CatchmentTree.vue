@@ -14,16 +14,12 @@
               </div>
           </div>
         </div>
-         <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 0px; width:100%">
-          <div class="card-body" >
-        <div style="margin-left: 0px;" class="input-group mb-2 mr-sm-2">
+        <div style="float:right; margin-left: 4px;" class="input-group mb-2 mr-sm-2">
           <div class="input-group-prepend" style="font-size:11pt; height:30px;" >
-              <div class="input-group-text rounded-0 inwards_search" style="margin-right:0px;"><i class="fa fa-search" aria-hidden="true" ></i></div>
+              <div class="input-group-text rounded-0 inwards_search"><i class="fa fa-search" aria-hidden="true" ></i></div>
             </div>
-          <input type="text" class="form-control rounded-0" id="catchmentSearchInput" placeholder="Search" style="margin-right:0px;11pt;height:30px;width:100%;">
+          <input type="text" class="form-control rounded-0" id="catchmentSearchInput" placeholder="Search" style="margin-right: 0.5rem; font-size:11pt;height:30px;width:100%;">
         </div>
-        </div>
-      </div>
       </div>
   </div>
 </template>
@@ -79,8 +75,7 @@
           }
         }
         this.loading = false;
-        let iconTree = require('../../assets/layer.png');
-        let iconStation = require('../../assets/station.png');
+        let iconTree = require('@/assets/iconfinder_layer_37228.png');
         setTimeout(function () {
           let $jsTreeDiv = $('#jstree-div');
           let $searchInputDiv = $('#catchmentSearchInput');
@@ -88,17 +83,13 @@
             'core': {
               'data': jsonData
             },
-            'search': {
-              'show_only_matches': true,
-              'show_only_matches_children': true
-            },
             'plugins': jsTreePlugins,
             'types': {
               'layer': {
                 'icon': iconTree
               },
               'station': {
-                'icon': iconStation
+                'icon': iconTree
               }
             }
           });

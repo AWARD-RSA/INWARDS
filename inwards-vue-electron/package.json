@@ -11,7 +11,7 @@
     "material-design-icons": "^3.0.1",
     "muuri": "^0.8.0",
     "nedb": "^1.8.0",
-    "plotly.js-dist": "^1.52.2",
+    "plotly.js-dist": "^2.12.1",
     "popper.js": "^1.16.0",
     "promise.prototype.finally": "^3.1.2",
     "save-svg-as-png": "^1.4.17",
@@ -82,8 +82,8 @@
     "webpack-dev-server": "3.11.2"
   },
   "license": "MIT",
-  "main": "./src/main.js",
   "private": true,
+  "main": "./dist/main.js",
   "productName": "INWARDS",
   "name": "inwards",
   "author": "Association for Water and Rural Development <hugo@award.org.za>",

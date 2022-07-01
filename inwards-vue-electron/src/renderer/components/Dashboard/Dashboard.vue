@@ -3,52 +3,44 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px; overflow: hidden;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px;">
           <CatchmentTree ref="catchmentTree"/>
           <div>
           <div class="card rounded-0">
             <div class="card-body">
               <div class="row" style="margin-top: 2px">
-                  <hr>
-                <div class="col-md-6">
-                <div class="form-inline" style="padding-left: 2px;">
-                  <div class="form-group">
-                    <label class="datepicker" for="dateStart" style="padding-left: 0px;">Start Date:</label>
-                    <input class="form-control datepicker" id="dateStart" style="margin-left: 4px; width: 65%" placeholder='Start Date' onfocus="(this.type='date')">
+                <div class="col-sm-6" style="padding-right: 5px;">
+                  <div class="form-group" style="margin-right: 0.5rem;">
+                    <input class="form-control rounded-0" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
                   </div>
                 </div>
-                </div>
-                <div class="col-md-6">
-                <div class="form-inline" style="padding-left: 0px;">
-                  <div class="form-group">
-                    <label class="datepicker" for="dateEnd" style="margin-right: 2px;">End Date:</label>
-                    <input class="form-control datepicker" id="dateEnd" style="margin-right: 2px; width: 65%;" placeholder='End Date' onfocus="(this.type='date')">
+                <div class="col-sm-6" style="padding-left: 2px;">
+                  <div class="form-group" style="margin-right: 0.2rem;">
+                    <input class="form-control rounded-0" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
                   </div>
                 </div>
               </div>
-              </div>
-              <hr>
-                  <div class="row" style="margin-bottom: 0.1rem;">
-                  <div class="col-md-12">
-                    <div class="funkyradio">
-                      <div class="form-check form-check-inline funkyradio-primary" >
-                      <input id="ts" type="checkbox" class="form-check-input" checked="true">
-                      <label for="ts" class="form-check-label" style="width: 11rem; font-size: 11px;">Timeseries</label>
-                      </div>
-                      <div class="form-check form-check-inline funkyradio-primary" >
-                      <input id="bx" type="checkbox" class="form-check-input" checked="true">
-                      <label for="bx" class="form-check-label" style="width: 11rem; font-size: 11px;">Boxplot</label>
-                      </div>
-                      <div class="form-check form-check-inline funkyradio-primary" >
-                      <input id="fdc" type="checkbox" class="form-check-input" checked="true">
-                      <label for="fdc" class="form-check-label" style="width: 11rem; font-size: 11px;">Flow Duration</label>
-                      </div>
+              <div class="row" style="margin-top: 5px;">
+                  <div class="col-md-4">
+                     <label class="custom-control custom-checkbox" style="margin-left: 5px">
+                      <input id="ts" type="checkbox" class="custom-control-input" checked="true">T/S
+                      <span class="custom-control-indicator"></span>
+                  </label>
+                  </div>
+                  <div class="col-md-4">
+                     <label class="custom-control custom-checkbox">
+                      <input id="bx" type="checkbox" class="custom-control-input" checked="true">Boxplot
+                      <span class="custom-control-indicator"></span>
+                  </label>
+                  </div>
+                  <div class="col-md-4">
+                     <label class="custom-control custom-checkbox">
+                      <input id="fdc" type="checkbox" class="custom-control-input" checked="true">FDC
+                      <span class="custom-control-indicator"></span>
+                  </label>
                 </div>
               </div>
-
-              </div>
-              <hr>
-                              <div class="row">
+                <div class="row">
                 <div class="col-md-12">
                 <button class="btn inwards_button" @click="fetchUnverified()" type="button" style="width: 100%">
                   <i class="fa fa-line-chart"></i>Chart Unverified
@@ -57,12 +49,11 @@
               </div>
               </div>
               </div>
-              </div>
-              <hr>
+            </div>
           <MapDashboard ref="mapDashboard"/>
 
           </div>
-       <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px; overflow: hidden;">
+       <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
 
           <div class="row no-gutters">
             <div class="col-md-6">
@@ -88,7 +79,7 @@
   .v-space {
     height: 10px;
   }
-  .jstree-container { 
+  .jstree-container {
     max-height: 200px;
     height: 200px;
     overflow-y: auto;
@@ -96,8 +87,8 @@
 </style>
 <script>
   import axios from 'axios';
-  import Header from '../../components/Header';
-  import NavButtons from '../../components/NavButtons';
+  import Header from '@/components/Header';
+  import NavButtons from '@/components/NavButtons';
   import MapDashboard from './MapDashboard';
   import CatchmentTree from './CatchmentTree';
   import UnverifiedChart from './UnverifiedChart';
@@ -110,11 +101,11 @@
   import path from 'path';
   require('promise.prototype.finally').shim();
   const { dialog, app } = require('electron').remote;
-
+  
   export default {
     data () {
       return {
-        stationsApi: 'https://inwards.award.org.za/app_json/stations.php',
+        stationsApi: 'https://uwasp.award.org.za/app_json/stations.php',
         stationsCoordinates: {}, // To stored all stations with their coordinates
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,
@@ -262,6 +253,7 @@
         wmaNames = wmaNames.sort();
         for (let i = 0; i < wmaNames.length; i++) {
           wmaNames[i] = `'${wmaNames[i]}'`;
+          console.log(wmaNames[i]);
         }
         let url = `${self.stationsApi}?wma=${wmaNames.join()}`;
         console.log(url);
