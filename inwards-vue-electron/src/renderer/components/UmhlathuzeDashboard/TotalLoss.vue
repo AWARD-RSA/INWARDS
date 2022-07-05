@@ -10,7 +10,7 @@ import { Console } from 'console';
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Total Estimated Loss (%)',
+        chartTitle: 'Estimated Total Balance (MCM)',
         chartId: 'unverified-discharge-boxplot',
         baseUrl: 'https://uwasp.award.org.za/app_json/uwasp_dash/total_loss.php'
       };
@@ -28,8 +28,9 @@ import { Console } from 'console';
           let boxData = [];
           setTimeout(() => {
             let layout = {
-              autosize: true,            
-              margin: { t: 25, r: 25, l: 25, b: 25 }
+                width: 350,
+                height: 200,
+                margin: { t: 25, b: 25, l: 25, r: 25 },
             };
             for (let variable in jsonData) {
               console.log(variable);

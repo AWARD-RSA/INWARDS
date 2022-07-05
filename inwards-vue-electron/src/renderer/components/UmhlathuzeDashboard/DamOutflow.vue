@@ -11,9 +11,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Observed Discharge (m3)',
-        chartId: 'stewards-observed-timeseries',
-        baseUrl: 'https://uwasp.award.org.za/app_json/uwasp_dash/stewards_observed.php'
+        chartTitle: 'Dam Outflow',
+        chartId: 'outflow-timeseries',
+        baseUrl: 'https://uwasp.award.org.za/app_json/uwasp_dash/dam_outflow.php'
       };
     },
     methods: {
@@ -38,9 +38,9 @@
                 margin: { t: 25, b: 25, l: 25, r: 25 },
               xaxis: { 
                 zeroline: false, 
-                visible: false, 
+                visible: false,                 
                 tickmode: "linear",
-                tick0: '2022-06-01',
+                tick0: '1999-12-15',
                 dtick: 30 * 24 * 60 * 60 * 1000
               }
             };

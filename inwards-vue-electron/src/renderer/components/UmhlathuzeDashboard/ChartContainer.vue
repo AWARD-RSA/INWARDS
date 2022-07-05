@@ -18,7 +18,6 @@
 <style>
   .chart-container2 {
       max-height: 200px;
-      height: 200px;
       width: 100%;
       overflow: hidden;
       display: -ms-flexbox;

@@ -34,6 +34,10 @@ menu.append(new MenuItem({
   label: 'Dashboards',
   submenu: [
     {
+      label: 'WMA Selection',
+      click: () => realTime('home')
+    },
+    {
       label: 'Real-time Discharge',
       click: () => realTime('unverified')
     },
@@ -42,13 +46,13 @@ menu.append(new MenuItem({
     },
     {
       label: 'uMhlathuze Dashboard',
-      click: () => realTime('home')
+      click: () => realTime('uwaspDash')
+    },
+    {
+      label: 'User Dashboard',
+      click: () => realTime('userDash')
     }
   ]
-}));
-menu.append(new MenuItem({
-  label: 'Your Dashboard',
-  click: () => realTime('userDash')
 }));
 menu.append(new MenuItem({
   label: 'Options',
