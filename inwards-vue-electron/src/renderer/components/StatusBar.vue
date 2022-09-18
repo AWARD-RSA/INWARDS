@@ -20,7 +20,7 @@
 <style>
   .status-bar {
     position: fixed;
-    z-index: 999;
+    z-index: 999; 
     bottom: 0;
     height: 20px;
     background-color: #3C3C3C;

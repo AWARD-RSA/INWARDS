@@ -15,7 +15,7 @@ import UmhlathuzeDashboard from '@/components/UmhlathuzeDashboard/Dashboard.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: process.env.IS_ELECTRON ? 'hash' : 'history',
   base: process.env.BASE_URL,
   routes: [
     {

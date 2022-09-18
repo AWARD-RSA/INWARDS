@@ -32,6 +32,21 @@
             </div>
           </div>
           </div>
+				<hr>
+          <div class="row" style="margin-bottom: 0.1rem;">
+          <div class="col-md-12">
+            <div class="funkyradio">
+              <div class="form-check form-check-inline funkyradio-primary" >
+                <input name="chart_components" id="60th" type="checkbox"  checked="checked" class="form-check-input"> 
+                <label for="verified" class="form-check-label">Verified Data</label>
+              </div>
+              <div class="form-check form-check-inline funkyradio-primary">
+                <input name="chart_components" id="Real-time" type="checkbox" class="form-check-input form-check-input"> 
+                <label for="realtime" class="form-check-label">Real-time</label>
+              </div>
+            </div>
+          </div>
+        </div>
           <div class="col-md-12">
              <button class="btn uwasp_button" type="button" style="width: 100%" @click="updateCharts()">
             <i class="fa fa-line-chart"></i>Update Dashboard
@@ -271,7 +286,6 @@
     <NavButtons/>
       </div>
     </div>
-  </div>
   </template>
 <script>
   import axios from 'axios';
@@ -330,8 +344,8 @@
       };
     },
     mounted () {
-      document.getElementById('dateStart').setAttribute('value', '2020-10-01');
-      document.getElementById('dateEnd').setAttribute('value', '2022-09-30');
+      document.getElementById('dateStart').setAttribute('value', '2018-10-01');
+      document.getElementById('dateEnd').setAttribute('value', '2018-09-30');
       let self = this;
       let startDate = new Date();
       startDate = '2019-10-01';
@@ -352,6 +366,7 @@
       this.$refs.riverviewlossComponent.displayChart('loss-riverview', this.formatDate(dateStart), this.formatDate(dateEnd));
       this.$refs.riverviewobservedComponent.displayChart('observed-riverview', this.formatDate(dateStart), this.formatDate(dateEnd));
       this.$refs.riverviewexpectedComponent.displayChart('expected-riverview', this.formatDate(dateStart), this.formatDate(dateEnd));
+      
 
     },
     methods: {

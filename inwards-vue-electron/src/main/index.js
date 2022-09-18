@@ -126,7 +126,7 @@ function createWindow() {
   // load root file/url
   Menu.setApplicationMenu(menu);
   if (isDev) {
-    mainWindow.loadURL('http://localhost:9080')
+    mainWindow.loadURL('http://localhost:9080/index.html')
     attachTitlebarToWindow(mainWindow);
     mainWindow.on('closed', () => {
       mainWindow = null;
@@ -138,6 +138,7 @@ function createWindow() {
       .join(__dirname, '/static')
       .replace(/\\/g, '\\\\')
   }
+  mainWindow.webContents.on('did-fail-load', () => mainWindow.loadURL('http://localhost:9080/index.html'));
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     mainWindow.focus()
@@ -145,6 +146,7 @@ function createWindow() {
   mainWindow.on('closed', () => {
     console.log('\nApplication exiting...')
   })
+  mainWindow.on("closed", () => (mainWindow = null));
   mainWindow.maximize();
 }
 

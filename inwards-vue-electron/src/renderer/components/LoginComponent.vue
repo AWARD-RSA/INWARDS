@@ -6,21 +6,81 @@
           <img class="modal-title" src="@/assets/logos.png" style="width: 100%;">
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <h5 class="modal-title"><b>Please Verify Access</b></h5>
-            <label for="emailAddress">Email address</label>
-            <input type="email" class="form-control rounded-0" id="emailAddress" v-model="emailAddress" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </div>
-          <div class="form-group">
-            <label for="uniqueCode">Unique Code</label>
-            <input type="text" class="form-control rounded-0" id="uniqueCode" placeholder="Unique Code" v-model="uniqueCode">
-          </div>
-          <button id="verifyCode" type="submit" class="btn rounded-0 inwards_button" v-on:click="submit">Submit</button>
-          <button type="submit" class="btn rounded-0 inwards_button" v-on:click="requestAccess">Request Access</button>
+          <div class="col-md-12">
+                  <nav>
+                  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#login-tab" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Login</a>
+                      <a class="nav-item nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="false">Register</a>
+                    </div>
+                    </nav>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent-login">
+                        <div class="tab-pane fade show active" id="login-tab" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                      <div class="form-group">
+                                      <label for="emailAddress">Email address</label>
+                                        <input type="email" class="form-control rounded-0" id="emailAddress" v-model="emailAddress" aria-describedby="emailHelp">
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="uniqueCode">Unique Code</label>
+                                          <input type="text" class="form-control rounded-0" id="uniqueCode" v-model="uniqueCode">
+                                        </div>                                   
+                                        <button id="verifyCode" type="submit" class="btn rounded-0 inwards_button" v-on:click="submit">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row register-form">
+                                <div class="col-md-12">
+                                    <form method="post">
+                                      <div class="form-group">
+                                            <div class="form-group">
+                                              <label for="firstName">First Name</label>
+                                              <input type="text" class="form-control rounded-0" id="firstName" v-model="firstName">
+                                            </div>
+                                              <div class="form-group">
+                                              <label for="lastName">Last Name</label>
+                                              <input type="text" class="form-control rounded-0" id="lastName" v-model="lastName">
+                                              </div>
+                                              <div class="form-group">
+                                            <label for="regEmailAddress">Email address</label>
+                                            <input type="email" class="form-control rounded-0" id="regEmailAddress" aria-describedby="emailHelp" v-model="regEmailAddress">
+                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="sectorSelect">Sector</label>
+                                            <select class="form-control rounded-0" id="sectorSelect" v-model="sectorSelect">
+                                              <option>Industry</option>
+                                              <option>Agriculture</option>
+                                              <option>Government</option>
+                                              <option>Civil society</option>
+                                              <option>Other</option>
+                                            </select>
+                                          </div>
+                                          <div class="form-group">         
+                                            <label for="userDesignation">Designation</label>
+                                            <input type="text" class="form-control rounded-0" id="userDesignation" v-model="userDesignation">              
+                                            </div>
+                                            <div class="form-group">  
+                                            <label for="useReason">Reason for use of data/accessing of information</label>
+                                            <textarea rows="5" class="form-control rounded-0" id="useReason" v-model="useReason">
+                                          </textarea>
+                                          </div>
+                                          </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn rounded-0 inwards_button" v-on:click="requestAccess">Request Access</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+           
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -33,7 +93,13 @@ export default {
     return {
       isLoggedIn: false,
       emailAddress: '',
-      uniqueCode: ''
+      uniqueCode: '',
+      firstName: '',
+      lastName: '',
+      sectorSelect: '',
+      useReason: '',
+      userDesignation: '',
+      regEmailAddress: ''
     };
   },
   mounted () {
@@ -72,7 +138,31 @@ export default {
       });
     },
     requestAccess (e) {
-      shell.openExternal('mailto:hugo@award.org.za?subject=Request Access to InWARDS Dashboard&body=');
+      let self = this;
+      let button = $(e.target);
+      let loginModal = $('#login-modal');
+      button.prop('disabled', true);
+      button.html(`Submitting...`);
+      console.log('https://uwasp.award.org.za/app_json/user_registration.php?email=' + this.regEmailAddress + '&first_name=' + this.firstName + '&last_name=' + this.lastName + '&sector=' + this.sectorSelect + '&designation=' + this.userDesignation + '&reason=' + this.useReason);
+      $.get('https://uwasp.award.org.za/app_json/user_registration.php?email=' + this.regEmailAddress + '&first_name=' + this.firstName + '&last_name=' + this.lastName + '&sector=' + this.sectorSelect + '&designation=' + this.userDesignation + '&reason=' + this.useReason, function (data) {
+        if (data === 'true') {
+          loginModal.modal('hide');
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Successfully Submitted Request!',
+            buttons: ['OK']
+          });
+          loginModal.modal('show');
+        } else {
+          button.prop('disabled', false);
+          button.html(`Submit`);
+          dialog.showMessageBox(null, {
+            type: 'error',
+            message: 'Failed to Submit Request!',
+            buttons: ['OK']
+          });
+        }
+      });
     },
     submit (e) {
       let self = this;
@@ -101,13 +191,7 @@ export default {
             }, 200);
           });
         } else {
-          button.prop('disabled', false);
-          button.html(`Submit`);
-          dialog.showMessageBox(null, {
-            type: 'error',
-            message: 'Failed to Verifiy!',
-            buttons: ['OK']
-          });
+
         }
       });
     }
