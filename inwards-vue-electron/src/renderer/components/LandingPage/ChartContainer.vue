@@ -33,7 +33,6 @@
 <script>
 import stateStore from '../../store/state_handler';
 import { RingLoader } from 'vue-spinner/dist/vue-spinner.min.js';
-const { getCurrentWindow } = require('electron').remote;
 const { dialog } = require('electron').remote;
 export default {
   components: {
@@ -77,42 +76,22 @@ export default {
     });
   },
   methods: {
-    async removed (itemId) {
+    removed () {
       // Called when item has been removed from store
-      itemId = itemId.replace('chartComponent-', '');
-      console.log(itemId);
-      let items = this.grid.getItems();
-      for (let i = 0; i < items.length; i++) {
-        let key = items[i].getElement().children[0].dataset.key;
-        this.currentCharts[key]['order'] = i;
-      }
-      let currentChart = this.currentCharts[itemId];
-      this.grid.remove(currentChart['order'], {removeElements: true});
-      delete this.currentCharts[itemId];
-      await stateStore.setState(stateStore.keys.selectedCharts, this.currentCharts);
-      getCurrentWindow().reload();
     },
     removeFromStore () {
-    console.log("before message box");
-    dialog.showMessageBox(
-      {
-        message: "Would you like to remove " + this.chartId + " from your dashboard?",
-        buttons: ["Yes", "No"],
-        defaultId: 0, // bound to buttons array
-        cancelId: 1 // bound to buttons array
-      })
-      .then(result => {
-        if (result.response === 0) {
-          // bound to buttons array
-          console.log("Removing chart from user dashboard!");
+      const options = {
+        type: 'question',
+        buttons: ['Yes, please', 'No, thanks'],
+        defaultId: 2,
+        title: 'Remove a chart',
+        message: 'Are you sure you want to delete this chart from your dashboard?'
+      };
+      dialog.showMessageBox(null, options, (response) => {
+        if (response === 0) {
           this.removed(this.chartId);
-        } else if (result.response === 1) {
-          // bound to buttons array
-          console.log("Cancel Removal Process");
         }
-      }
-    );
-    console.log("after message box");
+      });
     },
     addToStore () {
       let self = this;

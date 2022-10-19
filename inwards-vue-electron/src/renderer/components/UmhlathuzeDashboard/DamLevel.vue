@@ -10,7 +10,7 @@ import { Console } from 'console';
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Goedertrou Dam Level',
+        chartTitle: 'Goedertrou Dam Level (W1R001FW)',
         chartId: 'goedertrou-dam-level',
         baseUrl: 'https://uwasp.award.org.za/app_json/uwasp_dash/dam_level.php'
       };

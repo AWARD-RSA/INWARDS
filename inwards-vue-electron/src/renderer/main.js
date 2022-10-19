@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import axios from 'axios';
-import vSelect from 'vue-select';
 import $ from 'jquery';
 import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -8,11 +7,8 @@ import 'bootstrap/js/dist/util.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'jquery/dist/jquery.min.js';
 import './static/css/font-awesome.min.css';
-import 'vue-select/dist/vue-select.css';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.css';
 import 'material-design-icons/iconfont/material-icons.css';
-import 'vue-multiselect/dist/vue-multiselect.min.css';
-import Multiselect from 'vue-multiselect';
 import './static/css/custom.css';
 import '../utilities/helpers.js';
 import { Titlebar, Color } from 'custom-electron-titlebar';
@@ -31,8 +27,6 @@ Vue.prototype.$db = db;
 Vue.prototype.$ = $;
 Vue.prototype.$bus = new Vue();
 Vue.prototype.isLoggedIn = false;
-Vue.component('v-select', vSelect);
-Vue.component('multiselect', Multiselect);
 // tslint:disable-next-line: no-unused-expression
 /* eslint-disable no-new */
 

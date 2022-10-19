@@ -187,7 +187,7 @@ export default {
           });
           stateStore.updateFromServer(() => {
             setTimeout(function () {
-              window.location.reload();
+              console.log("logged in");
             }, 200);
           });
         } else {

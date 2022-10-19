@@ -46,9 +46,6 @@
               boxData.push(jsonData[variable]);
             }
             document.getElementById(self.chartDivId).innerHTML = '';
-            let stations = this.urlParameters.stations;
-            let chartTitle = $(this.$el).find('.chart-title');
-            chartTitle.html('Gauging station:' + stations[0]);
             Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: false});
           }, 1000);
         }).catch(error => {

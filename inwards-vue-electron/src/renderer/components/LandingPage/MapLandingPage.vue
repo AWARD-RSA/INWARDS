@@ -19,11 +19,11 @@
                 <div class="row">
                 <div class="col-md-12">
                   <div class="btn-group-vertical" style="width:100%">
-                    <button id="home" class="btn inwards_button" style="width: 100%; display:none; float:left;" @click="goHome()" type="button">Home<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="unverified" class="btn inwards_button" style="width: 100%" @click="saveSelection()" type="button"><i class="fa fa-line-chart" aria-hidden="true"></i>Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="userDash" class="btn inwards_button" style="width: 100%" @click="goToUserDefinedDashboard()" type="button"><i class="fa fa-user" aria-hidden="true"></i>User Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-                    <button id="uwaspDash" class="btn inwards_button" style="width: 100%" @click="goToUwaspDashboard()" type="button"><i class="fa fa-bar-chart" aria-hidden="true"></i>UWASP Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
-
+                    <button id="home" class="btn inwards_button btn-labeled text-left" style="width: 100%; display:none; float:left;" @click="goHome()" type="button"><span class="btn-label"></span>Home<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="saveSelection()" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="uwaspDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToDamDashboard()" type="button"><span class="btn-label"><i class="fa fa-pie-chart" aria-hidden="true"></i></span>Dam Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="uwaspDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToUwaspDashboard()" type="button"><span class="btn-label"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>UWASP Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+                    <button id="userDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToUserDefinedDashboard()" type="button"><span class="btn-label"><i class="fa fa-user" aria-hidden="true"></i></span>User Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
                   </div>
                 </div>
                 </div>
@@ -61,6 +61,8 @@
       </div>
       <div class="reset-application-data-container" style="position: absolute; bottom: 0; margin-bottom: 50px; margin-left: 20px;">
         <div id='reset' style="display:none;" class="btn inwards_button" v-on:click="resetApplicationData">Reset application data</div>
+        <div id='adminDash' style="display:none;" class="btn inwards_button" v-on:click="goAdminDash">Admin Dashboard</div>
+
       </div>
     </div>
 </template>
@@ -88,6 +90,7 @@
       };
     },
     mounted () {
+
       let self = this;
       // Create a map
       let map = new Map({
@@ -234,13 +237,19 @@
        goToUwaspDashboard () {
         router.push({ path: 'umhlathuze-dashboard' });
       },
+      goToDamDashboard () {
+        router.push({ path: 'dam-dashboard' });
+      },
       goHome () {
         router.push({ path: '/' });
+      },
+      goAdminDash () {
+        router.push({ path: 'admin-dashboard' });
       },
       resetApplicationData (e) {
         stateStore.clearAll();
         setTimeout(() => {
-          window.location.reload();
+          window.location.reload(true);
         }, 500);
       }
     },

@@ -16,3 +16,6 @@ tmp/
 dist
 coverage
 __coverage__
+
+#Electron-builder output
+/dist_electron

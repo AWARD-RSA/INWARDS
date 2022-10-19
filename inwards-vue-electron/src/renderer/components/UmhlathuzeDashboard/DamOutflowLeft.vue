@@ -11,7 +11,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Outflow Left Canal (MCM)',
+        chartTitle: 'Outflow Left Canal (MCM) (W1H030H3T)',
         chartId: 'outflow-left-timeseries',
         baseUrl: 'https://uwasp.award.org.za/app_json/uwasp_dash/dam_outflow_left.php'
       };
@@ -49,9 +49,6 @@
               boxData.push(jsonData[variable]);
             }
             document.getElementById(self.chartDivId).innerHTML = '';
-            let stations = this.urlParameters.stations;
-            let chartTitle = $(this.$el).find('.chart-title');
-            chartTitle.html('Gauging station:' + stations[0]);
             Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: false});
           }, 1000);
         }).catch(error => {

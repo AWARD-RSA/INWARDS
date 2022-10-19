@@ -10,58 +10,27 @@
         
         <div style="padding: 10px; padding-right: 10px; background: none; border:1px solid white;  border:1px solid white; box-shadow: 1px 1px 5px white inset;">
         <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><div class="numberCircle">1</div></div>
-        <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Select Date</h5></div>
-         <div class="row no-gutters"><div class="card-header inwards_card">Select Analysis Period</div></div>
+        <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Input Discharge</h5></div>
         <div class="row no-gutters">
            <div class="card rounded-0" style="margin-top: 1px; margin-bottom: 1px; width:100%;">
-            <div class="card-body" style="width:100%">
+            <div class="card-body" style="width:100%;overflow:auto; max-height:250px;">
           <div class="row no-gutters">  
-          <div class="col-md-6" style="padding: 10px; background: none;">
-          <div class="form-inline">
-            <div class="form-group">
-              <label class="datepicker" for="dateStart" style="padding-left: 4px;">Start:</label>
-              <input type="date" class="form-control datepicker" id="dateStart" style="margin-left: 1px; width: 80%; cololr: black;">
-            </div>
-          </div>
-          </div>
-          <div class="col-md-6" style="padding: 10px; background: none; height: 5vh;">
-          <div class="form-inline" style="padding-left: 0px;">
-            <div class="form-group">
-              <label class="datepicker" for="dateEnd" style="padding-right: 1px;">End:</label>
-              <input type="date" class="form-control datepicker" id="dateEnd" style="margin-right: 2px; width: 80%; cololr: black;" @onload="setDates()">
-            </div>
-          </div>
-          </div>
-				<hr>
-          <div class="row" style="margin-bottom: 0.1rem;">
-          <div class="col-md-12">
-            <div class="funkyradio">
-              <div class="form-check form-check-inline funkyradio-primary" >
-                <input name="chart_components" id="60th" type="checkbox"  checked="checked" class="form-check-input"> 
-                <label for="verified" class="form-check-label">Verified Data</label>
-              </div>
-              <div class="form-check form-check-inline funkyradio-primary">
-                <input name="chart_components" id="Real-time" type="checkbox" class="form-check-input form-check-input"> 
-                <label for="realtime" class="form-check-label">Real-time</label>
-              </div>
-            </div>
-          </div>
-        </div>
-          <div class="col-md-12">
-             <button class="btn uwasp_button" type="button" style="width: 100%" @click="updateCharts()">
-            <i class="fa fa-line-chart"></i>Update Dashboard
-          </button>
+          <div class="col-md-12" style="padding: 1px; background: none;">
+
+            <OverviewTable ref="overviewComponent"/>
+
         </div>
         </div>
         </div>
         </div>
+        <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="saveSelection()" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Submit Verified Discharge<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
         </div>
         </div>
 
           <!-- Rainfall -->
         <div style="padding: 10px; padding-right: 0px; background: none; padding-top: 0px; border:1px solid white;  border:1px solid white; box-shadow: 1px 1px 5px white inset;">
         <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><div class="numberCircle">2</div></div>
-        <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Goedetrou Dam Simplified Balance</h5></div>
+        <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Goedertrouw Dam Components</h5></div>
           <div class="row no-gutters">
           <div class="col-md-6">
            <div class="card rounded-0" style="width: 100%;" >
@@ -139,7 +108,7 @@
               <!-- River View  -->
          <div style="padding: 10px; padding-right: 10px; background: none; border:1px solid white;  border:1px solid white; box-shadow: 1px 1px 5px white inset;">
       <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><div class="numberCircle">3</div></div>
-      <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Estimated Upper uMhlathuze Simplified Balance</h5></div>
+      <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Estimated Upper uMhlathuze Simplified Balance</h5><p style="color:white;">W1H009H3T	Mhlatuze at Riverview (P230)</p></div>
         <div class="row no-gutters">
           <div class="col-md-6">
         <!-- Estimated Loss Stewards Farm  -->
@@ -180,8 +149,10 @@
         </div>
       <div style="padding: 10px; padding-right: 10px; background: none; padding-top: 0px; border:1px solid white;  border:1px solid white; box-shadow: 1px 1px 5px white inset;">
       <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><div class="numberCircle">4</div></div>
-      <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Estimated Lower uMhlathuze Simplified Balance</h5></div>
-         <!-- Pump Station -->
+      <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 0px;"><h5 style="color:white;">Estimated Lower uMhlathuze Simplified Balance</h5><p style="color:white;">W1H032H3T	Mhlatuze at Pumpstation (P106)</p></div>
+      
+
+      <!-- Pump Station -->
         <div class="row no-gutters">
         <!-- Estimated Loss Pump Station  -->
         <div class="col-md-6">
@@ -307,6 +278,7 @@
   import RainLevel from './RainLevel';
   import DamOutflowRight from './DamOutflowRight';
   import DamOutflowLeft from './DamOutflowLeft';
+  import OverviewTable from './OverviewTable';
   import StatusBar from '../StatusBar';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
@@ -319,64 +291,53 @@
   export default {
 
     components: {
-      Header,
-      NavButtons,
-      DamLevel,
-      DamInflow,
-      StewardsExpected,
-      StewardsObserved,
-      StewardsFarmLoss,
-      DamOutflow,
-      PumpStationExpected,
-      PumpStationLoss,
-      PumpStationObserved,
-      RiverViewExpected,
-      RiverViewLoss,
-      RiverViewObserved,
-      DamOutflowLeft,
-      TotalLoss,
-      DamOutflowRight,
-      RainLevel,
-      StatusBar
-    },
+    Header,
+    NavButtons,
+    DamLevel,
+    DamInflow,
+    StewardsExpected,
+    StewardsObserved,
+    StewardsFarmLoss,
+    DamOutflow,
+    PumpStationExpected,
+    PumpStationLoss,
+    PumpStationObserved,
+    RiverViewExpected,
+    RiverViewLoss,
+    RiverViewObserved,
+    DamOutflowLeft,
+    TotalLoss,
+    DamOutflowRight,
+    RainLevel,
+    StatusBar,
+    OverviewTable
+},
     data () {
       return {
       };
     },
     mounted () {
-      document.getElementById('dateStart').setAttribute('value', '2018-10-01');
-      document.getElementById('dateEnd').setAttribute('value', '2018-09-30');
-      let self = this;
-      let startDate = new Date();
-      startDate = '2019-10-01';
-      let endDate = this.formatDate(new Date());
-      this.$refs.inflowComponent.displayChart('chartComponent-unverified-inflow', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.outflowComponent.displayChart('chartComponent-unverified-outflow', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.damComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.rainComponent.displayChart('chartComponent-unverified-timeseries-X2H018FW', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.leftComponent.displayChart('chartComponent-unverified-outflow-left', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.rightComponent.displayChart('chartComponent-unverified-outflow-right', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.totalComponent.displayChart('total-loss-dam', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.stewardslossComponent.displayChart('total-loss-stewards', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.stewardsobservedComponent.displayChart('observed-stewards', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.stewardsexpectedComponent.displayChart('expected-stewards', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.pumplossComponent.displayChart('loss-pump', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.pumpobservedComponent.displayChart('observed-pump', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.pumpexpectedComponent.displayChart('expected-pump', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.riverviewlossComponent.displayChart('loss-riverview', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.riverviewobservedComponent.displayChart('observed-riverview', this.formatDate(dateStart), this.formatDate(dateEnd));
-      this.$refs.riverviewexpectedComponent.displayChart('expected-riverview', this.formatDate(dateStart), this.formatDate(dateEnd));
+
+      this.$refs.inflowComponent.displayChart('chartComponent-unverified-inflow');
+      this.$refs.outflowComponent.displayChart('chartComponent-unverified-outflow');
+      this.$refs.damComponent.displayChart('chartComponent-unverified-timeseries-W1R001FW');
+      this.$refs.rainComponent.displayChart('chartComponent-unverified-timeseries-W1E001FW');
+      this.$refs.leftComponent.displayChart('chartComponent-unverified-outflow-left');
+      this.$refs.rightComponent.displayChart('chartComponent-unverified-outflow-right');
+      this.$refs.totalComponent.displayChart('total-loss-dam');
+      this.$refs.stewardslossComponent.displayChart('total-loss-stewards');
+      this.$refs.stewardsobservedComponent.displayChart('observed-stewards');
+      this.$refs.stewardsexpectedComponent.displayChart('expected-stewards');
+      this.$refs.pumplossComponent.displayChart('loss-pump');
+      this.$refs.pumpobservedComponent.displayChart('observed-pump');
+      this.$refs.pumpexpectedComponent.displayChart('expected-pump');
+      this.$refs.riverviewlossComponent.displayChart('loss-riverview');
+      this.$refs.riverviewobservedComponent.displayChart('observed-riverview');
+      this.$refs.riverviewexpectedComponent.displayChart('expected-riverview');
       
 
     },
     methods: {
-      updateCharts () {
-        let dateStartString = $('#dateStart').val();
-        let dateEndString = $('#dateEnd').val();
-        let startDate = new Date(dateStartString);
-        let endDate = new Date(dateEndString);
-        this.$refs.complianceTable.updateTable();
-      },
       goToUserDefinedDashboard () {
         let self = this;
         let _selectedWMA = [];

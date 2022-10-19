@@ -11,7 +11,7 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Dam Outflow',
+        chartTitle: 'Dam Outflow (W1H028FW)',
         chartId: 'outflow-timeseries',
         baseUrl: 'https://uwasp.award.org.za/app_json/uwasp_dash/dam_outflow.php'
       };
@@ -48,9 +48,6 @@
               boxData.push(jsonData[variable]);
             }
             document.getElementById(self.chartDivId).innerHTML = '';
-            let stations = this.urlParameters.stations;
-            let chartTitle = $(this.$el).find('.chart-title');
-            chartTitle.html('Gauging station:' + stations[0]);
             Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: false});
           }, 1000);
         }).catch(error => {

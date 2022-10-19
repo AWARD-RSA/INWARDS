@@ -58,9 +58,14 @@ menu.append(new MenuItem({
   label: 'Options',
   submenu: [
     {
+      label: 'Admin Dashboard',
+      click: () => realTime('adminDash')
+    },
+    {
       label: 'Reset Application',
       click: () => realTime('reset')
-    }]
+    }
+  ]
 }));
 
 
@@ -138,7 +143,6 @@ function createWindow() {
       .join(__dirname, '/static')
       .replace(/\\/g, '\\\\')
   }
-  mainWindow.webContents.on('did-fail-load', () => mainWindow.loadURL('http://localhost:9080/index.html'));
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     mainWindow.focus()
@@ -147,6 +151,24 @@ function createWindow() {
     console.log('\nApplication exiting...')
   })
   mainWindow.on("closed", () => (mainWindow = null));
+  mainWindow.webContents.on('did-fail-load', () => {
+    if (process.env.NODE_ENV === 'production') {
+      // Load the index URL the same way you load it above
+      mainWindow.loadFile(`${__dirname}/index.html`)
+    }
+    else{
+      mainWindow.loadURL('http://localhost:9080/index.html')
+    }
+  })
+  mainWindow.webContents.on('reload', () => {
+    if (process.env.NODE_ENV === 'production') {
+      // Load the index URL the same way you load it above
+      mainWindow.loadFile(`${__dirname}/index.html`)
+    }
+    else{
+      mainWindow.loadURL('http://localhost:9080/index.html')
+    }
+  })
   mainWindow.maximize();
 }
 

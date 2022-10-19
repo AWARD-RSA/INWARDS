@@ -4,6 +4,8 @@
     <button id="unverified" class="btn inwards_button" style="width: 100%; display:none;" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="userDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="uwaspDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToUwaspDashboard()" type="button"><i class="fa fa-bar-chart" aria-hidden="true"></i>UWASP Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+    <button id="damDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToDamDashBoard()" type="button"><i class="fa fa-bar-chart" aria-hidden="true"></i>Dam Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+    <button id="adminDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToadminDashboard()" type="button"><i class="fa fa-bar-chart" aria-hidden="true"></i>UWASP Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
 
 </div>
 </template>
@@ -27,7 +29,13 @@
       },
       goToUwaspDashboard () {
         router.push({ path: 'umhlathuze-dashboard' });
-      },      
+      },
+      goToDamDashBoard () {
+        router.push({ path: 'dam-dashboard' });
+      },  
+      goToadminDashboard () {
+        router.push({ path: 'admin-dashboard' });
+      },        
       goHome () {
         router.push({ path: '/' });
       }
