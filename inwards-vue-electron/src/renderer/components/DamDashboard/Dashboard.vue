@@ -12,39 +12,20 @@
                 <div class="col-sm-6" style="padding-right: 5px;">
                   <div class="form-group" style="margin-right: 0.5rem;">
                     <input class="form-control rounded-0" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
+                    <small class="form-text text-muted" style="margin-left: 4px;">Select start date.</small>
                   </div>
                 </div>
-                <div class="col-sm-6" style="padding-left: 2px;">
+                <div class="col-sm-6" style="padding-left: 0px;">
                   <div class="form-group" style="margin-right: 0.2rem;">
                     <input class="form-control rounded-0" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
+                    <small class="form-text text-muted" style="margin-left: 4px;">Select end date.</small>
                   </div>
-                </div>
-              </div>
-              <div class="row" style="margin-top: 5px;">
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox" style="margin-left: 5px">
-                      <input id="ts" type="checkbox" class="custom-control-input" checked="true">T/S
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                  </div>
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox">
-                      <input id="bx" type="checkbox" class="custom-control-input" checked="true">Boxplot
-                      <span class="custom-control-indicator"></span>
-                  </label>
-                  </div>
-                  <div class="col-md-4">
-                     <label class="custom-control custom-checkbox">
-                      <input id="fdc" type="checkbox" class="custom-control-input" checked="true">FDC
-                      <span class="custom-control-indicator"></span>
-                  </label>
                 </div>
               </div>
                 <div class="row">
                 <div class="col-md-12">
                 <button class="btn inwards_button" @click="fetchUnverified()" type="button" style="width: 100%">
-                  <i class="fa fa-line-chart"></i>Chart Unverified
-                </button>
+                  <i class="fa fa-line-chart"></i>Update Timeframe</button>
                 </div>
               </div>
               </div>
@@ -114,21 +95,32 @@
       };
     },
     mounted () {
-      document.getElementById('dateStart').setAttribute('value', '2022-09-01');
-      document.getElementById('dateEnd').setAttribute('value', '2022-09-30');
+      document.getElementById('dateStart').setAttribute('value', '2022-10-01');
+      var endDate = new Date();
+      endDate.setDate(endDate.getDate() + 14);
+      var dd = endDate.getDate();
+      var mm = endDate.getMonth() + 1;
+      var yyyy = endDate.getFullYear();
+      if (dd < 10) {
+        dd = '0' + dd;
+      }
+      if (mm < 10) {
+        mm = '0' + mm;
+      }
+      endDate = yyyy + '-' + mm + '-' + dd;
+      document.getElementById('dateEnd').setAttribute('value', endDate);
       let self = this;
       this.mapDashboardRef = this.$refs.mapDashboard;
       let map = this.$refs.mapDashboard.map;
       this.mapDashboardRef.connectedToTree = false;
       let startDate = new Date();
-      startDate = '2022-09-01';
-      let endDate = this.formatDate(new Date());
+      startDate = '2022-10-01';
       let selectedWMAs = ['pongola_mtamvuna'];
       this.$refs.damComponent.displayChart('chartComponent-unverified-timeseries-W1R001FW', ['W1R001FW'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.outflowComponent.displayChart('chartComponent-unverified-timeseries-W1H028FW', ['W1H028FW'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.rightComponent.displayChart('chartComponent-unverified-timeseries-W1H030H3T', ['W1H030H3T'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.leftComponent.displayChart('chartComponent-unverified-timeseries-W1H029FW', ['W1H029FW'], this.formatDate(startDate), this.formatDate(endDate));
-      this.$refs.stationComponent.displayChart('W1HR001', this.formatDate(dateStart), this.formatDate(dateEnd));
+      this.$refs.stationComponent.displayChart('W1R001FW', this.formatDate(dateStart), this.formatDate(dateEnd));
       self.mapDashboardRef.showSelectedWMA(selectedWMAs);
       self.fetchStations();
 

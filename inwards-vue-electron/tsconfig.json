@@ -2,16 +2,21 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 14",
   "compilerOptions": {
-    "lib": ["es5", "es6", "dom"],
-    "module": "commonjs",
-    "target": "esnext",
+    "lib": ["esnext",  "dom.iterable", "es5", "es6", "dom", "scripthost"],
+    "module": "esnext",
+    "baseUrl": "./",
+    "target": "es5",
     "types": ["node"],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "allowJs": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "baseUrl": ".",
     "outDir": "./dist",
     "skipLibCheck": true,
     "jsx":"preserve",

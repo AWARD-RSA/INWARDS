@@ -51,6 +51,7 @@ export default {
         stations: [],
         sd: '',
         ed: '',
+        userCode: '',
         type: 0
       },
       color: '#177a98',
@@ -157,11 +158,12 @@ export default {
       // Override this function get the chart data
       return false;
     },
-    displayChart (stations, sd, ed, type = 0) {
+    displayChart (stations, sd, ed, userCode, type = 0) {
       this.styleObject.display = 'block';
       this.urlParameters.stations = stations;
       this.urlParameters.sd = sd;
       this.urlParameters.ed = ed;
+      this.urlParameters.userCode = userCode;
       this.urlParameters.type = type;
       this.chartId = this.chartId;
       this.chartDivId = this.chartId.replace(/,/g, '-');

@@ -13,7 +13,7 @@
       return {
         chartTitle: 'Unverified timeseries',
         chartId: 'unverified-timeseries',
-        baseUrl: 'https://inwards.award.org.za/app_json/plotly_timeseries.php'
+        baseUrl: 'https://uwasp.award.org.za/app_json/plotly_timeseries.php'
       };
     },
     methods: {
@@ -27,6 +27,7 @@
           return;
         }
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
+        console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           let boxData = [];

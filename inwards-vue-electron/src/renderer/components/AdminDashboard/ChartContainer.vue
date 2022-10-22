@@ -1,44 +1,40 @@
 <template>
   <div class="card rounded-0 box" v-bind:style="styleObject">
-    <div class="card-header inwards_card">
-   <div class="row">
-    <div class="col-md-12">  
-    <h6 style="color: white; margin-top: 10px; width: 70%; float: left;" class="chart-title">{{ chartTitle }}</h6>
-      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-            <span v-if='deletable'>
-              <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Remove from your dashboard" v-on:click="removeFromStore"><i class="fa fa-minus" style="padding-right: 10px;"></i></button>
-            </span>
-            <span v-else>
-              <button type="button" class="btn inwards_button_group" data-toggle="tooltip" data-placement="top" title="Add to your dashboard" v-on:click="addToStore"><i class="fa fa-plus" style="padding-right: 10px;"></i></button>
-            </span>
-          </div>
-      </div>
+    <div class="card-header inwards_card">{{ chartTitle }}
     </div>
-    </div>
-    </div>
-    <div class="card-body chart-container">
+    <div class="card-body chart-container2">
       <section v-if="errored">
         <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
       </section>
       <section v-else style="height: 100%;">
-        <div v-if='loading'><ring-loader :loading="loading" :color="color" :size="size" class="loading_disks"></ring-loader></div>
+        <div v-if='loading'>Loading...</div>
         <div v-else style="height: 100%">
-          <div :id="chartDivId" style="height: 100%;"><ring-loader :loading="loading" :color="color" :size="size" class="loading_disks"></ring-loader></div>
+          <div :id="chartDivId" style="height: 100%;">Loading...</div>
         </div>
       </section>
     </div>
   </div>
 </template>
+<style>
+  .chart-container2 {
+      max-height: 200px;
+      width: 100%;
+      overflow: hidden;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      align-items: center;
+      justify-content: center;
+  }
+</style>
 <script>
 import stateStore from '../../store/state_handler';
-import { RingLoader } from 'vue-spinner/dist/vue-spinner.min.js';
 const { dialog } = require('electron').remote;
 export default {
-  components: {
-    RingLoader
-  },
-  name: 'chart-container',
+  name: 'chart-container2',
   data () {
     return {
       chartId: null,
@@ -52,15 +48,9 @@ export default {
         ed: '',
         type: 0
       },
-      color: '#177a98',
-      height: '35px',
-      width: '4px',
-      margin: '2px',
-      size: '100px',
-      loading: false,
-      radius: '2px',
       chartData: null,
       errored: false,
+      loading: true,
       stationsCoordinates: {},
       styleObject: {
         display: 'none'
@@ -87,6 +77,7 @@ export default {
         title: 'Remove a chart',
         message: 'Are you sure you want to delete this chart from your dashboard?'
       };
+
       dialog.showMessageBox(null, options, (response) => {
         if (response === 0) {
           this.removed(this.chartId);
@@ -136,15 +127,14 @@ export default {
       // Override this function get the chart data
       return false;
     },
-    displayChart (stations, sd, ed, userCode, type = 0) {
+    displayChart (id, stations, sd, ed, type = 0) {
       this.styleObject.display = 'block';
       this.urlParameters.stations = stations;
       this.urlParameters.sd = sd;
       this.urlParameters.ed = ed;
-      this.urlParameters.userCode = userCode;
       this.urlParameters.type = type;
       this.chartId = this.chartId;
-      this.chartDivId = this.chartId.replace(/,/g, '-');
+      this.chartDivId = id;
       this.fetchChartData();
     }
   }

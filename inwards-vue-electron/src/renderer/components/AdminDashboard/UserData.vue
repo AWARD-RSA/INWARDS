@@ -1,20 +1,23 @@
 <template>
-    <table class="table table-bordered table-striped table-hover" style="padding: 0; margin-bottom: 0;">
+    <table ref="table" class="table table-bordered table-striped table-hover" style="padding: 0; margin-bottom: 0; overflow:auto; height: 100%;">
         <thead class="inwards_card">
-            <tr style="color: white; font-size: 0.6rem; font-weight: lighter;">
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">ID</th>
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">First Name</th>
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">Last Name</th>
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">Designation</th>
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">Sector</th>
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">reason</th>
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">email</th>
-                <th style="color: white; font-size: 0.6rem; font-weight: lighter;">Registration Date</th>
-
+            <tr style="color: white; font-size: 1rem; font-weight: lighter;">
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">DB ID</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">First Name</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Last Name</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Designation</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Sector</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Reason</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Email</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Registration Date</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Access Count</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Last Data Request</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Role</th>
+                <th style="color: white; font-size: 1rem; font-weight: lighter;">Action</th>
             </tr>
         </thead>
         <tbody>
-        <tr v-for="station in stations" v-bind:key="station.Station" style="font-size: 0.6rem;">
+        <tr v-for="station in stations" v-bind:key="station.Station" style="font-size: 0.9rem;">
                 <td>{{ station.id }}</td>
                 <td>{{ station.first_name }}</td>
                 <td>{{ station.last_name }}</td>
@@ -22,30 +25,156 @@
                 <td>{{ station.sector }}</td>     
                 <td>{{ station.reason }}</td>        
                 <td>{{ station.email }}</td>         
-                <td>{{ station.registration_date }}</td>         
+                <td>{{ station.registration_date }}</td>                
 
+
+            <td>{{ station.access_count }}</td>
+            <td>{{ station.last_request }}</td>
+            <td>
+                  <select class="custom-select" style="width:130px;" id="privilege">
+                    <option v-if="station.privilege === 'Super Admin'" selected>Super Admin</option>
+                    <option v-else>Super Admin</option>
+
+                    <option v-if="station.privilege === 'Admin'" selected>Admin</option>
+                    <option v-else>Admin</option>
+                    
+                    <option v-if="station.privilege === 'Operations'" selected>Operations</option>
+                    <option v-else>Operations</option>
+
+                    <option v-if="station.privilege === 'Technician'" selected>Technician</option>
+                    <option v-else>Technician</option>
+
+                    <option v-if="station.privilege === 'General'" selected>General</option>
+                    <option v-else>General</option>
+                    
+                  </select>
+
+            <button class="btn inwards_button" @click="updateAdmin(station.id)" type="button" style="width: 30%">Update</button>
+          </td>
+          <td>
+
+            <button v-if="station.accepted === 'Accept User'" class="btn inwards_button" @click="updateStatus(station.user_code, station.email)" type="button" :style="station.hidden">Accept User</button>
+            <button v-else class="btn inwards_button" @click="removeUser(station.id)" type="button" :style="station.hidden">Remove User</button>
+          
+          </td>
         </tr>
-        </tbody>
+      </tbody>
     </table>
 </template>
 
 <script type="text/javascript">
+import $ from 'jquery';
+import router from '../../router/index';
+const { dialog } = require('electron').remote;
+import stateStore from '../../store/state_handler';
 export default {
 data () {
   return {
-    stations: []
+    stations: [],
+    userCode: ''
   };
 },
 created () {
-  this.$http.get('https://uwasp.award.org.za/app_json/uwasp_dash/users.php')
+stateStore.getState(
+      stateStore.keys.loginStatus, (status) => {
+        this.userCode = status['uniqueCode'];
+      }
+    );
+
+  this.$http.get('https://uwasp.award.org.za/app_json/uwasp_dash/users.php?user_code='+this.userCode)
     .then(
       response => {
         this.stations = response.data;
+        if(this.stations == false){
+          dialog.showMessageBox(null, {
+              type: 'info',
+              message: 'You are not an admin!',
+              buttons: ['OK']
+            });
+            router.push({ path: '/' });
+        }
         console.log(this.stations);
+
       })
     .catch(function (error) {
       console.log(error);
     });
+},
+methods: {
+
+    updateAdmin (updateId) {
+      var UserOption = document.getElementById('privilege').value;
+      let button = $(updateId.target);
+      button.prop('disabled', true);
+      button.html(`Submitting...`);
+      console.log('https://uwasp.award.org.za/app_json/uwasp_dash/updatePrivilege.php?user_code=' + updateId + '&privilege=' + UserOption + '&super=' + this.userCode);
+      $.get('https://uwasp.award.org.za/app_json/uwasp_dash/updatePrivilege.php?user_code=' + updateId + '&privilege=' + UserOption + '&super=' + this.userCode, function (data) {
+        if (data === 'true') {
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Successfully Updated!',
+            buttons: ['OK']
+          });
+        } else {
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Failed to Update!',
+            buttons: ['OK']
+          });
+        }
+      });
+    },
+    updateStatus (user_id, email) {
+
+        console.log('Accept User '+user_id);
+        console.log('https://uwasp.award.org.za/app_json/accept_user_request.php?user_code=' + user_id + '&email=' + email);
+        $.get('https://uwasp.award.org.za/app_json/accept_user_request.php?user_code=' + user_id + '&email=' + email, function (data) {
+          if (data === 'true') {
+            dialog.showMessageBox(null, {
+              type: 'info',
+              message: 'Successfully Accepted a Email was Sent to! '+email,
+              buttons: ['OK']
+            });
+          } else {
+            dialog.showMessageBox(null, {
+              type: 'info',
+              message: 'Failed to Update!',
+              buttons: ['OK']
+            });
+          }
+        });
+
+    },
+    removeUser (userID) {
+      console.log('https://uwasp.award.org.za/app_json/uwasp_dash/removeUser.php?user_code=' + userID);
+      console.log('Accept User '+userID);
+      let response = dialog.showMessageBoxSync(null, {
+        type: 'question',
+        buttons: ['Yes', 'No'],
+        title: 'Confirm',
+        message: 'Are you sure you want to remove this user?'
+    });
+    console.log(response);
+    if(response == 0){
+      
+      $.get('https://uwasp.award.org.za/app_json/uwasp_dash/removeUser.php?user_code=' + userID, function (data) {
+        if (data === 'true') {
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Successfully Removed User!',
+            buttons: ['OK']
+          });
+        } else {
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Failed to Remove User!',
+            buttons: ['OK']
+          });
+        }
+      });
+      //window.location.reload();
+     }   
+}
 }
 };
 </script>

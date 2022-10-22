@@ -85,6 +85,7 @@
     "@types/sass": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "@vue/compiler-dom": "^3.2.41",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "bootstrap": "^4.4.1",

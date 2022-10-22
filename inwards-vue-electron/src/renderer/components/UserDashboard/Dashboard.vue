@@ -44,7 +44,8 @@ export default Vue.extend({
       grid: null,
       currentStations: {},
       stationsFromStoredCharts: [],
-      selectedWMAs: []
+      selectedWMAs: [],
+      userCode: ''
     };
   },
   components: {
@@ -59,7 +60,9 @@ export default Vue.extend({
     this.catchmentTreeRef.selectable = false;
     this.catchmentTreeRef.refreshable = false;
     this.mapDashboardRef.connectedToTree = false;
+
     this.getSelectedCharts();
+
   },
   methods: {
     getStations () {
@@ -144,10 +147,17 @@ export default Vue.extend({
             $chartsContainer.append(itemDiv);
             itemContentDiv.html(chart.$el);
             chart.deletable = true;
+            let userCode = '';
+            stateStore.getState(
+              stateStore.keys.loginStatus, (status) => {
+                userCode = status['uniqueCode'];
+              }
+            );
             chart.displayChart(
               stations,
               startDate,
-              endDate
+              endDate,
+              userCode
             );
             chart.removed = self.itemRemoved;
           }

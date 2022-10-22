@@ -110,6 +110,7 @@
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,
         selectedStations: [],
+        userCode: '',
         selectedWMAs: []
       };
     },
@@ -141,6 +142,11 @@
         self.addStationsToStore(stations, chartStoredId);
       });
       stateStore.getState(
+        stateStore.keys.loginStatus, (status) => {
+          this.userCode = status['uniqueCode'];
+        }
+      );
+      stateStore.getState(
         stateStore.keys.dateEnd,
         function (dateEnd) {
           if (!dateEnd) {
@@ -159,6 +165,7 @@
           document.getElementById('dateEnd').setAttribute('value', dateEnd);
         }
       );
+      console.log('Look here! '+ this.userCode);
       document.getElementById('dateEnd').onchange = function () {
         stateStore.setState(
           stateStore.keys.dateEnd,
@@ -223,17 +230,17 @@
         }
         let tsChart = document.getElementById('ts').checked;
         if (tsChart === true) {
-          this.$refs.chartComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd));
+          this.$refs.chartComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.userCode);
         }
         let bxChart = document.getElementById('bx').checked;
         if (bxChart === true) {
-          this.$refs.boxComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd));
+          this.$refs.boxComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.userCode);
         }
         let fdcChart = document.getElementById('fdc').checked;
         if (fdcChart === true) {
-          this.$refs.durationComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd));
+          this.$refs.durationComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.userCode);
         }
-        this.$refs.stationComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd));
+        this.$refs.stationComponent.displayChart(selectedStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.userCode);
       },
       fetchStations () {
         let self = this;
