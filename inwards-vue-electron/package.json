@@ -2,6 +2,7 @@
   "name": "inwards",
   "version": "3.0.0",
   "private": true,
+  "main": "./dist/main.js",
   "description": "An integrated water resources decision support system",
   "author": "Association for Water and Rural Development <hugo@award.org.za>",
   "scripts": {
@@ -34,21 +35,21 @@
     "test": "run-s rebuild:node pack:workers jest",
     "test:watch": "run-s rebuild:node pack:workers jest:watch"
   },
-  "main": "background.js",
   "files": [
     "build",
     "dist/**/*",
+    "node_modules",
     "*.js",
     "*.vue",
     "public"
   ],
   "dependencies": {
     "@electron/remote": "^1.1.0",
-    "axios": "^0.26.1",
     "bulma-fluent": "^0.4.3",
     "c3": "^0.7.20",
     "custom-electron-titlebar": "4.1.0",
     "electron-devtools-installer": "3.2.0",
+    "form-data": "^4.0.0",
     "jquery": "^3.6.0",
     "material-design-iconic-font": "^2.2.0",
     "material-design-icons": "^3.0.1",
@@ -86,6 +87,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "@vue/compiler-dom": "^3.2.41",
+    "axios": "^0.21.4",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "bootstrap": "^4.4.1",
@@ -118,6 +120,7 @@
     "typescript": "^4.2.4",
     "url-loader": "^4.1.1",
     "url-parse": "^1.5.10",
+    "vue-axios": "^2.1.5",
     "vue-cli-plugin-electron-builder": "~2.1.1",
     "vue-eslint-parser": "^7.6.0",
     "vue-loader": "^15.9.6",

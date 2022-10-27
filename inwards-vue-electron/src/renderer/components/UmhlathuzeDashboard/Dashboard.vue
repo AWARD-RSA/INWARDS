@@ -23,10 +23,14 @@
         </div>
         </div>
         </div>
-        <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="saveSelection()" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Submit Verified Discharge<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+        <div class="col-md-6" style="padding: 1px; background: none;">
+        <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showSubmitForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Submit Plate Reading<i class="fa fa-upload" style="padding-left: 10px;"></i></button>
+      </div>
+      <div class="col-md-6" style="padding: 1px; background: none;">
+        <button id="viewPlates" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showPlatesForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>View Plate Submissions<i class="fa fa-eye" style="padding-left: 10px;"></i></button>
+      </div>
+      </div>
         </div>
-        </div>
-
           <!-- Rainfall -->
         <div style="padding: 10px; padding-right: 0px; background: none; padding-top: 0px; border:1px solid white;  border:1px solid white; box-shadow: 1px 1px 5px white inset;">
         <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><div class="numberCircle">2</div></div>
@@ -256,6 +260,10 @@
     </div>
     <NavButtons/>
       </div>
+      <SubmitForm ref="operationalComponent" style="margin-top: 5px;"/>
+
+      <PlateSubmissions ref="submissionsComponent" style="margin-top: 5px;"/>
+
     </div>
   </template>
 <script>
@@ -279,9 +287,14 @@
   import DamOutflowRight from './DamOutflowRight';
   import DamOutflowLeft from './DamOutflowLeft';
   import OverviewTable from './OverviewTable';
+  import SubmitForm from './SubmitForm';
+  import PlateSubmissions from './PlateSubmissions';
+  import stateStore from '../../store/state_handler';
   import StatusBar from '../StatusBar';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
+  const { dialog } = require('electron').remote;
+  import router from '../../router/index';
   import GeoJSON from 'ol/format/GeoJSON';
   import $ from 'jquery';
   import {Fill, Stroke, Style} from 'ol/style';
@@ -310,34 +323,73 @@
     DamOutflowRight,
     RainLevel,
     StatusBar,
-    OverviewTable
+    OverviewTable,
+    SubmitForm,
+    PlateSubmissions
 },
     data () {
       return {
+        userCode: ''
       };
     },
     mounted () {
+      let userCode = '';
+      stateStore.getState(
+        stateStore.keys.loginStatus, (status) => {
+          this.userCode = status['uniqueCode'];
+        }
+      );
+    this.$http.get('https://uwasp.award.org.za/app_json/admin/balance_admin.php?user_code='+this.userCode)
+      .then(
+        response => {
+          this.stations = response.data;
+          if(this.stations == false){
+            dialog.showMessageBox(null, {
+                type: 'info',
+                message: 'This dashboard has been built for Operations, please contact Admin for more information',
+                buttons: ['OK']
+              });
+              router.push({ path: '/' });
+          }
+          else{
 
-      this.$refs.inflowComponent.displayChart('chartComponent-unverified-inflow');
-      this.$refs.outflowComponent.displayChart('chartComponent-unverified-outflow');
-      this.$refs.damComponent.displayChart('chartComponent-unverified-timeseries-W1R001FW');
-      this.$refs.rainComponent.displayChart('chartComponent-unverified-timeseries-W1E001FW');
-      this.$refs.leftComponent.displayChart('chartComponent-unverified-outflow-left');
-      this.$refs.rightComponent.displayChart('chartComponent-unverified-outflow-right');
-      this.$refs.totalComponent.displayChart('total-loss-dam');
-      this.$refs.stewardslossComponent.displayChart('total-loss-stewards');
-      this.$refs.stewardsobservedComponent.displayChart('observed-stewards');
-      this.$refs.stewardsexpectedComponent.displayChart('expected-stewards');
-      this.$refs.pumplossComponent.displayChart('loss-pump');
-      this.$refs.pumpobservedComponent.displayChart('observed-pump');
-      this.$refs.pumpexpectedComponent.displayChart('expected-pump');
-      this.$refs.riverviewlossComponent.displayChart('loss-riverview');
-      this.$refs.riverviewobservedComponent.displayChart('observed-riverview');
-      this.$refs.riverviewexpectedComponent.displayChart('expected-riverview');
+            console.log('Look here! '+ this.userCode);
+            this.$refs.inflowComponent.displayChart('chartComponent-unverified-inflow', this.userCode);
+            this.$refs.outflowComponent.displayChart('chartComponent-unverified-outflow', this.userCode);
+            this.$refs.damComponent.displayChart('chartComponent-unverified-timeseries-W1R001FW', this.userCode);
+            this.$refs.rainComponent.displayChart('chartComponent-unverified-timeseries-W1E001FW', this.userCode);
+            this.$refs.leftComponent.displayChart('chartComponent-unverified-outflow-left', this.userCode);
+            this.$refs.rightComponent.displayChart('chartComponent-unverified-outflow-right', this.userCode);
+            this.$refs.totalComponent.displayChart('total-loss-dam', this.userCode);
+            this.$refs.stewardslossComponent.displayChart('total-loss-stewards', this.userCode);
+            this.$refs.stewardsobservedComponent.displayChart('observed-stewards', this.userCode);
+            this.$refs.stewardsexpectedComponent.displayChart('expected-stewards', this.userCode);
+            this.$refs.pumplossComponent.displayChart('loss-pump', this.userCode);
+            this.$refs.pumpobservedComponent.displayChart('observed-pump', this.userCode);
+            this.$refs.pumpexpectedComponent.displayChart('expected-pump', this.userCode);
+            this.$refs.riverviewlossComponent.displayChart('loss-riverview', this.userCode);
+            this.$refs.riverviewobservedComponent.displayChart('observed-riverview', this.userCode);
+            this.$refs.riverviewexpectedComponent.displayChart('expected-riverview', this.userCode);
+            
+          }
+          //console.log(this.stations);
+
+        })
+      .catch(function (error) {
+        console.log(error);
+      });
+
       
 
     },
     methods: {
+      showSubmitForm () {
+        this.$refs.operationalComponent.showSubmitForm();
+      },
+      showPlatesForm () {
+        this.$refs.submissionsComponent.showPlatesForm();
+      },
+      
       goToUserDefinedDashboard () {
         let self = this;
         let _selectedWMA = [];

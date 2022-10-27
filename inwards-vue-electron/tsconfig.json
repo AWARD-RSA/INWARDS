@@ -3,15 +3,10 @@
   "display": "Node 14",
   "compilerOptions": {
     "lib": ["esnext",  "dom.iterable", "es5", "es6", "dom", "scripthost"],
-    "module": "esnext",
+    "module": "es2015",
     "baseUrl": "./",
-    "target": "es5",
+    "target": "ES6",
     "types": ["node"],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
     "allowJs": true,
     "esModuleInterop": true,
     "isolatedModules": true,

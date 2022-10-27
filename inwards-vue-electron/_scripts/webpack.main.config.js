@@ -80,10 +80,12 @@ if (isDevMode) {
         {
           from: path.join(__dirname, '../src/data'),
           to: path.join(__dirname, '../dist/data'),
+          noErrorOnMissing: true
         },
         {
           from: path.join(__dirname, '../static'),
           to: path.join(__dirname, '../dist/static'),
+          noErrorOnMissing: true,
           globOptions: {
             ignore: ['.*'],
           },

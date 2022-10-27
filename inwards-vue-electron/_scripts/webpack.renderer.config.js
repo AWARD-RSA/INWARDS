@@ -158,7 +158,7 @@ if (isDevMode) {
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+      '__static': `"${path.join(__dirname, '../src/static').replace(/\\/g, '\\\\')}"`
     })
   )
 } else {
@@ -166,10 +166,13 @@ if (isDevMode) {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.join(__dirname, '../static'),
+          from: path.join(__dirname, '../src/static'),
           to: path.join(__dirname, '../dist/static'),
+          noErrorOnMissing: true,
           globOptions: {
-            ignore: ['.*'],
+            ignore: [
+              '.*'
+            ],
           },
         },
       ],

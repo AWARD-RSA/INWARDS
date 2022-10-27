@@ -91,10 +91,16 @@
         stationsFeatures: {}, // To stored station features
         stationsRequest: null,
         selectedStations: [],
+        userCode: '',
         selectedWMAs: []
       };
     },
     mounted () {
+      stateStore.getState(
+        stateStore.keys.loginStatus, (status) => {
+          this.userCode = status['uniqueCode'];
+        }
+      );
       document.getElementById('dateStart').setAttribute('value', '2022-10-01');
       var endDate = new Date();
       endDate.setDate(endDate.getDate() + 14);
@@ -116,11 +122,11 @@
       let startDate = new Date();
       startDate = '2022-10-01';
       let selectedWMAs = ['pongola_mtamvuna'];
-      this.$refs.damComponent.displayChart('chartComponent-unverified-timeseries-W1R001FW', ['W1R001FW'], this.formatDate(startDate), this.formatDate(endDate));
-      this.$refs.outflowComponent.displayChart('chartComponent-unverified-timeseries-W1H028FW', ['W1H028FW'], this.formatDate(startDate), this.formatDate(endDate));
-      this.$refs.rightComponent.displayChart('chartComponent-unverified-timeseries-W1H030H3T', ['W1H030H3T'], this.formatDate(startDate), this.formatDate(endDate));
-      this.$refs.leftComponent.displayChart('chartComponent-unverified-timeseries-W1H029FW', ['W1H029FW'], this.formatDate(startDate), this.formatDate(endDate));
-      this.$refs.stationComponent.displayChart('W1R001FW', this.formatDate(dateStart), this.formatDate(dateEnd));
+      this.$refs.damComponent.displayChart('chartComponent-unverified-timeseries-W1R001FW', ['W1R001FW'], this.formatDate(startDate), this.formatDate(endDate), this.userCode);
+      this.$refs.outflowComponent.displayChart('chartComponent-unverified-timeseries-W1H028FW', ['W1H028FW'], this.formatDate(startDate), this.formatDate(endDate), this.userCode);
+      this.$refs.rightComponent.displayChart('chartComponent-unverified-timeseries-W1H030H3T', ['W1H030H3T'], this.formatDate(startDate), this.formatDate(endDate), this.userCode);
+      this.$refs.leftComponent.displayChart('chartComponent-unverified-timeseries-W1H029FW', ['W1H029FW'], this.formatDate(startDate), this.formatDate(endDate), this.userCode);
+      this.$refs.stationComponent.displayChart('W1R001FW', this.formatDate(dateStart), this.formatDate(dateEnd), this.userCode);
       self.mapDashboardRef.showSelectedWMA(selectedWMAs);
       self.fetchStations();
 

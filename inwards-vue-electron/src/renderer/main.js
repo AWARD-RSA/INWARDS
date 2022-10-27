@@ -1,5 +1,6 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import axios from 'axios';
+import VueAxios from 'vue-axios'
 import $ from 'jquery';
 import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -29,7 +30,7 @@ Vue.prototype.$bus = new Vue();
 Vue.prototype.isLoggedIn = false;
 // tslint:disable-next-line: no-unused-expression
 /* eslint-disable no-new */
-
+Vue.use(VueAxios, axios);
 new Vue({
   el: '#app',
   router,
@@ -37,6 +38,7 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
 if (window && window.process && window.process.type === 'renderer') {
   const { ipcRenderer } = require('electron')
 

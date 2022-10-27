@@ -112,11 +112,12 @@ export default {
       // Override this function get the chart data
       return false;
     },
-    displayChart (id, stations, sd, ed) {
+    displayChart (id, stations, sd, ed, userCode) {
       this.styleObject.display = 'block';
       this.urlParameters.stations = stations;
       this.urlParameters.sd = sd;
       this.urlParameters.ed = ed;
+      this.urlParameters.userCode = userCode;
       this.chartId = this.chartId;
       this.chartDivId = id;
       this.fetchChartData();

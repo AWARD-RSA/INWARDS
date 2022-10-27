@@ -113,7 +113,7 @@ const stateStore = {
     for (let i = 0; i < this.keysToUpload.length; i++) {
       dataToUpload[this.keysToUpload[i]] = this.state[this.keysToUpload[i]];
     }
-    let url = `https://inwards.award.org.za/user_data/backup.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}&json=${JSON.stringify(dataToUpload)}`;
+    let url = `https://uwasp.award.org.za/user_data/backup.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}&json=${JSON.stringify(dataToUpload)}`;
     axios.get(url).then(response => {
       console.log('User states in server has been updated');
       if (callback) {
@@ -124,7 +124,7 @@ const stateStore = {
   updateFromServer (callback) {
     // Get user states from the server, if the server has the latest data then update the local data
     let self = this;
-    let url = `https://inwards.award.org.za/user_data/user_pref.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}`;
+    let url = `https://uwasp.award.org.za/user_data/user_pref.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}`;
     axios.get(url).then(response => {
       if (!response) {
         return false;
