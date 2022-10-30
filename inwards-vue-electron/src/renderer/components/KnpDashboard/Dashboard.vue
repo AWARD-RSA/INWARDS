@@ -11,6 +11,7 @@
               <ComplianceTable ref="complianceTable"/>
             </div>
           </div>
+
           <div class="v-space"></div>
           <div class="card rounded-0">
             <div class="card-body">
@@ -35,25 +36,46 @@
                 </button>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                <button class="btn inwards_button" type="button" style="width: 100%" @click="showRiverLog()">
-                  <i class="fa fa-book"></i>View River Log Book
-                </button>
+              <div class="row" style="block: none;">
+                <div class="col-md-6" style="padding: 1px; background: none;">
+                  <button id="viewKNPLogs" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showRiverLog()" type="button"><span class="btn-label"><i class="fa fa-book"></i></span>View River Log Book<i class="fa fa-eye" style="padding-left: 0px;"></i></button>
+                </div>
+                <div class="col-md-6">
+                  <button id="submitRiverLog" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showOperationalReserve()" type="button"><span class="btn-label"><i class="fa fa-pencil-square-o"></i></span>Submit Log<i class="fa fa-upload" style="padding-left: 0px;"></i></button>
                 </div>
               </div>
               <div class="row" style="block: none;">
-                <div class="col-md-12">
-                <button class="btn inwards_button" type="button" style="width: 100%" @click="showOperationalReserve()">
-                  <i class="fa fa-pencil-square-o"></i>Submit Log
-                </button>
+                <div class="col-md-6" style="padding: 1px; background: none;">
+                  <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showSubmitForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Submit Plate Reading<i class="fa fa-upload" style="padding-left: 0px;"></i></button>
+                </div>
+                <div class="col-md-6">
+                  <button id="viewPlates" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showPlatesForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>View Plate Submissions<i class="fa fa-eye" style="padding-left: 0px;"></i></button>
                 </div>
               </div>
             </div>
           </div>
+          <div class="v-space"></div>
+              <div class="row" style="block: none;">
+                <div class="col-md-12">
+              <div class="card rounded-0 align-items-center" style="margin-top: 5px; margin-bottom: 1px; background-color: #124103;">
+                <div class="card-body align-items-center justify-content-center" style="background-color: #124103;">
+                  <img class="align-items-center justify-content-center" height="105px" src="../../assets/sanparks.jpg" alt="" style="margin:1rem;">
+                </div>
+              </div>
+              </div>
+        </div>
         </div>
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
-
+          <div class="row no-gutters">
+            <div class="col-md-12">
+              <div class="card rounded-0 box">
+                <div class="card-header inwards_card">KNP Rivers Log Book</div>
+                <div class="card-body" style="height: 605px;">
+                    <iframe src="https://inwards.award.org.za/timeline.php" height="600px" width="100%"></iframe>
+                  </div>
+              </div>
+              </div>
+          </div>
           <div class="row no-gutters">
             <div class="col-md-6">
                   <CrocChart ref="crocComponent" style="margin-top: 5px;"/>
@@ -80,6 +102,8 @@
       <NavButtons/>
     </div>
     <RiverLog ref="logComponent" style="margin-top: 5px;"/>
+    <SubmitForm ref="submitComponent" style="margin-top: 5px;"/>
+    <PlateSubmissions ref="submissionsComponent" style="margin-top: 5px;"/>
     <OperationalReserve ref="operationalComponent" style="margin-top: 5px;"/>
   </div>
 </template>
@@ -125,6 +149,9 @@
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
+  import SubmitForm from './SubmitForm';
+  import PlateSubmissions from './PlateSubmissions';
+  import stateStore from '../../store/state_handler';
   import $ from 'jquery';
   import {Fill, Stroke, Style} from 'ol/style';
   import path from 'path';
@@ -145,7 +172,9 @@
       LimChart,
       RiverLog,
       OperationalReserve,
-      StatusBar
+      StatusBar,
+      SubmitForm,
+      PlateSubmissions
     },
     data () {
       return {
@@ -166,8 +195,8 @@
       startDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
       let endDate = this.formatDate(new Date());
       this.$refs.letComponent.displayChart('chartComponent-unverified-timeseries-B8H008H3T', ['B8H008H3T'], this.formatDate(startDate), this.formatDate(endDate));
-      this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016BFW'], this.formatDate(startDate), this.formatDate(endDate));
-      this.$refs.sabieComponent.displayChart('chartComponent-unverified-timeseries-X3H021FW', ['X3H021BFW'], this.formatDate(startDate), this.formatDate(endDate));
+      this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016FW'], this.formatDate(startDate), this.formatDate(endDate));
+      this.$refs.sabieComponent.displayChart('chartComponent-unverified-timeseries-X3H021IUCMA', ['X3H021IUCMA'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.oliComponent.displayChart('chartComponent-unverified-timeseries-B7H015FW', ['B7H015FW'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.balComponent.displayChart('chartComponent-unverified-timeseries-B7H026BFW', ['B7H026BFW'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.limComponent.displayChart('chartComponent-unverified-timeseries-A9H012FW', ['A9H012FW'], this.formatDate(startDate), this.formatDate(endDate));
@@ -190,6 +219,12 @@
       self.fetchStations();
     },
     methods: {
+      showSubmitForm () {
+        this.$refs.submitComponent.showSubmitForm();
+      },
+      showPlatesForm () {
+        this.$refs.submissionsComponent.showPlatesForm();
+      },
       fetchStations () {
         let self = this;
         let wmaNames = ['limpopo', 'olifants_letaba', 'inkomati_usuthu'];
@@ -219,7 +254,6 @@
           }
           axios.get(url, { cancelToken: cancelToken }).then(response => {
             self.mapDashboardRef.loadStationsToMap(response.data);
-            self.createCatchmentTree(response.data);
           }).catch(error => {
             console.log(error);
           });

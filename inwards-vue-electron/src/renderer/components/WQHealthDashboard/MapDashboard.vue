@@ -8,9 +8,11 @@
         <component :is="child" :key="child.name" :ref="child.id"></component>
       </template>
       <div class="card rounded-0">
-        <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-map" style="padding-right: 10px;"></i>Map</h6></div>
         <div class="card-body">
           <div id="dashboard-map"></div>
+          <div id="tooltip" class="ol-tooltip">
+            <div id="tooltip-content"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,6 +75,43 @@
     width: 100%;
     height: 350px;
   }
+  .ol-tooltip {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 17px;
+    left: -50px;
+    min-width: 190px;
+  }
+  .ol-tooltip:after, .ol-tooltip:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .ol-tooltip:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+  }
+  .ol-tooltip:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+  }
+   .ol-tooltip p {
+     margin-top: 0;
+     margin-bottom: 0;
+   }
 </style>
 <script>
   /* eslint-disable no-unused-vars */
@@ -118,7 +157,7 @@
         }),
         stationsSelectedStyle: new Style({
           image: new CircleStyle({
-            radius: 5,
+            radius: 8,
             fill: new Fill({color: [51, 204, 51, 0.8]}),
             stroke: new Stroke({color: 'green', width: 1})
           })
@@ -147,6 +186,8 @@
     mounted () {
       let container = document.getElementById('popup');
       let closer = document.getElementById('popup-closer');
+      var tooltipContainer = document.getElementById('tooltip');
+      var tooltipContent = document.getElementById('tooltip-content');
       let self = this;
       /**
       * Add a click handler to hide the popup.
@@ -167,14 +208,12 @@
           duration: 20
         }
       });
-
       this.map = new Map({
         target: 'dashboard-map',
         layers: [
           new TileLayer({
             source: new XYZ({
-              url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'
-              
+              url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             })
           })
         ],
@@ -185,20 +224,56 @@
         })
       });
       this.map.addLayer(this.layerGroup);
-      this.stationsVectorLayer.setZIndex(0);
       this.map.addLayer(this.stationsVectorLayer);
-      this.stationsVectorLayer.setZIndex(3);
       this.map.on('click', this._mapClicked);
+      var tooltip = new Overlay({
+        element: tooltipContainer,
+        autoPan: false,
+        autoPanAnimation: {
+          duration: 250
+        }
+      });
+      this.map.addOverlay(tooltip);
+
+      var featureId = '';
+
+      this.map.on('pointermove', function (e) {
+        var feature = this.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+          if (featureId === feature.get('station')) {
+            return feature;
+          };
+          featureId = feature.get('station');
+          if (featureId !== undefined) {
+            var coordinates = feature.getGeometry().getCoordinates();
+            tooltipContent.innerHTML = '<p style="font-size: 11px;">' + featureId + '</p><p style="font-size: 10px;">' + feature.get('desc') + '</p>';
+            tooltip.setPosition(coordinates);
+            return feature;
+          } else {
+            tooltip.setPosition(undefined);
+          }
+        });
+        if (!feature && (featureId !== '')) {
+          featureId = '';
+        };
+      });
     },
     methods: {
       _mapClicked (e) {
         // Clicked map event handler
         this.selectStation(e.pixel);
       },
+      getSelectedStations () {
+        let _selectedStationsId = [];
+        for (let i = 0; i < this.selectedStations.length; i++) {
+          _selectedStationsId.push(this.selectedStations[i]);
+        }
+        return _selectedStationsId;
+      },
       showSelectedWMA (data) {
         this.defaultExtent = Extent.createEmpty();
         for (let i = 0; i < data.length; i++) {
-          let wmaJsonFile = `wma_merge.json`;
+          let wma = data[i];
+          let wmaJsonFile = `${wma}_wma.json`;
           let vectorLayer = new VectorLayer({
             source: new VectorSource({
               features: (new GeoJSON({
@@ -208,15 +283,6 @@
                 featureProjection: 'EPSG:3857'
               })
             }),
-            style: function (feature) {
-            return new Style({
-              image: new CircleStyle({
-                radius: 5,
-                fill: new Fill({color: 'rgba(255,0,0,0.5)'}),
-                stroke: new Stroke({color: 'red', width: 1})
-                })
-              });
-            },
             updateWhileAnimating: true,
             updateWhileInteracting: true
           });
@@ -235,6 +301,52 @@
           })
         }));
       },
+      selectCatchments (catchments) {
+        // Style a feature based on selected secondary catchment name
+        // catchments = ['X3', 'X4', ...]
+        for (let f = 0; f < this.selectedFeatures.length; f++) {
+          this.selectedFeatures[f].setStyle(undefined);
+        }
+        this.selectedFeatures = [];
+        if (catchments.length === 0) {
+          // this.map.getView().fit(this.defaultExtent);
+          return;
+        }
+        let extent = Extent.createEmpty();
+        for (let i = 0; i < catchments.length; i++) {
+          let catchment = catchments[i];
+          let features = this.featureDict[catchment];
+          for (let f = 0; f < features.length; f++) {
+            let feature = features[f];
+            feature.setStyle(this.selectedStyle);
+            this.selectedFeatures.push(feature);
+            Extent.extend(extent, feature.getGeometry().getExtent());
+          }
+        }
+        this.map.getView().fit(extent);
+      },
+      toggleSelectedStationsByStationNames (selectedStationNames, unselectedStationNames) {
+        let self = this;
+        this.stationsVectorLayer.getSource().forEachFeature(function (feature) {
+          let station = feature.get(self.keys.station);
+          const index = self.selectedStations.indexOf(station);
+          if (selectedStationNames.indexOf(station.toString()) !== -1) {
+            console.log('Yes Its A Match');
+            feature.set(self.keys.selected, true);
+            feature.setStyle(self.stationsSelectedStyle);
+            self.map.getView().fit(feature.getGeometry(), { 'maxZoom': 12 });
+            if (index === -1) {
+              self.selectedStations.push(station);
+            }
+          } else if (unselectedStationNames.indexOf(station.toString()) !== -1) {
+            feature.set(self.keys.selected, false);
+            feature.setStyle(self.stationsDefaultStyle);
+            if (index > -1) {
+              self.selectedStations.splice(index, 1);
+            }
+          }
+        });
+      },
       selectStation (pixel) {
         // Select and style stations from map based on ol.pixel
         let content = document.getElementById('popup-content');
@@ -242,11 +354,19 @@
         self.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
           let station = feature.get(self.keys.station);
           let isStationSelected = feature.get(self.keys.selected);
+          if (!self.connectedToTree) {
+            // Just show popup
+            content.innerHTML = `<p>${station}</p>`;
+            self.overlay.setPosition(feature.getGeometry().getCoordinates());
+            console.log('not connected to tree');
+            return false;
+          }
+          if (!station) return false;
           if (!isStationSelected) {
             feature.set(self.keys.selected, true);
             feature.setStyle(self.stationsSelectedStyle);
             self.selectedStations.push(station);
-            content.innerHTML = `<p>${station.split(' ')[0]}</p>`;
+            content.innerHTML = `<p>${station}</p>`;
             self.overlay.setPosition(feature.getGeometry().getCoordinates());
           } else {
             feature.set(self.keys.selected, false);
@@ -259,6 +379,35 @@
           self.$bus.$emit('stationSelectedFromMap', station, !isStationSelected);
           return true;
         });
+      },
+      getCatchmentsData () {
+        // Return catchment data as dict of dict
+        // e.g {'X': {'X2': { 'X23': ['X231']}}}
+        let catchmentsData = {};
+        let layers = this.layerGroup.getLayers().getArray();
+        for (let i = 0; i < layers.length; i++) {
+          let layer = layers[i];
+          let features = layer.getSource().getFeatures();
+          for (let f = 0; f < features.length; f++) {
+            let feature = features[f];
+            let catchmentName = feature.get('NAME');
+            let secondaryCatchmentName = catchmentName.slice(0, 2);
+            // Store feature in local dictionary
+            if (!this.featureDict[secondaryCatchmentName]) {
+              this.featureDict[secondaryCatchmentName] = [feature];
+            } else {
+              this.featureDict[secondaryCatchmentName].push(feature);
+            }
+            if (!catchmentsData.hasOwnProperty(secondaryCatchmentName)) {
+              catchmentsData[secondaryCatchmentName] = [];
+            }
+          }
+        }
+        let orderedCatchmentsData = {};
+        Object.keys(catchmentsData).sort().forEach(function (key) {
+          orderedCatchmentsData[key] = catchmentsData[key];
+        });
+        return orderedCatchmentsData;
       }
     }
   };

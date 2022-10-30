@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios';
+import VueAxios from 'vue-axios'
 import vSelect from 'vue-select';
 import $ from 'jquery';
 import 'ol/ol.css';
@@ -12,6 +13,7 @@ import 'vue-select/dist/vue-select.css';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.css';
 import 'material-design-icons/iconfont/material-icons.css';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
+import '@knight-lab/timelinejs/dist/css/timeline.css';
 import Multiselect from 'vue-multiselect';
 import './static/css/custom.css';
 import '../utilities/helpers.js';
@@ -35,7 +37,7 @@ Vue.component('v-select', vSelect);
 Vue.component('multiselect', Multiselect);
 // tslint:disable-next-line: no-unused-expression
 /* eslint-disable no-new */
-
+Vue.use(VueAxios, axios);
 new Vue({
   el: '#app',
   router,

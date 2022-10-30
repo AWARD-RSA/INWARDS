@@ -34,14 +34,15 @@
                     <button id="home" class="btn inwards_button text-left" style="width: 100%; display:none;" @click="goHome()" type="button">Home<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="unverified" class="btn inwards_button text-left" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="wqDash" class="btn inwards_button text-left" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="knpDash" class="btn inwards_button text-left" style="width: 100%" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="healthDash" class="btn inwards_button text-left" style="width: 100%" @click="goToHealthDashboard()" type="button">WQ Health Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="knpDash" class="btn inwards_button text-left" style="width: 100%" @click="goToKnpDashboard()" type="button">KNP Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="iucmaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Hydro Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="iucmaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToIUCMAWqDashboard()" type="button">IUCMA WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="userDash" class="btn inwards_button text-left" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="verifiedDash" class="btn inwards_button text-left" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="fishDash" class="btn inwards_button text-left" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                     <button id="invertDash" class="btn inwards_button text-left" style="width: 100%" @click="goToInvertDashboard()" type="button">Invert Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="ebaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToEbaDashboard()" type="button">EBA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="ebaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToEbaDashboard()" type="button">Spatial Risk Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
                   </div>
                 </div>
                 </div>
@@ -62,6 +63,7 @@
             <div><img src="../../assets/fbis_logo.png" alt=""></div>
             <div><img src="../../assets/kartoza.png" alt=""></div>
             <div><img src="../../assets/frc.svg" alt=""></div>
+            <div><img src="../../assets/wrc.jpg" alt=""></div>
           </div>
         </div>
     </div>
@@ -74,6 +76,7 @@
       </div>
       <div class="reset-application-data-container" style="position: absolute; bottom: 0; margin-bottom: 50px; margin-left: 20px;">
         <div id='reset' style="display:none;" class="btn inwards_button" v-on:click="resetApplicationData">Reset application data</div>
+        <div id='adminDash' style="display:none;" class="btn inwards_button" v-on:click="goAdminDash">Admin Dashboard</div>
       </div>
     </div>
 </template>
@@ -108,7 +111,7 @@
         layers: [
           new TileLayer({
             source: new XYZ({
-              url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+              url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'
             })
           })
         ],
@@ -133,11 +136,11 @@
       // highlight it temporarily
       let highlightStyle = new Style({
         stroke: new Stroke({
-          color: [255, 0, 0, 0.6],
+          color: [76, 175, 80, 0.6],
           width: 2
         }),
         fill: new Fill({
-          color: [255, 0, 0, 0.2]
+          color: [76, 175, 80, 0.4]
         }),
         zIndex: 1
       });
@@ -161,11 +164,11 @@
       // When map selected update the style
       let selectedStyle = new Style({
         stroke: new Stroke({
-          color: [76, 175, 80, 0.6],
+          color: [76, 97, 174, 0.9],
           width: 2
         }),
         fill: new Fill({
-          color: [76, 175, 80, 0.2]
+          color: [76, 97, 174, 0.8]
         }),
         zIndex: 1
       });
@@ -319,8 +322,14 @@
       goToEbaDashboard () {
         router.push({ path: 'eba-dashboard' });
       },
+      goToHealthDashboard () {
+        router.push({ path: 'wq-health-dashboard' });
+      },
       goHome () {
         router.push({ path: '/' });
+      },
+      goAdminDash () {
+        router.push({ path: 'admin-dashboard' });
       },
       resetApplicationData (e) {
         stateStore.clearAll();

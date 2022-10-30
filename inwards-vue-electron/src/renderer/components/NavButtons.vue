@@ -8,6 +8,7 @@
     <button id="userDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="verifiedDash" class="btn inwards_button" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="fishDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+    <button id="adminDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToadminDashboard()" type="button"><i class="fa fa-bar-chart" aria-hidden="true"></i>UWASP Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
   </div>
 </template>
 <script>
@@ -40,6 +41,9 @@
       goToFishDashboard () {
         router.push({ path: 'fish-dashboard' });
       },
+      goToadminDashboard () {
+        router.push({ path: 'admin-dashboard' });
+      },     
       goHome () {
         router.push({ path: '/' });
       }

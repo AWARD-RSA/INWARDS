@@ -10,6 +10,11 @@ import FishDashboard from '@/components/FishDashboard/Dashboard.vue'
 import InvertDashboard from '@/components/InvertDashboard/Dashboard.vue'
 import EbaDashboard from '@/components/EbaDashboard/Dashboard.vue'
 import IucmaWqDashboard from '@/components/IucmaWaterQuality/Dashboard.vue'
+import WQHealthDashboard from '@/components/WQHealthDashboard/Dashboard.vue'
+import EffectsTable from '@/components/WQHealthDashboard/EffectsTable.vue'
+import LimitsTable from '@/components/WQHealthDashboard/LimitsTable.vue'
+import AdminDashboard from '@/components/AdminDashboard/Dashboard.vue'
+import UserSupport from '@/components/UserSupport/Dashboard.vue'
 
 Vue.use(Router)
 
@@ -66,6 +71,31 @@ export default new Router({
       path: '/iucma-wq-dashboard',
       name: 'iucma-wq-dashboard-page',
       component: IucmaWqDashboard
+    },
+    {
+      path: '/wq-health-dashboard',
+      name: 'wq-health-dashboard-page',
+      component: WQHealthDashboard
+    },
+    {
+      path: '/naratives-dashboard',
+      name: 'naratives-dashboard-page',
+      component: EffectsTable
+    },
+    {
+      path: '/limits-dashboard',
+      name: 'limits-dashboard-page',
+      component: LimitsTable
+    },
+    {
+      path: '/admin-dashboard',
+      name: 'admin-dashboard-page',
+      component: AdminDashboard
+    },
+    {
+      path: '/user-support',
+      name: 'user-support-page',
+      component: UserSupport
     },
     {
       path: '*',

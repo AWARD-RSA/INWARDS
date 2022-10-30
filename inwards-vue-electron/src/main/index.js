@@ -85,9 +85,14 @@ menu.append(new MenuItem({
   label: 'Options',
   submenu: [
     {
+      label: 'Admin Dashboard',
+      click: () => realTime('adminDash')
+    },
+    {
       label: 'Reset Application',
       click: () => realTime('reset')
-    }]
+    }
+  ]
 }));
 
 
@@ -128,7 +133,7 @@ function createWindow() {
   /**
    * Initial window options
    */
-  mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
     backgroundColor: '#fff',
     width: 960,
     height: 540,

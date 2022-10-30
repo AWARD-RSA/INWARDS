@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">RIVER MANAGEMENT COMMUNICATION LOGSHEET KNP</h5>
+          <img class="modal-title" src="../../assets/knp.png" style="width: 5%;"><h5 class="modal-title">RIVER MANAGEMENT COMMUNICATION LOGSHEET KNP</h5>
         </div>
         <div class="modal-body">
          <div class="row">
@@ -25,9 +25,9 @@
           <div class="form-group">
             <table class="table">
 			<thead class="inwards_card">
-				<tr style="color: white; font-size: 1rem;">
+				<tr style="color: white; font-size: 0.8rem;">
 					<th> Management Problem</th>
-                    <th> Date</th>
+          <th> Date</th>
 					<th> Management Options</th>
 					<th> Management Action</th>
 					<th> Result</th>
@@ -35,15 +35,15 @@
 					<th> Attachments</th>
 				</tr>
 			</thead>
-			<tr v-for="log in logs" :key="log" style="font-size: 0.7rem;">
+			<tr v-for="log in logs" :key="log.id" style="font-size: 0.7rem;">
                     <td>{{ log.mg_problems }}</td>
                     <td>{{ log.date }}</td>
                     <td>{{ log.mg_options }}</td>
                     <td>{{ log.mg_actions }}</td>
                     <td>{{ log.result }}</td>
-                    <td>{{ log.image }}</td>
-                    <td>{{ log.attachments }}</td>
-                    <td>{{ log.No_Readings }}</td>
+                    <td>{{ log.station }}{{ log.site_desc}}<br><img :src="log.image" height="50px"></td>
+                    <td><a :href="log.attachments" download :style="log.hidden"><i class="fa fa-download fa-6"></i>Download</a></td>
+                    
 			</tr>
 		</table>
           </div>
