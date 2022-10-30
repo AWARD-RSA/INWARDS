@@ -29,6 +29,7 @@
 </template>
 
 <script type="text/javascript">
+const { dialog } = require('electron').remote;
 export default {
 data () {
   return {
@@ -39,8 +40,18 @@ created () {
   this.$http.get('https://uwasp.award.org.za/app_json/uwasp_dash/uwasp_paramters.php')
     .then(
       response => {
-        this.stations = response.data;
-        console.log(this.stations);
+        if(response.data == false){
+          console.log("You have reached the error message");
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Real-time systems have been down for more than 7 days therefore water loss models cannot be run. Please be patient while the DWS technical staff attend to this issue',
+            buttons: ['OK']
+          });
+        }
+        else{
+          this.stations = response.data;
+          console.log(this.stations);
+        }
       })
     .catch(function (error) {
       console.log(error);

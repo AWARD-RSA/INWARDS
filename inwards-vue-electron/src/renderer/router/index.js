@@ -6,6 +6,7 @@ import UserDashboard from '@/components/UserDashboard/Dashboard.vue'
 import UmhlathuzeDashboard from '@/components/UmhlathuzeDashboard/Dashboard.vue'
 import DamDashboard from '@/components/DamDashboard/Dashboard.vue'
 import AdminDashboard from '@/components/AdminDashboard/Dashboard.vue'
+import UserSupport from '@/components/UserSupport/Dashboard.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -41,7 +42,12 @@ export default new Router({
       path: '/admin-dashboard',
       name: 'admin-dashboard-page',
       component: AdminDashboard
-    },   
+    },
+    {
+      path: '/user-support',
+      name: 'user-support-page',
+      component: UserSupport
+    },    
     {
       path: '*',
       redirect: '/'

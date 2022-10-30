@@ -1,8 +1,10 @@
 <template>
     <div>
       <StatusBar/>
-      <div class="container-fluid">
+      <div class="container" style="max-width: 95%;">
         <div class="v-space"></div>
+        <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">User Metrics</h5></div>
+        <hr>
         <div class="row no-gutters">
           <div class="col-md-2">
               <div class="card rounded-0" style="width: 100%;">
@@ -48,8 +50,20 @@
             </div>
         </div>
         <hr>
-        <div class="row no-gutters">
-          <div class="col-md-12" style="background: #fff; padding-bottom: 50px; padding-left: 10px; padding-right: 10px; overflow: auto;">
+        <br>
+        <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Support Tickets</h5></div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12" style="overflow: auto;">
+            <SupportTickets ref="supportComponent"/>
+          </div>
+        </div>
+        <br>
+        <hr>
+        <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">User Management</h5></div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12" style="overflow: auto;">
             <UserData ref="userdataComponent"/>
           </div>
         </div>
@@ -70,6 +84,7 @@
     import Verified from './Verified';
     import StationsOnline from './StationsOnline';
     import Users from './Users';
+    import SupportTickets from './SupportTickets';
   
     export default {
     components: {
@@ -82,6 +97,7 @@
         Sectors,
         Verified,
         StationsOnline,
+        SupportTickets,
         Users
     },
       data () {

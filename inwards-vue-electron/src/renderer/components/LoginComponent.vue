@@ -51,10 +51,11 @@
                                           <div class="form-group">
                                             <label for="sectorSelect">Sector</label>
                                             <select class="form-control rounded-0" id="sectorSelect" v-model="sectorSelect">
-                                              <option>Industry</option>
+                                              <option>Academia</option>
                                               <option>Agriculture</option>
-                                              <option>Government</option>
                                               <option>Civil society</option>
+                                              <option>Government</option>
+                                              <option>Industry</option>
                                               <option>Other</option>
                                             </select>
                                           </div>

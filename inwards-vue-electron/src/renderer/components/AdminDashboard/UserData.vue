@@ -18,19 +18,19 @@
         </thead>
         <tbody>
         <tr v-for="station in stations" v-bind:key="station.Station" style="font-size: 0.9rem;">
-                <td>{{ station.id }}</td>
-                <td>{{ station.first_name }}</td>
-                <td>{{ station.last_name }}</td>
-                <td>{{ station.designation }}</td>        
-                <td>{{ station.sector }}</td>     
-                <td>{{ station.reason }}</td>        
-                <td>{{ station.email }}</td>         
-                <td>{{ station.registration_date }}</td>                
+                <td style="background-color: white;">{{ station.id }}</td>
+                <td style="background-color: white;">{{ station.first_name }}</td>
+                <td style="background-color: white;">{{ station.last_name }}</td>
+                <td style="background-color: white;">{{ station.designation }}</td>        
+                <td style="background-color: white;">{{ station.sector }}</td>     
+                <td style="background-color: white;">{{ station.reason }}</td>        
+                <td style="background-color: white;">{{ station.email }}</td>         
+                <td style="background-color: white;">{{ station.registration_date }}</td>                
 
 
-            <td>{{ station.access_count }}</td>
-            <td>{{ station.last_request }}</td>
-            <td>
+            <td style="background-color: white;">{{ station.access_count }}</td>
+            <td style="background-color: white;">{{ station.last_request }}</td>
+            <td  style="background-color: white;">
                   <select class="custom-select" style="width:130px;" id="privilege">
                     <option v-if="station.privilege === 'Super Admin'" selected>Super Admin</option>
                     <option v-else>Super Admin</option>
@@ -38,11 +38,11 @@
                     <option v-if="station.privilege === 'Admin'" selected>Admin</option>
                     <option v-else>Admin</option>
                     
-                    <option v-if="station.privilege === 'Operations'" selected>Operations</option>
-                    <option v-else>Operations</option>
-
                     <option v-if="station.privilege === 'Technician'" selected>Technician</option>
                     <option v-else>Technician</option>
+
+                    <option v-if="station.privilege === 'Operations'" selected>Operations</option>
+                    <option v-else>Operations</option>
 
                     <option v-if="station.privilege === 'General'" selected>General</option>
                     <option v-else>General</option>
@@ -51,7 +51,7 @@
 
             <button class="btn inwards_button" @click="updateAdmin(station.id)" type="button" style="width: 30%">Update</button>
           </td>
-          <td>
+          <td style="background-color: white;">
 
             <button v-if="station.accepted === 'Accept User'" class="btn inwards_button" @click="updateStatus(station.user_code, station.email)" type="button" :style="station.hidden">Accept User</button>
             <button v-else class="btn inwards_button" @click="removeUser(station.id)" type="button" :style="station.hidden">Remove User</button>
@@ -86,12 +86,7 @@ stateStore.getState(
       response => {
         this.stations = response.data;
         if(this.stations == false){
-          dialog.showMessageBox(null, {
-              type: 'info',
-              message: 'You are not an admin!',
-              buttons: ['OK']
-            });
-            router.push({ path: '/' });
+          router.push({ path: 'user-support' });
         }
         console.log(this.stations);
 
