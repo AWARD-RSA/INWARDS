@@ -31,18 +31,18 @@
                 <div class="row">
                 <div class="col-md-12">
                   <div class="btn-group-vertical" style="width:100%">
-                    <button id="home" class="btn inwards_button text-left" style="width: 100%; display:none;" @click="goHome()" type="button">Home<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="unverified" class="btn inwards_button text-left" style="width: 100%" @click="saveSelection()" type="button">Unverified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="wqDash" class="btn inwards_button text-left" style="width: 100%" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="healthDash" class="btn inwards_button text-left" style="width: 100%" @click="goToHealthDashboard()" type="button">WQ Health Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="knpDash" class="btn inwards_button text-left" style="width: 100%" @click="goToKnpDashboard()" type="button">KNP Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="iucmaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToIUCMADashboard()" type="button">IUCMA Hydro Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="iucmaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToIUCMAWqDashboard()" type="button">IUCMA WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="userDash" class="btn inwards_button text-left" style="width: 100%" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="verifiedDash" class="btn inwards_button text-left" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="fishDash" class="btn inwards_button text-left" style="width: 100%" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="invertDash" class="btn inwards_button text-left" style="width: 100%" @click="goToInvertDashboard()" type="button">Invert Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
-                    <button id="ebaDash" class="btn inwards_button text-left" style="width: 100%" @click="goToEbaDashboard()" type="button">Spatial Risk Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px; float : right; padding-top: 0.4rem;"></i></button>
+                    <button id="home" class="btn inwards_button btn-labeled text-left" style="width: 100%; display:none;" @click="goHome()" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Home<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="saveSelection()" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Real-time Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="wqDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToWqDashboard()" type="button"><span class="btn-label"><i class="fa fa-flask" aria-hidden="true"></i></span>DWS WQ Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="healthDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToHealthDashboard()" type="button"><span class="btn-label"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>WQ Health Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="knpDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToKnpDashboard()" type="button"><span class="btn-label"><i class="fa fa-paw" aria-hidden="true"></i></span>KNP Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="iucmaDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToIUCMADashboard()" type="button"><span class="btn-label"><i class="fa fa-area-chart" aria-hidden="true"></i></span>IUCMA EWR Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="iucmaDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToIUCMAWqDashboard()" type="button"><span class="btn-label"><i class="fa fa-bullseye" aria-hidden="true"></i></span>IUCMA RQO Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="verifiedDash" class="btn inwards_button text-left" style="width: 100%; display:none;" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Verified Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="fishDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToFishDashboard()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-fish-fins" /></span>Fish Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="invertDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToInvertDashboard()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-bug" /></span>Invert Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="ebaDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToEbaDashboard()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-map" /></span>Spatial Risk Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="userDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToUserDefinedDashboard()" type="button"><span class="btn-label"><i class="fa fa-user" aria-hidden="true"></i></span>User Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
                 </div>
                 </div>
@@ -95,7 +95,9 @@
   import stateStore from '../../store/state_handler';
   import router from '../../router/index';
   import StatusBar from '../StatusBar';
-  const { getCurrentWindow } = require('electron').remote;
+
+
+
   export default {
     data () {
       return {

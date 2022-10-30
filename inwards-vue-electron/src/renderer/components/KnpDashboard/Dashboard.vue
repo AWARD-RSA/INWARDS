@@ -29,27 +29,25 @@
                   </div>
                 </div>
               </div>
-                <div class="row">
-                <div class="col-md-12">
-                <button class="btn inwards_button" type="button" style="width: 100%" @click="updateCharts()">
-                  <i class="fa fa-line-chart"></i>Update Dashboard
-                </button>
+                <div class="row no-gutters">
+                <div class="col-md-12" style="padding: 1px; background: none;">
+                <button class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="updateCharts()" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Update<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                 </div>
               </div>
-              <div class="row" style="block: none;">
+              <div class="row no-gutters">
                 <div class="col-md-6" style="padding: 1px; background: none;">
-                  <button id="viewKNPLogs" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showRiverLog()" type="button"><span class="btn-label"><i class="fa fa-book"></i></span>View River Log Book<i class="fa fa-eye" style="padding-left: 0px;"></i></button>
+                  <button id="viewKNPLogs" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showRiverLog()" type="button"><span class="btn-label"><i class="fa fa-book"></i></span>View River Log Book<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right;"></i></button>
                 </div>
-                <div class="col-md-6">
-                  <button id="submitRiverLog" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showOperationalReserve()" type="button"><span class="btn-label"><i class="fa fa-pencil-square-o"></i></span>Submit Log<i class="fa fa-upload" style="padding-left: 0px;"></i></button>
+                <div class="col-md-6" style="padding: 1px; background: none;">
+                  <button id="submitRiverLog" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showOperationalReserve()" type="button"><span class="btn-label"><i class="fa fa-pencil-square-o"></i></span>Submit Log<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right;"></i></button>
                 </div>
               </div>
-              <div class="row" style="block: none;">
+              <div class="row no-gutters">
                 <div class="col-md-6" style="padding: 1px; background: none;">
-                  <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showSubmitForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Submit Plate Reading<i class="fa fa-upload" style="padding-left: 0px;"></i></button>
+                  <button id="unverified" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showSubmitForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Submit Plate Reading<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right;"></i></button>
                 </div>
-                <div class="col-md-6">
-                  <button id="viewPlates" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showPlatesForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>View Plate Submissions<i class="fa fa-eye" style="padding-left: 0px;"></i></button>
+                <div class="col-md-6" style="padding: 1px; background: none;">
+                  <button id="viewPlates" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showPlatesForm()" type="button"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Plate Submissions<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right;"></i></button>
                 </div>
               </div>
             </div>

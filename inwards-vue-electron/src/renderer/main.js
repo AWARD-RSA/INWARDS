@@ -23,6 +23,18 @@ import router from './router/index'
 import store from './store/index'
 import db from './datastore';
 import sqlite from './sqlite';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faBug, faFishFins, faMap, faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+const { getCurrentWindow } = require('electron').remote;
+library.add(faUserSecret);
+library.add(faFishFins);
+library.add(faMap);
+library.add(faBug);
+library.add(faUser);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 const path = require('path');
 const isDev = process.env.NODE_ENV === 'development'
 Vue.http = Vue.prototype.$http = axios;

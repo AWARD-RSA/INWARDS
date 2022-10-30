@@ -1,6 +1,16 @@
 <template>
   <div class="card rounded-0 box" v-bind:style="styleObject">
-    <div class="card-header inwards_card">{{ chartTitle }}
+    <div class="card-header inwards_card">
+   <div class="row">
+    <div class="col-md-12">  
+    <h6 style="color: white; margin-top: 10px; width: 70%; float: left;" class="chart-title">{{ chartTitle }}</h6>
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
+        <div class="btn-group mr-2" role="group" aria-label="First group">          
+              <button type="button" class="btn inwards_button_group" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="fa fa-info" style="padding-right: 10px;"></i></button>      
+            </div>
+      </div>
+    </div>
+    </div>
     </div>
     <div class="card-body chart-container">
       <section v-if="errored">
@@ -60,6 +70,9 @@ export default {
       // entire view has been rendered
       self.mounted = true;
     });
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
   },
   methods: {
     removed () {
