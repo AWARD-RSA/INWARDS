@@ -10,8 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Timing of annual extremes: Julian date of each annual 1-day minimum',
+        chartTitle: 'Julian date of each annual 1-day minimum',
         chartId: 'julianmin-flow-timeseries',
+        dataText: '<ol><li>Predictability and avoidability of stress for organisms</li><li>Spawning cues for migratory fish</li></ol>',
         baseUrl: 'https://inwards.award.org.za/app_json/julian_low.php'
       };
     },

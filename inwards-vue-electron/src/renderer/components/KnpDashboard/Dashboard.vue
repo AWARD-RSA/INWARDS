@@ -39,7 +39,7 @@
                   <button id="viewKNPLogs" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showRiverLog()" type="button"><span class="btn-label"><i class="fa fa-book"></i></span>View River Log Book<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right;"></i></button>
                 </div>
                 <div class="col-md-6" style="padding: 1px; background: none;">
-                  <button id="submitRiverLog" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="showOperationalReserve()" type="button"><span class="btn-label"><i class="fa fa-pencil-square-o"></i></span>Submit Log<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right;"></i></button>
+                  <button id="submitLog" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="submitRiverLog()" type="button"><span class="btn-label"><i class="fa fa-pencil-square-o"></i></span>Submit Log<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right;"></i></button>
                 </div>
               </div>
               <div class="row no-gutters">
@@ -81,15 +81,16 @@
             <div class="col-md-6" style="padding-left: 2px;">
                   <SabieChart ref="sabieComponent" style="margin-top: 5px;"/>
               </div>
+              <div class="col-md-6">
+                  <OliChart ref="oliComponent" style="margin-top: 5px;"/>
+              </div>
             <div class="col-md-6">
               <BalChart ref="balComponent" style="margin-top: 5px;"/>
               </div>
             <div class="col-md-6" style="padding-left: 2px;">
                   <LetChart ref="letComponent" style="margin-top: 5px;"/>
               </div>
-              <div class="col-md-6">
-                  <OliChart ref="oliComponent" style="margin-top: 5px;"/>
-              </div>
+
               <div class="col-md-6" style="padding-left: 2px;">
                   <LimChart ref="limComponent" style="margin-top: 5px;"/>
               </div>
@@ -102,7 +103,8 @@
     <RiverLog ref="logComponent" style="margin-top: 5px;"/>
     <SubmitForm ref="submitComponent" style="margin-top: 5px;"/>
     <PlateSubmissions ref="submissionsComponent" style="margin-top: 5px;"/>
-    <OperationalReserve ref="operationalComponent" style="margin-top: 5px;"/>
+    <SubmitLog ref="submitLogComponent" style="margin-top: 5px;"/>
+    <UpdateLog ref="submitLogUpdateComponent" style="margin-top: 5px;"/>
   </div>
 </template>
 <style>
@@ -135,7 +137,7 @@
   import NavButtons from '../../components/NavButtons';
   import MapDashboard from './MapDashboard';
   import ComplianceTable from './ComplianceTable';
-  import OperationalReserve from './OperationalReserve';
+  import SubmitLog from './SubmitLog';
   import RiverLog from './RiverLog';
   import CrocChart from './CrocChart';
   import SabieChart from './SabieChart';
@@ -148,6 +150,7 @@
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
   import SubmitForm from './SubmitForm';
+  import UpdateLog from './UpdateLog';
   import PlateSubmissions from './PlateSubmissions';
   import stateStore from '../../store/state_handler';
   import $ from 'jquery';
@@ -169,9 +172,10 @@
       BalChart,
       LimChart,
       RiverLog,
-      OperationalReserve,
+      SubmitLog,
       StatusBar,
       SubmitForm,
+      UpdateLog,
       PlateSubmissions
     },
     data () {
@@ -190,7 +194,7 @@
       let map = this.$refs.mapDashboard.map;
       this.mapDashboardRef.connectedToTree = false;
       let startDate = new Date();
-      startDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+      startDate = new Date(startDate.getFullYear(), (startDate.getMonth()-1), 1);
       let endDate = this.formatDate(new Date());
       this.$refs.letComponent.displayChart('chartComponent-unverified-timeseries-B8H008H3T', ['B8H008H3T'], this.formatDate(startDate), this.formatDate(endDate));
       this.$refs.crocComponent.displayChart('chartComponent-unverified-timeseries-X2H016FW', ['X2H016FW'], this.formatDate(startDate), this.formatDate(endDate));
@@ -266,8 +270,11 @@
       showRiverLog () {
         this.$refs.logComponent.showLogModal();
       },
-      showOperationalReserve () {
-        this.$refs.operationalComponent.showOperationalModal();
+      submitRiverLog () {
+        this.$refs.submitLogComponent.submitRiverLog();
+      },
+      submitRiverLogUpdate (id) {
+        this.$refs.submitLogUpdateComponent.submitLogUpdate(id);
       },
       addKnpLayer (map) {
         const knpJson = require('../../assets/knp.json');

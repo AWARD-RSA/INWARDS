@@ -12,6 +12,7 @@
       return {
         chartTitle: 'Number of high pulses within each water year',
         chartId: 'high-pulse-timeseries',
+        dataText: '<ol><li>Frequency and magnitude of soil moisture stress for plants</li><li>Availability of floodplain habitat for aquatic organisms</li><li>Effects of bedload transport and channel sediment distribution, and duration of substrate disturbance</li></ol>',
         baseUrl: 'https://inwards.award.org.za/app_json/high_flow_pulses.php'
       };
     },

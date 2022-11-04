@@ -12,6 +12,7 @@
       return {
         chartTitle: 'Observations Radar Chart',
         chartId: 'fish-radar',
+        dataText: '',
         baseUrl: 'https://inwards.award.org.za/app_json/fish_radar.php'
       };
     },

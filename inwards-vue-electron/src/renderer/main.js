@@ -52,6 +52,7 @@ Vue.component('multiselect', Multiselect);
 Vue.use(VueAxios, axios);
 new Vue({
   el: '#app',
+  vuetify,
   router,
   store,
   components: { App },

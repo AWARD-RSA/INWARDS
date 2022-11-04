@@ -12,6 +12,7 @@
       return {
         chartTitle: 'Fish Duration Curve',
         chartId: 'load-duration-curve',
+        dataText: '',
         baseUrl: 'https://inwards.award.org.za/app_json/fish_duration.php'
       };
     },

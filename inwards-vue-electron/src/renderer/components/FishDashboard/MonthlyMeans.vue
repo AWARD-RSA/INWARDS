@@ -10,8 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude of monthly water conditions : Monthly Means',
+        chartTitle: 'Monthly Means',
         chartId: 'low-flow-timeseries',
+        dataText: '<ol><li>Availability of habitat for aquatic organisms </li><li>Availability of soil moisture for plants</li><li>Availability of water</li><li>Reliability of water supplies for wildlife</li><li>Effects of water temperature and dissolved oxygen</li></ol>',
         baseUrl: 'https://inwards.award.org.za/app_json/monthly_stats.php'
       };
     },

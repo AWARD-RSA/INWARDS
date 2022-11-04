@@ -12,6 +12,7 @@
       return {
         chartTitle: 'Mean duration of high pulses (days)',
         chartId: 'high-duration-timeseries',
+        dataText: '<ol><li>Frequency and magnitude of soil moisture stress for plants</li><li>Availability of floodplain habitat for aquatic organisms</li><li>Effects of bedload transport and channel sediment distribution, and duration of substrate disturbance</li></ol>',
         baseUrl: 'https://inwards.award.org.za/app_json/high_flow_pulse_duration.php'
       };
     },

@@ -3,8 +3,11 @@
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <img class="modal-title" src="../../assets/knp.png" style="width: 5%;"><h5 class="modal-title">RIVER MANAGEMENT COMMUNICATION LOGSHEET KNP</h5>
-        </div>
+            <h5><img class="modal-title" src="../../assets/knp.png" style="width: 10%;">River Communications Logbook</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
         <div class="modal-body">
          <div class="row">
                              <div class="col-sm-6" style="padding-right: 2px;">
@@ -33,6 +36,7 @@
 					<th> Result</th>
 					<th> Image</th>
 					<th> Attachments</th>
+          <th>Update Log</th>
 				</tr>
 			</thead>
 			<tr v-for="log in logs" :key="log.id" style="font-size: 0.7rem;">
@@ -41,9 +45,9 @@
                     <td>{{ log.mg_options }}</td>
                     <td>{{ log.mg_actions }}</td>
                     <td>{{ log.result }}</td>
-                    <td>{{ log.station }}{{ log.site_desc}}<br><img :src="log.image" height="50px"></td>
-                    <td><a :href="log.attachments" download :style="log.hidden"><i class="fa fa-download fa-6"></i>Download</a></td>
-                    
+                    <td><b>{{ log.station }}</b>{{ log.site_desc}}<br><hr><br><img class="thumb-upload center" :src="log.image"></td>
+                    <td><a :href="log.attachments" download :style="log.attach_hidden"><i class="fa fa-download fa-6" :style="log.attach_hidden"></i>Download</a></td>
+                    <td><button class="btn inwards_button" @click="editRecord(log.id)" type="button">Update</button></td>        
 			</tr>
 		</table>
           </div>
@@ -77,6 +81,10 @@
         logModal.modal({
           keyboard: true
         });
+      },
+      editRecord (id) {
+        $('#log-modal').modal('hide');
+        this.$parent.submitRiverLogUpdate(id);
       }
     }
   };

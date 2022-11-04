@@ -10,8 +10,9 @@
     extends: ChartContainer,
     data () {
       return {
-        chartTitle: 'Magnitude and duration of annual extremes: Number of Zero Flow Days',
+        chartTitle: 'Number of Zero Flow Days',
         chartId: 'zero-flow-timeseries',
+        dataText: '<ol><li>Balance of competitive and stress tolerant organisms</li><li>Creation of sites for plant colonization</li><li>Structure of river channel morphology and physical habitat conditions</li><li>Soil moisture stress in plants</li><li>Dehydration in wildlife</li><li>Duration of stressful conditions</li><li>Distribution of plant communities</li></ol>',
         baseUrl: 'https://inwards.award.org.za/app_json/zero_flow.php'
       };
     },

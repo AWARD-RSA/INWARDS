@@ -115,8 +115,8 @@
         let button = $(e.target);
         button.prop('disabled', true);
         button.html(`Submitting...`);
-        console.log('https://uwasp.award.org.za/app_json/admin/support_request.php?email=' + this.regEmailAddress + '&first_name=' + this.firstName + '&last_name=' + this.lastName + '&request_select=' + this.supportSelect + '&support_message=' + this.supportMessage);
-        $.get('https://uwasp.award.org.za/app_json/admin/support_request.php?email=' + this.regEmailAddress + '&first_name=' + this.firstName + '&last_name=' + this.lastName + '&request_select=' + this.supportSelect + '&support_message=' + this.supportMessage, function (data) {
+        console.log('https://inwards.award.org.za/app_json/admin/support_request.php?email=' + this.regEmailAddress + '&first_name=' + this.firstName + '&last_name=' + this.lastName + '&request_select=' + this.supportSelect + '&support_message=' + this.supportMessage);
+        $.get('https://inwards.award.org.za/app_json/admin/support_request.php?email=' + this.regEmailAddress + '&first_name=' + this.firstName + '&last_name=' + this.lastName + '&request_select=' + this.supportSelect + '&support_message=' + this.supportMessage, function (data) {
           if (data === 'true') {
             dialog.showMessageBox(null, {
               type: 'info',

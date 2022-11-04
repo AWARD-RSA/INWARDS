@@ -12,6 +12,7 @@
       return {
         chartTitle: 'Discharge/Fish timeseries',
         chartId: 'fish-timeseries',
+        dataText: '',
         baseUrl: 'https://inwards.award.org.za/app_json/fish_timeseries.php'
       };
     },

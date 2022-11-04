@@ -62,8 +62,13 @@
             </div>
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
 
+          <hr>
           <div class="row no-gutters">
-            <div class="col-md-6">
+            <div class="col-md-12">
+            <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h2 style="color:white;">Indicators of Hydrologic Alteration (IHA)</h2></div>
+          <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h6 style="color:white;">Methodology based on <i href="https://www.conservationgateway.org/Documents/1996.pdf">Richter et.al. 1996</i>, Descriptors derived from <i href="https://www.blm.gov/sites/default/files/documents/files/Library_BLMResourceNote58.pdf">Swanson, 2002</i></h6></div>
+        </div>  
+          <div class="col-md-6">
                   <SiteOverview ref="siteComponent" style="margin-top: 5px;"/>
               </div>
               <div class="col-md-6" style="padding-left: 2px;">
@@ -72,14 +77,47 @@
             <div class="col-md-6" style="padding-left: 2px;">
                   <FishDuration ref="durationComponent" style="margin-top: 5px;"/>
               </div>
-
-            <div class="col-md-6">
+              <div class="col-md-6">
                   <FishTimeseries ref="timeseriesComponent" style="margin-top: 5px;"/>
               </div>
+              <hr>
+              <div class="col-md-12">
+                <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                  <div class="numberCircle">1</div></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Magnitude of monthly water conditions</h5></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">      
+                    <p style="color:white;">
+                    1. Mean value for each calendar month (12 parameters)
+                  </p>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
+
+                </div>
+             
+
 
                <div class="col-md-6" style="padding-left: 2px;">
                   <MonthlyMeans ref="monthlyComponent" style="margin-top: 5px;"/>
               </div>
+              <div class="col-md-6" style="padding-left: 2px;"></div>
+              <hr>
+              <div class="col-md-12">
+                <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                  <div class="numberCircle">2</div></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Magnitude and duration of annual extreme water conditions (mean daily flow)</h5></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                   <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                    <p style="color:white;">
+                    1. Annual 1-day minima, 2. Annual 3-day minima, 3. Annual 7-day minima, 4. Annual 30-day minima, 5. Annual 90-day minima, 6. Annual 1-day maxima, 7. Annual 3-day maxima, 8. Annual 7-day maxima, 9. Annual 30-day maxima, 10. Annual 90-day maxima, 11. Number of zero-flow days, 12. 7-day minima/mean for year
+                  </p>   
+                </div> 
+                <div class="col-md-1"></div>              
+                </div>
+                </div>
               <div class="col-md-6" style="padding-left: 2px;">
                   <LowFlowTimeseries ref="lowComponent" style="margin-top: 5px;"/>
               </div>
@@ -92,12 +130,40 @@
                <div class="col-md-6" style="padding-left: 2px;">
                   <BaseFlowIndex ref="baseComponent" style="margin-top: 5px;"/>
               </div>
+              <hr>
+              <div class="col-md-12">
+                <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                  <div class="numberCircle">3</div></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Timing of annual extreme water conditions</h5></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                   <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                    <p style="color:white;">
+                      1. Julian date of each annual 1-day maxima, 2. Julian date of each annual 1-day minima</p>   
+                </div> 
+                <div class="col-md-1"></div>              
+                </div>
+                </div>
                <div class="col-md-6" style="padding-left: 2px;">
                   <JulianMax ref="julianmaxComponent" style="margin-top: 5px;"/>
               </div>
                <div class="col-md-6" style="padding-left: 2px;">
                   <JulianMin ref="julianminComponent" style="margin-top: 5px;"/>
               </div>
+              <hr>
+              <div class="col-md-12">
+                <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                  <div class="numberCircle">4</div></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Frequency and duration of high and low pulses</h5></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                   <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                    <p style="color:white;">
+                      1. Number of low pulses within each year, 2. Mean duration of low pulses each year, 3. Number of high pulses within each year, 4. Mean duration of high pulses each year</p>   
+                </div> 
+                <div class="col-md-1"></div>              
+                </div>
+                </div>
                <div class="col-md-6" style="padding-left: 2px;">
                   <HighPulse ref="highpulseComponent" style="margin-top: 5px;"/>
               </div>
@@ -113,9 +179,22 @@
               <div class="col-md-6" style="padding-left: 2px;">
                   <FishBox ref="boxComponent" style="margin-top: 5px;"/>
               </div>
+              <hr>
+              <div class="col-md-12">
+                <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                  <div class="numberCircle">5</div></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;"><h5 style="color:white;">Rate and frequency of water condition changes</h5></div>
+                  <div class="row h-100 justify-content-center align-items-center" style="margin-bottom: 5px;">
+                   <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                      <p style="color:white;">1. Means of all positive differences between consecutive daily values, 2. Means of all negative differences, between consecutive daily values, 3. Number of hydrologic reversals</p>   
+                    </div> 
+                <div class="col-md-1"></div>              
+                </div>
+                </div>
               <br>
           </div>
-           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>     
+           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>
         </div>
       </div>
       <NavButtons/>

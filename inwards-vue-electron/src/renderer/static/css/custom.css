@@ -725,3 +725,15 @@ color: white;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+.thumb-upload{
+  max-height:180px;
+  max-width:200px;
+  height:auto;
+  width:auto;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}

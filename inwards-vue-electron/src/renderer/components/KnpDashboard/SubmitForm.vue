@@ -37,19 +37,20 @@
                         <label>Select station:</label>
                     </div>
                     <div class="col-sm-12">
-                    <div class="form-group">
-                        <select class="custom-select" style="width:130px;" id="station">
-                            <option>X2H016</option>
-                            <option>X3H021</option>
-                            <option>B7H015</option>
-                            <option>B7H026</option>
-                            <option>B8H008</option>
-                        </select>
-                        </div>
-                    
+                        <div class="form-group">
+                             <multiselect placeholder="Select Station" :options="stations" v-model="selectedStations" :multiple="false"></multiselect>
+                        </div>       
                   </div>
                   <div class="col-sm-12">
-                        <label>Plate Segment:</label>
+                        <label>Plate reading (m) <b>optional</b></label>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                        <multiselect placeholder="Optional: select plate reading" :options="gaugeHeights" v-model="selectedGaugeHeight" :multiple="false" @input="fetchDischarge()"></multiselect>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                        <label>Plate Segment <b>only if plate reading not entered</b>:</label>
                     </div>
                     <div class="col-sm-12">
                     <div class="form-group">
@@ -62,8 +63,15 @@
                             <option>6m</option>    
                         </select>
                         </div>
-                    
                          </div>
+                         <div class="col-sm-12">
+                            <label>Discharge<b>extracted from rating curve for site selected</b>:</label>
+                        </div>
+                         <div class="col-sm-12">
+                            <div class="form-group">
+                                <input placeholder="Height to discharge calculation" type="text" class="form-control" id="dischargeEstimate" disabled>
+                            </div>
+                            </div>
                         </div>
                     </div>
                     <hr>
@@ -76,6 +84,9 @@
                     </div>
                     <div class="col-md-6">
                         <button class="btn inwards_button btn-labeled" v-on:click="submitForm()"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Upload Gauge Plate Reading<i class="fa fa-upload" style="padding-left: 10px;"></i></button>
+                </div>
+                <div class="col-md-12">
+                  <v-progress-linear class="progress-bar progress-bar-striped progress-bar-animated" max="100" :value.prop="uploadPercentage" style="width: 100%"><strong>{{ Math.ceil(uploadPercentage) }}%</strong></v-progress-linear>
                 </div>
                 </div>  
                 </div>
@@ -93,6 +104,11 @@
   export default {
     data: function() {
         return {
+            stations: [],
+            uploadPercentage: 0,
+            selectedStations: null,
+            gaugeHeights: [],
+            selectedGaugeHeight: null,
             fileURL: '',
             fileName: '',
             userCode: '',
@@ -100,6 +116,7 @@
             successAlert: false,
             errorAlert: false,
             uploadedImage:'',
+            discharge: [],
         };
     },
     created () {
@@ -109,14 +126,29 @@
             console.log(this.userCode);
         }
         );
-    },   
+        this.$http.get('https://inwards.award.org.za/app_json/stations_all.php')
+        .then(
+          response => {
+            this.stations = response.data;
+            //console.log(this.stations);
+          })
+        .catch(function (error) {
+          console.log(error);
+        });
+        this.$http.get('https://inwards.award.org.za/app_json/gauge_heights.php')
+        .then(
+          response => {
+            this.gaugeHeights = response.data;
+            //console.log(this.stations);
+          })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },     
     methods: {
         showSubmitForm () {
-
-           
         let operationalModel = $('#operational-modal');
         var today  = new Date();
-
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
@@ -140,65 +172,12 @@
         if (s < 10) {
             s = '0' + s;
         }
-        //2014-12-08T15:43:00
-        //2022-10-23T07:08:35
-        //2022-10-23T7:5:47
         today = yyyy + '-' + mm + '-' + dd+'T'+H+':'+i+':'+s;
-
         console.log(today);
         document.getElementById('dateObserved').value = today;
         operationalModel.modal({
           keyboard: true
         });
-      },
-      submitServer(callback = null) {
-
-        let dateObserved = $('#dateObserved').val();
-        let station = $('#station').val();
-        let segment = $('#segment').val();
-
-        //let api = 'https://uwasp.award.org.za/app_json/uwasp_dash/stage.php?user_code=' + userCode + '&station=' + station + '&dateObserved=' + dateObserved + '&segment=' + segment;
-       
-        var bitmap = fs.createReadStream(this.fileURL);
-        //const image =  fs.readFile(this.fileURL, 'utf8', function(err, data) {       if (err) throw err;     console.log(data); });
-            // convert binary data to base64 encoded string
-        //var base64str =  Buffer(bitmap).toString('base64');
-       // console.log(base64str);
-        
-         let urlAPI = "https://inwards.award.org.za/app_json/upload_data/image.php";
-        // `form-data` library gives us a similar API in Node.js to the `FormData` interface in the browser
-        //var image = this.fileURL;
-        //let image = remote.app.getPath('userData')+ this.fileName;
-        console.log(remote.app.getPath('userData')+"\\"+this.fileName);
-        var  formData = new FormData();
-        
-
-        formData.append('image', bitmap);
-        let url = 'https://inwards.award.org.za/app_json/upload_data/image.php';
-      //  axios.post(url, formData, {
-            
-          //  }).then(response => {
-          ////      console.log(response.data);
-         //       console.log('User states in server has been updated');
-         //   if (callback) {
-         //           callback();
-        //    }
-        //});     
-        //$.get(api, function (data) {
-        //  if (data === 'true') {
-        //    dialog.showMessageBox(null, {
-        //      type: 'info',
-        //      message: 'Successfully Submitted Reserve!',
-        //      buttons: ['OK']
-        //    });
-        //  } else {
-        //    dialog.showMessageBox(null, {
-        //      type: 'error',
-        //      message: 'Failed to Submit!',
-        //      buttons: ['OK']
-        //    });
-        //  }
-       // });
       },
       onChangeFileUpload(){
         this.file = this.$refs.file.files[0];
@@ -206,9 +185,14 @@
       },
       uploadImage (imageId) {    
             let dateObserved = $('#dateObserved').val();
-            let station = $('#station').val();
-            let segment = $('#segment').val();  
-        let api = 'https://inwards.award.org.za/app_json/upload_data/stage.php?image_url='+imageId+'&user_code=' + this.userCode + '&station=' + station + '&date_taken=' + dateObserved + '&plate=' + segment;
+            let stationsAll = this.selectedStations;
+            let stationSplit = stationsAll.split(':');
+            let siteCode = stationSplit[0];
+            console.log(siteCode);
+            let segment = $('#segment').val();
+            let height = this.selectedGaugeHeight;
+            let discharge =   $('#dischargeEstimate').val();
+            let api = 'https://inwards.award.org.za/app_json/upload_data/stage.php?image_url='+imageId+'&user_code=' + this.userCode + '&station=' + siteCode + '&date_taken=' + dateObserved + '&plate=' + segment + '&stage_height=' + height + '&discharge=' + discharge;
             $.get(api, function (dataAPI) {
                 if (dataAPI === 'true') {
                 dialog.showMessageBox(null, {
@@ -226,107 +210,86 @@
                 }
             }); 
     },
+    fetchDischarge(){
+        let stationsAll = this.selectedStations;
+        let stationSplit = stationsAll.split(':');
+        let siteCode = stationSplit[0];
+        let heightPlate = this.selectedGaugeHeight;
+        console.log('https://inwards.award.org.za/app_json/plate_convert.php?station='+siteCode+'&height='+heightPlate);
+        this.$http.get('https://inwards.award.org.za/app_json/plate_convert.php?station='+siteCode+'&height='+heightPlate)
+        .then(
+          response => {
+            this.discharge = response.data;
+            console.log(this.discharge);
+            console.log(this.discharge[0].flow);
+            document.getElementById("dischargeEstimate").value = this.discharge[0].flow;
+          })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+
+    },
     submitForm(){
-            
-
             let userCodeglobal = this.userCode;
+            let dateObserved = $('#dateObserved').val();
+            let stationsAll = this.selectedStations;
+            let stationSplit = stationsAll.split(':');
+            let siteCode = stationSplit[0];
+            console.log(siteCode);
+            let segment = $('#segment').val();
+            let height = this.selectedGaugeHeight;
+            let dischargeEst = $('#dischargeEstimate').val(); 
             let formData = new FormData();
-            var imageURL = '';
-            
+
+            const config = {
+                //Choose upload
+                onUploadProgress: event => {
+                    this.imageUploadPercentage = Math.round(
+                        (event.loaded * 100) / event.total
+                    );
+                },
+            };
+            var imageURL = '';        
             formData.append('file', this.file);
-
-
-  
             this.axios.post('https://inwards.award.org.za/app_json/data_upload/image.php',
                 formData,
                 {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-              }
+                  headers: {
+                  'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: function( progressEvent ) {
+                  this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 ) );
+                }.bind(this)       
+               }
+
             ).then(
-            
             function(data){
-              //console.log(data.data.message);
               imageURL = data.data.message; 
-              
             },
-                   
             ).then(function(){
-
-                //this.uploadImage(imageURL);
-            
-            let dateObserved = $('#dateObserved').val();
-            let station = $('#station').val();
-            let segment = $('#segment').val();  
-            //console.log(userCodeglobal);
-            let callApi = 'https://inwards.award.org.za/app_json/data_upload/stage.php?image_url='+imageURL+'&user_code=' + userCodeglobal + '&station=' + station + '&date_taken=' + dateObserved + '&plate=' + segment;
-            //console.log('https://uwasp.award.org.za/app_json/uwasp_dash/stage.php?image_url='+imageURL+'&user_code=' + userCodeglobal + '&station=' + station + '&date_taken=' + dateObserved + '&plate=' + segment);
-            $.get(callApi, function (data) {
-                if (data === 'true') {
-                dialog.showMessageBox(null, {
-                    type: 'info',
-                    message: 'Successfully Submited!',
-                    buttons: ['OK']
-                });
-                $('#operational-modal').modal('hide');
-                } else {
-                dialog.showMessageBox(null, {
-                    type: 'info',
-                    message: 'Failed to Submit Please Try Again or Contact Admin!',
-                    buttons: ['OK']
-                });
-                }
-            });               
-                
-
-
-
-        }
-            
+                let callApi = 'https://inwards.award.org.za/app_json/data_upload/stage.php?image_url='+imageURL+'&user_code=' + userCodeglobal + '&station=' + siteCode + '&date_taken=' + dateObserved + '&plate=' + segment + '&stage_height=' + height + '&discharge=' + dischargeEst;
+                $.get(callApi, function (data) {
+                    if (data === 'true') {
+                    dialog.showMessageBox(null, {
+                        type: 'info',
+                        message: 'Successfully Submited!',
+                        buttons: ['OK']
+                    });
+                    $('#operational-modal').modal('hide');
+                    } else {
+                    dialog.showMessageBox(null, {
+                        type: 'info',
+                        message: 'Failed to Submit Please Try Again or Contact Admin!',
+                        buttons: ['OK']
+                    });
+                    }
+                });               
+            }           
             ).catch(function(){
-              console.log('FAILURE!!');
+                console.log('FAILURE!!');
             });
-
-            
-            //uploadImage();
-
-      },    
-      base64_encode(file) {
-            // read binary data
-            var bitmap = fs.readFileSync(file);
-            // convert binary data to base64 encoded string
-            return new Buffer(bitmap).toString('base64');
-      },
-      uploadImageFile() {
-
-        // opens a window to choose file
-        dialog.showOpenDialog({properties: ['openFile']}).then(result => {
-
-            // checks if window was closed
-            if (result.canceled) {
-                console.log("No file selected!")
-            } else {
-
-                // get first element in array which is path to file selected
-                const filePath = result.filePaths[0];
-                //document.getElementById("imageURL").value = filePath;
-                document.getElementById("gaugeThumbnail").src = filePath;
-                this.fileURL = result.filePaths[0];
-                // get file name
-                this.fileName = path.basename(filePath);
-
-                  // Copy the chosen file to the application's data path
-                fs.copyFile(filePath, (remote.app.getPath('userData') +"\\"+ this.fileName), (err) => {
-                    if (err) throw err;
-                    console.log('Image ' + this.fileName + ' stored.');
-
-                    // At that point, store some information like the file name for later use
-                });
-
-            }
-        });
-        }
+      }
     }
   };
   </script>
