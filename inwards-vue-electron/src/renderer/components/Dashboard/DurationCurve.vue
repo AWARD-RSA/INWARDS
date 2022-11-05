@@ -37,6 +37,9 @@
                 family: 'Raleway, Calibri',
                 size: 9
               },
+              xaxis: {
+                title: 'Percentile (%)'
+              },
               yaxis: {
                 title: 'Discharge (cumecs)',
                 autorange: true,

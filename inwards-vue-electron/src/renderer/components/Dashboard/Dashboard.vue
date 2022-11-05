@@ -65,8 +65,11 @@
             <div class="col-md-6">
               <DurationCurve ref="durationComponent" style="margin-top: 5px;"/>
             </div>
+            
             <div class="col-md-6" style="padding-left: 2px; margin-top: 5px;">
+              <div class="watermarked">
                 <Station ref="stationComponent"/>
+              </div>
             </div>
           </div>
         </div>
