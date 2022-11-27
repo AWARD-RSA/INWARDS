@@ -2,6 +2,10 @@
   <div style="width: 100%; height: 100%; margin: 0; padding: 0;">
     <StatusBar/>
     <Header/>
+    <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content" class="ol-popup-content"></div>
+      </div>
     <div id="overlay">
       <div class="row" style="height: 100%;">
       <div class="col-md-12">
@@ -67,10 +71,33 @@
           </div>
         </div>
     </div>
+    <div id="overlay-legend">
+      <div class="row" style="height: 100%;">
+        <div class="col-md-12">
+          <div class="card rounded-0">
+             <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-line-chart" style="padding-right: 10px;"></i>Flow Status</h6></div>
+               <div class="card-body">
+                <div class="container">
+                <i style="font-size:smaller;"><i class="dot" style="background: #0033cc"></i> High</i><br>
+                <i style="font-size:smaller;"><i class="dot" style="background: #3399ff"></i> Moderately High</i><br>
+                <i style="font-size:smaller;"><i class="dot" style="background: #99CC33"></i> Normal</i><br>
+                <i style="font-size:smaller;"><i class="dot" style="background: #FFFF00"></i> Moderately Low</i><br>
+                <i style="font-size:smaller;"><i class="dot" style="background: #FFCC00"></i> Low</i><br>
+                <i style="font-size:smaller;"><i class="dot" style="background: #ff0000"></i> Very Low</i><br>
+                <i style="font-size:smaller;"><i class="dot" style="background: rgb(0, 0, 0)"></i>None</i><br>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <div class="map-container">
       <div class="container-fluid" style="height: 100%; width:100%">
         <div class="col-md-12" style="width: 100%; height: 100%; margin: 0; padding: 0;">
           <div id="map" style="width: 100%; height: 100%; position:fixed"></div>
+          <div id="tooltip" class="ol-tooltip">
+            <div id="tooltip-content"></div>
+          </div>
           </div>
         </div>
       </div>
@@ -80,34 +107,159 @@
       </div>
     </div>
 </template>
+<style>
+  .ol-popup {
+    opacity: 0.7;
+    font-weight: bold;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -40px;
+    min-width: 75px;
+  }
+  .card-body {
+    padding: 0
+  }
+  .ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 38px;
+    margin-left: -10px;
+  }
+  .ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 12px;
+    left: 38px;
+    margin-left: -12px;
+  }
+  .ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+  }
+  .ol-popup-closer:after {
+    content: "✖";
+  }
+  .ol-popup-content {
+    font-size: 12px;
+  }
+  .ol-popup-content p {
+    max-width: 90px;;
+    margin-bottom: 0 !important;
+  } 
+  #dashboard-map-unverified {
+    width: 100%;
+    height: 410px;
+  }
+  .ol-tooltip {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 17px;
+    left: -50px;
+    min-width: 190px;
+  }
+  .ol-tooltip:after, .ol-tooltip:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .ol-tooltip:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+  }
+  .ol-tooltip:before {
+    border-top-color: #cccccc;
+    border-width: 12px;
+    left: 48px;
+    margin-left: -12px;
+  }
+   .ol-tooltip p {
+     margin-top: 0;
+     margin-bottom: 0;
+   }
+</style>
 <script>
   import Map from 'ol/Map';
+  import axios from 'axios';
   import View from 'ol/View';
   import TileLayer from 'ol/layer/Tile';
   import XYZ from 'ol/source/XYZ';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
-  import {Fill, Stroke, Style} from 'ol/style';
+  import {Fill, Stroke, Style, Text} from 'ol/style';
+  import {Circle as CircleStyle} from 'ol/style';
   import WmaJson from '../../assets/wma_merge.json';
   import Header from '../../components/Header';
   import $ from 'jquery';
   import stateStore from '../../store/state_handler';
   import router from '../../router/index';
   import StatusBar from '../StatusBar';
-
+  import Overlay from 'ol/Overlay';
+  import {Legend} from 'ol/Control';
 
 
   export default {
     data () {
       return {
+        stationsApi: 'https://inwards.award.org.za/app_json/tpc_stations.php',
         selectedWMA: [],
-        selectedFeatures: {}
+        selectedFeatures: {},
+        popups: [],
+        stylesPerPoint: [],
+        stationsVectorLayer: new VectorLayer({
+          source: new VectorSource(),
+          style: function (feature) {
+            return new Style({
+              image: new CircleStyle({
+                radius: 5,
+                fill: new Fill({color: 'rgba(255,0,0,0.5)'}),
+                stroke: new Stroke({color: 'red', width: 1})
+              })
+            });
+          }
+        })
       };
     },
     mounted () {
       let self = this;
+      var tooltipContainer = document.getElementById('tooltip');
+      var tooltipContent = document.getElementById('tooltip-content');
+      let container = document.getElementById('popup');
+      let closer = document.getElementById('popup-closer');
       // Create a map
+      this.overlay = new Overlay({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: 20
+        }
+      });
       let map = new Map({
         target: 'map',
         layers: [
@@ -117,10 +269,33 @@
             })
           })
         ],
+        overlays: [this.overlay],
         view: new View({
           center: [0, 0],
           zoom: 2
         })
+      });
+
+      var tooltip = new Overlay({
+        element: tooltipContainer,
+        autoPan: false,
+        autoPanAnimation: {
+          duration: 250
+        }
+      });
+      map.addOverlay(tooltip);
+
+    stationsVectorLayer: new VectorLayer({
+        source: new VectorSource(),
+        style: function (feature) {
+          return new Style({
+            image: new CircleStyle({
+              radius: 5,
+              fill: new Fill({color: 'rgba(255,0,0,0.5)'}),
+              stroke: new Stroke({color: 'red', width: 1})
+            })
+          });
+        }
       });
       let vectorLayer = new VectorLayer({
         source: new VectorSource({
@@ -136,6 +311,15 @@
       });
       // when we move the mouse over a feature, we can change its style to
       // highlight it temporarily
+        
+      let stationsSelectedStyle = new Style({
+          image: new CircleStyle({
+            radius: 9,
+            fill: new Fill({color: [51, 204, 51, 0.8]}),
+            stroke: new Stroke({color: 'green', width: 1})
+          })
+        });
+
       let highlightStyle = new Style({
         stroke: new Stroke({
           color: [76, 175, 80, 0.6],
@@ -147,8 +331,195 @@
         zIndex: 1
       });
       let highlightedFeature = null;
+
+      this.stationsVectorLayer.setZIndex(1);
+      map.addLayer(this.stationsVectorLayer);
       map.addLayer(vectorLayer);
       map.getView().fit(vectorLayer.getSource().getExtent());
+
+      let wmaNames = ['limpopo', 'olifants_letaba', 'inkomati_usuthu'];
+      wmaNames = wmaNames.sort();
+        for (let i = 0; i < wmaNames.length; i++) {
+          wmaNames[i] = `'${wmaNames[i]}'`;
+        }
+        let url = `${self.stationsApi}?wma=${wmaNames.join()}`;
+      console.log(url);
+
+      let content = document.getElementById('popup-content');
+      if (navigator.onLine) {
+          let cancelToken = null;
+          if (self.stationsRequest) {
+            cancelToken = self.stationsRequest.token;
+          }
+          axios.get(url, { cancelToken: cancelToken }).then(response => {
+            console.log(response.data);
+            
+            this.loadStationsToMap(response.data);
+            let self = this;
+            let x = 0;
+            let styles = [];
+            this.stationsVectorLayer.getSource().forEachFeature(function (feature) {
+
+                let station = feature.get('station');
+                let latest = feature.get('record');
+                let color = feature.get('color');
+                //console.log(x);
+                //console.log(latest);
+                content.innerHTML = '<p>'+station+'</p><br><p>'+latest+'</p>';
+                let siteText = station+': \n'+latest+' m3.s-1';
+
+                //console.log(color);
+                if(color == "min"){
+                  styles[x] = new Style({
+                    image: new CircleStyle({
+                        radius: 9,
+                        fill: new Fill({color: '#FF0000'}),
+                        stroke: new Stroke({color: 'green', width: 1})
+                      }),
+                      text: new Text({
+                      font: 'bold 12px "Open Sans", "Arial Unicode MS", "sans-serif"',
+                      placement: 'point',
+                      fill: new Fill({color: '#000'}),
+                      stroke: new Stroke({color: '#fff', width: 1}),
+                      offsetX :  0,
+                      offsetY : -25
+                  }),
+                    });
+                  let updatedStyle = styles[x].getText().setText(siteText);
+                  styles.push(updatedStyle);
+                  feature.setStyle(styles[x]);
+                };
+                if(color == "95th"){
+                  styles[x] = new Style({
+                    image: new CircleStyle({
+                      radius: 9,
+                      fill: new Fill({color: '#FFCC00'}),
+                      stroke: new Stroke({color: 'green', width: 1})
+                    }),
+                    text: new Text({
+                    font: 'bold 12px "Open Sans", "Arial Unicode MS", "sans-serif"',
+                    placement: 'point',
+                    fill: new Fill({color: '#000'}),
+                      stroke: new Stroke({color: '#fff', width: 1}),
+                    offsetX :  0,
+                    offsetY : -25
+                    }),
+                  });
+                  let updatedStyle = styles[x].getText().setText(siteText);                  
+                  styles.push(updatedStyle);
+                  feature.setStyle(styles[x]);
+                };
+                if(color ==  "50th"){
+                  styles[x] = new Style({
+                  image: new CircleStyle({
+                      radius: 9,
+                      fill: new Fill({color: '#FFFF00'}),
+                      stroke: new Stroke({color: 'green', width: 1})
+                    }),
+                    text: new Text({
+                    font: 'bold 12px "Open Sans", "Arial Unicode MS", "sans-serif"',
+                    placement: 'point',
+                    fill: new Fill({color: '#000'}),
+                      stroke: new Stroke({color: '#fff', width: 1}),
+                    offsetX :  0,
+                    offsetY : -25
+                  }),
+                  });
+                  let updatedStyle = styles[x].getText().setText(siteText);
+                  styles.push(updatedStyle);
+                  feature.setStyle(styles[x]);
+                };	
+                if(color ==  "25th"){
+                  styles[x] = new Style({
+                  image: new CircleStyle({
+                      radius: 9,
+                      fill: new Fill({color: '#99CC33'}),
+                      stroke: new Stroke({color: 'green', width: 1})
+                    }),
+                    text: new Text({
+                    font: 'bold 12px "Open Sans", "Arial Unicode MS", "sans-serif"',
+                    placement: 'point',
+                    fill: new Fill({color: '#000'}),
+                      stroke: new Stroke({color: '#fff', width: 1}),
+                    offsetX :  0,
+                    offsetY : -25
+                    }),
+                  });
+                  let updatedStyle =  styles[x].getText().setText(siteText);
+                  styles.push(updatedStyle);
+                  feature.setStyle(styles[x]);
+                }	;			
+                if(color ==  "5th"){
+                  styles[x] = new Style({
+                  image: new CircleStyle({
+                      radius: 9,
+                      fill: new Fill({color: '#3399ff'}),
+                      stroke: new Stroke({color: 'green', width: 1})
+                    }),
+                    text: new Text({
+                    font: 'bold 12px "Open Sans", "Arial Unicode MS", "sans-serif"',
+                    text: 'hello',
+                    padding: [8,8,0,0],
+                    placement: 'point',
+                    fill: new Fill({color: '#000'}),
+                      stroke: new Stroke({color: '#fff', width: 1}),
+                    offsetX :  0,
+                    offsetY : -25
+                    }),
+                  });
+                  let updatedStyle = styles[x].getText().setText(siteText);
+                  styles.push(updatedStyle);
+                  feature.setStyle(styles[x]);
+                };				
+                if(color ==  "max"){
+                  styles[x] = new Style({
+                    image: new CircleStyle({
+                        radius: 9,
+                        fill: new Fill({color: '#0033cc'}),
+                        stroke: new Stroke({color: 'green', width: 1})
+                      }),
+                      text: new Text({
+                      font: 'bold 12px "Open Sans", "Arial Unicode MS", "sans-serif"',
+                      placement: 'point',
+                      fill: new Fill({color: '#000'}),
+                      stroke: new Stroke({color: '#fff', width: 1}),
+                      offsetX :  0,
+                      offsetY : -25
+                   }),
+                  });
+                  let updatedStyle = styles[x].getText().setText(siteText);
+                  styles.push(updatedStyle);
+                  feature.setStyle(styles[x]);
+                };
+                if(color ==  "none"){
+                  styles[x] = new Style({
+                  image: new CircleStyle({
+                      radius: 9,
+                      fill: new Fill({color: '#000'}),
+                      stroke: new Stroke({color: 'green', width: 1})
+                    }),
+                    text: new Text({
+                    font: 'bold 12px "Open Sans", "Arial Unicode MS", "sans-serif"',
+                    placement: 'point',
+                    textBaseline: 'top',
+                    fill: new Fill({color: '#000'}),
+                    stroke: new Stroke({color: '#fff', width: 1}),
+                    offsetX :  0,
+                    offsetY : -25
+                    }),
+                  });
+                  let updatedStyle = styles[x].getText().setText(siteText)
+                  styles.push(updatedStyle);
+                  feature.setStyle(styles[x]);
+                };
+                //console.log(styles[x]);
+                x++;
+            });
+
+          }).catch(error => {
+            console.log(error);
+          });
+      };
       // Map on hover
       map.on('pointermove', function (e) {
         if (highlightedFeature !== null && !self.selectedFeatures.hasOwnProperty(highlightedFeature.ol_uid)) {
@@ -157,12 +528,14 @@
         };
         map.forEachFeatureAtPixel(e.pixel, function (f) {
           if (!self.selectedFeatures.hasOwnProperty(f.ol_uid)) {
+            //console.log(highlightedFeature);
             highlightedFeature = f;
             f.setStyle(highlightStyle);
             return true;
           }
         });
       });
+
       // When map selected update the style
       let selectedStyle = new Style({
         stroke: new Stroke({
@@ -253,8 +626,61 @@
           return true;
         });
       });
+      self.addKnpLayer(map);
     },
     methods: {
+      loadStationsToMap (stationsGeoJSONData) {
+        let self = this;
+        self.stationsVectorLayer.setSource(new VectorSource({
+          features: (new GeoJSON({
+            defaultDataProjection: 'EPSG:4326',
+          })).readFeatures(stationsGeoJSONData, {
+
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857'
+          })
+        }));        
+      },
+      fetchStations () {
+        let self = this;
+        let wmaNames = ['limpopo', 'olifants_letaba', 'inkomati_usuthu'];
+        let fs = require('fs');
+        let dir = path.join(app.getPath('userData'), '/stations');
+        // TODO : Create an util class for file storage
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir);
+        }
+        // Cancel previous request if any
+        if (this.stationsRequest) {
+          this.stationsRequest.cancel('Canceling stations request');
+          this.stationsRequest = null;
+        }
+        // Wrap wma name with single quotes, for api purposes
+        wmaNames = wmaNames.sort();
+        for (let i = 0; i < wmaNames.length; i++) {
+          wmaNames[i] = `'${wmaNames[i]}'`;
+        }
+        let url = `${self.stationsApi}?wma=${wmaNames.join()}`;
+        let stationFile = `${dir}/${url.hashCode()}.json`;
+        // Check if online
+        if (navigator.onLine) {
+          let cancelToken = null;
+          if (self.stationsRequest) {
+            cancelToken = self.stationsRequest.token;
+          }
+          axios.get(url, { cancelToken: cancelToken }).then(response => {
+            self.mapDashboardRef.loadStationsToMap(response.data);
+          }).catch(error => {
+            console.log(error);
+          });
+        } else {
+          if (fs.existsSync(stationFile)) {
+            let jsonData = fs.readFileSync(stationFile, 'utf-8');
+            let stationsData = JSON.parse(jsonData);
+            self.mapDashboardRef.loadStationsToMap(stationsData);
+          }
+        }
+      },
       saveSelection () {
         let self = this;
         let _selectedWMA = [];
@@ -334,8 +760,11 @@
         router.push({ path: 'admin-dashboard' });
       },
       resetApplicationData (e) {
-        stateStore.clearAll();
-        getCurrentWindow().reload();
+        stateStore.clearAll(() => {
+            setTimeout(function () {
+              window.location.reload();
+            }, 200);
+          });
       },
       addKnpLayer (map) {
         const knpJson = require('../../assets/knp.json');

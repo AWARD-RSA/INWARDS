@@ -103,7 +103,9 @@
                 <button class="btn inwards_button btn-labeled" v-on:click="uploadLog()"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Submit Log<i class="fa fa-upload" style="padding-left: 10px;"></i></button>
               </div>
               <div class="col-md-12">
-                  <progress class="progress-bar progress-bar-striped progress-bar-animated" max="100" :value.prop="uploadPercentage" style="width: 100%"></progress>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" max="100" :value.prop="uploadPercentage" :style="'width: '+uploadPercentage+'%;'"><strong>{{ Math.ceil(uploadPercentage) }}%</strong></div>
+                </div>
                 </div>
           </div>
         </div>

@@ -9,8 +9,8 @@
               </button>
           </div>
         <div class="modal-body">
-         <div class="row">
-                             <div class="col-sm-6" style="padding-right: 2px;">
+         <div class="row" style="visibility:hidden;">
+                <div class="col-sm-6" style="padding-right: 2px;">
                   <div class="form-group">
                     <label for="dateStart" style="padding-left: 8px;">Start Date:</label>
                     <input type="date" class="form-control" id="dateStart" style="margin-left: 4px;">

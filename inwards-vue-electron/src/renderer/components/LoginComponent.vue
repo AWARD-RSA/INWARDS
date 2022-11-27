@@ -11,22 +11,22 @@
                   <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                       <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#login-tab" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Login</a>
                       <a class="nav-item nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-profile" aria-selected="false">Register</a>
+                      <a class="nav-item nav-link" data-toggle="tab" href="#reset-tab" role="tab" aria-controls="nav-profile" aria-selected="false">Resend Code</a>
                     </div>
                     </nav>
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent-login">
                         <div class="tab-pane fade show active" id="login-tab" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="row">
+                          <div class="row">
                                 <div class="col-md-12">
-                                      <div class="form-group">
-                                      <label for="emailAddress">Email address</label>
-                                        <input type="email" class="form-control rounded-0" id="emailAddress" v-model="emailAddress" aria-describedby="emailHelp">
-                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                        </div>
-                                        <div class="form-group">
-                                          <label for="uniqueCode">Unique Code</label>
-                                          <input type="text" class="form-control rounded-0" id="uniqueCode" v-model="uniqueCode">
-                                        </div>                                   
-                                        <button id="verifyCode" type="submit" class="btn rounded-0 inwards_button" v-on:click="submit">Login</button>
+                                    <div class="form-group">
+                                      <label for="emailAddress" style="margin-top:0.3rem;">Email address</label>
+                                      <input type="email" class="form-control rounded-0" id="emailAddress" v-model="emailAddress" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="uniqueCode">Unique Code</label>
+                                      <input type="text" class="form-control rounded-0" id="uniqueCode" v-model="uniqueCode">
+                                    </div>                                   
+                                    <button id="verifyCode" type="submit" class="btn rounded-0 inwards_button" v-on:click="submit">Login</button>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,6 @@
                                               <div class="form-group">
                                             <label for="regEmailAddress">Email address</label>
                                             <input type="email" class="form-control rounded-0" id="regEmailAddress" aria-describedby="emailHelp" v-model="regEmailAddress">
-                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                           </div>
                                           <div class="form-group">
                                             <label for="sectorSelect">Sector</label>
@@ -76,8 +75,19 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-           
+                    
+                    <div class="tab-pane fade" id="reset-tab" role="tabpanel" aria-labelledby="reset-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                      <div class="form-group">
+                                      <label for="emailAddressResend">Email address</label>
+                                        <input type="email" class="form-control rounded-0" id="emailAddressResend" v-model="emailAddressResend" aria-describedby="emailHelp">
+                                        </div>                                
+                                        <button id="resendUserCode" type="submit" class="btn rounded-0 inwards_button" v-on:click="resendCode">Request Usercode</button>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
         </div>
       </div>
     </div>
@@ -100,7 +110,8 @@ export default {
       sectorSelect: '',
       useReason: '',
       userDesignation: '',
-      regEmailAddress: ''
+      regEmailAddress: '',
+      emailAddressResend: ''
     };
   },
   mounted () {
@@ -138,6 +149,34 @@ export default {
         keyboard: false
       });
     },
+    resendCode (e) {
+      let self = this;
+      let button = $(e.target);
+      let loginModal = $('#login-modal');
+      button.prop('disabled', true);
+      button.html(`Submitting...`);
+      console.log('https://inwards.award.org.za/app_json/user_resend.php?email=' + this.emailAddressResend);
+      $.get('https://inwards.award.org.za/app_json/user_resend.php?email=' + this.emailAddressResend, function (data) {
+        if (data === 'true') {
+          document.getElementById("login-tab").click()
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Successfully Submitted Please Check your Email!',
+            buttons: ['OK']
+          });
+          button.html(`Request Succesfully Submitted`);
+          loginModal.modal('show');
+        } else {
+          button.prop('disabled', false);
+          button.html(`Submit Again`);
+          dialog.showMessageBox(null, {
+            type: 'error',
+            message: 'Sorry we failed to verify your account please make sure the email address you have entered is correct or contact hugo@award.org.za for assistance.',
+            buttons: ['OK']
+          });
+        }
+      });
+    },
     requestAccess (e) {
       let self = this;
       let button = $(e.target);
@@ -159,9 +198,10 @@ export default {
           button.html(`Submit`);
           dialog.showMessageBox(null, {
             type: 'error',
-            message: 'Failed to Submit Request!',
+            message: 'Failed to submit request please ensure all fields have been filled correctly',
             buttons: ['OK']
           });
+          button.html(`Try Submit Again...`);
         }
       });
     },
@@ -171,6 +211,7 @@ export default {
       let loginModal = $('#login-modal');
       button.prop('disabled', true);
       button.html(`Submitting...`);
+      console.log('https://inwards.award.org.za/app_json/user_verification.php?email=' + this.emailAddress + '&code=' + this.uniqueCode);
       $.get('https://inwards.award.org.za/app_json/user_verification.php?email=' + this.emailAddress + '&code=' + this.uniqueCode, function (data) {
         if (data === 'true') {
           loginModal.modal('hide');
@@ -191,8 +232,19 @@ export default {
               console.log("logged in");
             }, 200);
           });
+          stateStore.updateFromServer(() => {
+            setTimeout(function () {
+              window.location.reload();
+            }, 200);
+          });
         } else {
-
+          dialog.showMessageBox(null, {
+            type: 'info',
+            message: 'Incorrect verification code please try again!',
+            buttons: ['OK']
+          });
+          button.prop('disabled', false);
+          button.html(`Try Login Again...`);
         }
       });
     }

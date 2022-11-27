@@ -7,8 +7,28 @@
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
             <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-bar-chart" style="padding-right: 10px;"></i>Parameters</h6></div>
             <div class="card-body">
+              <div class="row" style="margin-bottom: 0.1rem;">
+                  <div class="col-md-12">
+                    <p class="divider-text"><span class="bg-light">Data Source Selection</span></p>
+                    <div class="funkyradio">
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="veryHigh" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="veryHigh" class="form-check-label">IUCMA Data</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="high" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="high" class="form-check-label">DWS Data</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="critical" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="critical" class="form-check-label">Merge Datasets</label>
+                      </div>                      
+                    </div>
+                  </div>
+                </div>
               <div class="row">
                 <div class="col-md-12">
+                  <p class="divider-text"><span class="bg-light">Case Study Inputs</span></p>
                   <div class="form-group" style="margin-right: 0.5rem;">
                   <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" name="typeSelect" v-model="selectedType" @change="detectType()">
                     <option value="" disabled selected hidden>Select a site type (e.g. River, WWTW etc)</option>
@@ -17,7 +37,7 @@
                 </div>
                 </div>
              </div>
-            <div class="row">
+             <div class="row">
                 <div class="col-md-12">
                   <div class="form-group" style="margin-right: 0.5rem;">
                   <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px;" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable">
@@ -25,8 +45,19 @@
                     <option class="dropdown-item" v-for="variable in variables" v-bind:key="variable.id" v-bind:value="[variable.mon_variable_abbr,variable.measure_unit_abbr]"> {{ variable.mon_variable_name }} </option>
                   </select>
                 </div>
+                <div class="col-sm-12" style="padding-left: 2px;">
+                  <div class="form-group" style="margin-right: 0.2rem;">
+                    <div class="slidecontainer">
+                      <input type="range" min="1" max="100" value="10" class="slider" id="customRange3">  
+                  </div>
+                    <div class="form-control input rounded-0 minSamples" style="margin-right: 0px;" placeholder='10'></div>
+                  </div>
+                </div>
+
+
                 </div>
              </div>
+
               <div class="row">
                 <div class="col-sm-6" style="padding-right: 5px;">
                   <div class="form-group">
@@ -39,6 +70,39 @@
                   </div>
                 </div>
               </div>
+             
+             <div class="row" style="margin-bottom: 0.1rem;">
+                  <div class="col-md-12">
+                    <p class="divider-text"><span class="bg-light">Output Selection</span></p>
+                    <div class="funkyradio">
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Risk Overview</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Timeseries</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="veryHigh" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="veryHigh" class="form-check-label">Boxplots</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="high" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="high" class="form-check-label">Duration Curve</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="critical" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="critical" class="form-check-label">Compliance</label>
+                      </div>                  
+                    </div>
+                  </div>
+                </div>
+
+
+
+             
+
               </div>
             </div>
           <CatchmentTree ref="catchmentTree"/>
@@ -206,6 +270,11 @@
       });
       let map = this.$refs.mapDashboard.map;
       self.addKnpLayer(map);
+      $('#customRange3').on('input', function(){
+              let v = $('#customRange3').val();
+              //console.log(v);
+              $('div.minSamples').text(v);
+       });
     },
     methods: {
       doAnalysis () {

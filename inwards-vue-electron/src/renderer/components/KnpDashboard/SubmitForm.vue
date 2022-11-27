@@ -65,11 +65,12 @@
                         </div>
                          </div>
                          <div class="col-sm-12">
-                            <label>Discharge<b>extracted from rating curve for site selected</b>:</label>
+                            <label>Discharge<b> extracted from rating curve for site selected</b>:</label>
                         </div>
                          <div class="col-sm-12">
                             <div class="form-group">
                                 <input placeholder="Height to discharge calculation" type="text" class="form-control" id="dischargeEstimate" disabled>
+                                <button>Verify with Rating Table</button>
                             </div>
                             </div>
                         </div>
@@ -86,7 +87,9 @@
                         <button class="btn inwards_button btn-labeled" v-on:click="submitForm()"><span class="btn-label"><i class="fa fa-file-image-o"></i></span>Upload Gauge Plate Reading<i class="fa fa-upload" style="padding-left: 10px;"></i></button>
                 </div>
                 <div class="col-md-12">
-                  <v-progress-linear class="progress-bar progress-bar-striped progress-bar-animated" max="100" :value.prop="uploadPercentage" style="width: 100%"><strong>{{ Math.ceil(uploadPercentage) }}%</strong></v-progress-linear>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" max="100" :value.prop="uploadPercentage" :style="'width: '+uploadPercentage+'%;'"><strong>{{ Math.ceil(uploadPercentage) }}%</strong></div>
+                </div>
                 </div>
                 </div>  
                 </div>

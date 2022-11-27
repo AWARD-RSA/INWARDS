@@ -52,7 +52,6 @@ Vue.component('multiselect', Multiselect);
 Vue.use(VueAxios, axios);
 new Vue({
   el: '#app',
-  vuetify,
   router,
   store,
   components: { App },
@@ -79,7 +78,7 @@ window.addEventListener('DOMContentLoaded', () => {
     backgroundColor: Color.fromHex("#3C3C3C"),
     itemBackgroundColor: Color.fromHex("#121212"),
     svgColor: Color.WHITE,
-    icon: path.join(__dirname, './assets', '/icon.png'),
+    icon: require('@/assets/icon.png'),
     //menu: null // = do not automatically use Menu.applicationMenu
   })
 
