@@ -8,7 +8,7 @@
         </h6>
         </div>
         <div class="card-body jstree-container" style="max-height:300px; height: 300px;">
-          <div v-if='loading'>Select Station Types...</div>
+          <div class="center inwards_label" v-if='loading'>Stations with data will be displayed after selecting type and variable above...</div>
           <div v-else>
               <div id="jstree-div" style="font-size: 14px;">
               </div>

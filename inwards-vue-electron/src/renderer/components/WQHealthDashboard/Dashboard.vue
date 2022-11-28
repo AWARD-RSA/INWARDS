@@ -3,7 +3,7 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px; overflow: hidden;">
+        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px;">
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
             <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-bar-chart" style="padding-right: 10px;"></i>Parameters</h6></div>
             <div class="card-body">
@@ -20,8 +20,8 @@
                         <label for="high" class="form-check-label">DWS Data</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary">
-                        <input name="chart_components" id="critical" type="checkbox" class="form-check-input form-check-input"> 
-                        <label for="critical" class="form-check-label">Merge Datasets</label>
+                        <input name="chart_components" id="merge" type="checkbox" class="form-check-input form-check-input"> 
+                        <label for="merge" class="form-check-label">Merge Datasets</label>
                       </div>                      
                     </div>
                   </div>
@@ -30,55 +30,109 @@
                 <div class="col-md-12">
                   <p class="divider-text"><span class="bg-light">Case Study Inputs</span></p>
                   <div class="form-group" style="margin-right: 0.5rem;">
-                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" name="typeSelect" v-model="selectedType" @change="detectType()">
-                    <option value="" disabled selected hidden>Select a site type (e.g. River, WWTW etc)</option>
-                    <option class="dropdown-item" v-for="type in types" v-bind:key="type.type" v-bind:value="type.type"> {{ type.type }} </option>
-                  </select>
+                    <select class="form-control rounded-0 inwards_label" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" name="typeSelect" v-model="selectedType">                    <option value="" disabled selected hidden>Select a site type (e.g. River)</option>
+                      <option class="dropdown-item inwards_label" v-for="siteType in types" v-bind:key="siteType.type" v-bind:value="siteType.type"> {{ siteType.type }} </option>                    
+                    </select>
                 </div>
                 </div>
              </div>
              <div class="row">
+             <div class="col-md-12">
+                  <div class="form-group" style="margin-right: 0.2rem;">
+                    <div class="slidecontainer" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;">
+                      <input type="range" min="1" max="100" value="10" class="slider" id="customRange3">  
+                  </div>
+                    <div class="form-control input rounded-0 minSamples inwards_label" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" placeholder="Set minimum number of samples using slider above">Refine sites by sample size</div>
+                  </div>
+                </div>            
                 <div class="col-md-12">
                   <div class="form-group" style="margin-right: 0.5rem;">
-                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px;" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable">
+                  <select class="form-control rounded-0 inwards_label" style="margin-left: 4px; margin-right: 10px;" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable" @change="changeVariable()">
                     <option value="" disabled selected hidden>Select a variable</option>
                     <option class="dropdown-item" v-for="variable in variables" v-bind:key="variable.id" v-bind:value="[variable.mon_variable_abbr,variable.measure_unit_abbr]"> {{ variable.mon_variable_name }} </option>
                   </select>
                 </div>
-                <div class="col-sm-12" style="padding-left: 2px;">
-                  <div class="form-group" style="margin-right: 0.2rem;">
-                    <div class="slidecontainer">
-                      <input type="range" min="1" max="100" value="10" class="slider" id="customRange3">  
-                  </div>
-                    <div class="form-control input rounded-0 minSamples" style="margin-right: 0px;" placeholder='10'></div>
-                  </div>
-                </div>
-
-
                 </div>
              </div>
-
               <div class="row">
                 <div class="col-sm-6" style="padding-right: 5px;">
                   <div class="form-group">
-                    <input class="form-control rounded-0" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
+                    <input class="form-control rounded-0 inwards_label" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
                   </div>
                 </div>
                 <div class="col-sm-6" style="padding-left: 2px;">
                   <div class="form-group" style="margin-right: 0.2rem;">
-                    <input class="form-control rounded-0" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
+                    <input class="form-control rounded-0 inwards_label" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
                   </div>
                 </div>
               </div>
-             
+              <div class="row" style="margin-bottom: 0.1rem;">
+                <div class="col-md-12">
+                    <p class="divider-text"><span class="bg-light">Limits and Standards</span></p>
+                    <div class="funkyradio">
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">RQOs</label>
+                      </div> 
+                        <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">SANS241</label>
+                      </div> 
+                        <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">DWS Domestic</label>
+                      </div> 
+                        <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">DWS Domestic</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">DWS Agric</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">DWS Industry</label>
+                      </div>
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">DWS NWRQOs</label>
+                      </div>
+                  </div>
+                    <p class="divider-text"><span class="bg-light">Hazard and Cancer Risk Scale</span></p>
+                    <div class="funkyradio">
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Catchment</label>
+                        <div class="form-check form-check-inline funkyradio-primary">
+                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Site</label>
+                      </div>  
+                      </div>
+                      <p class="divider-text"><span class="bg-light">Data Parameters</span></p>
+                      <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Varaible Specific</label>
+                      </div> 
+                        <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Max</label>
+                      </div> 
+                        <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Median</label>
+                      </div> 
+                        <div class="form-check form-check-inline funkyradio-primary" >
+                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
+                        <label for="siteOverview" class="form-check-label">Most Recent</label>
+                      </div>
+                  </div>
+                  </div>
+                  </div>
              <div class="row" style="margin-bottom: 0.1rem;">
                   <div class="col-md-12">
                     <p class="divider-text"><span class="bg-light">Output Selection</span></p>
                     <div class="funkyradio">
-                      <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">Risk Overview</label>
-                      </div>
                       <div class="form-check form-check-inline funkyradio-primary" >
                         <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
                         <label for="siteOverview" class="form-check-label">Timeseries</label>
@@ -93,16 +147,11 @@
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary">
                         <input name="chart_components" id="critical" type="checkbox" class="form-check-input form-check-input"> 
-                        <label for="critical" class="form-check-label">Compliance</label>
+                        <label for="critical" class="form-check-label">Table</label>
                       </div>                  
                     </div>
                   </div>
                 </div>
-
-
-
-             
-
               </div>
             </div>
           <CatchmentTree ref="catchmentTree"/>
@@ -224,11 +273,14 @@
         stationsRequest: null,
         selectedStations: [],
         selectedWMAs: [],
+        mergeAPI: 'false',
         selectedType: '',
         types: [],
         selectedVariable: '',
         variableUnit: '',
         variables: [],
+        variableSample: 'All', 
+        stationsList: 'all',
         color: '#177a98',
         height: '35px',
         width: '4px',
@@ -279,6 +331,7 @@
     methods: {
       doAnalysis () {
         console.log(this.selectedVariable);
+        this.variableSample = this.selectedVariable;
         console.log(this.selectedStations[0]);
         console.log(this.selectedType);
         console.log(this.variables);
@@ -310,9 +363,14 @@
           });
           return;
         }
+        let mergeDWS = document.getElementById('merge').checked;
+
+        if(mergeDWS === true){
+            this.mergeAPI = 'true';
+        }
         this.loading = true;
         this.$refs.boxComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.$refs.timeseriesComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.timeseriesComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1], this.mergeAPI);
         this.$refs.durationComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.loadComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.maxComponent.updateTable(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
@@ -335,16 +393,16 @@
         }).catch(e => {
         });
       },
+      changeVariable() {
+        
+        console.log(this.selectedVariable);
+        this.variableSample = this.selectedVariable[0];
+        this.catchmentTreeRef.refreshStations();
+        this.fetchStations();
+      },
       fetchStations () {
-        let self = this;
+        let self = this; 
         let wmaNames = Object.assign([], self.selectedWMAs);
-        console.log(wmaNames);
-        let fs = require('fs');
-        let dir = path.join(app.getPath('userData'), '/stations');
-        // TODO : Create an util class for file storage
-        if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir);
-        }
         // Cancel previous request if any
         if (this.stationsRequest) {
           this.stationsRequest.cancel('Canceling stations request');
@@ -355,31 +413,20 @@
         for (let i = 0; i < wmaNames.length; i++) {
           wmaNames[i] = `'${wmaNames[i]}'`;
         }
-        let url = `${self.stationsApi}?wma=${wmaNames.join()}&type=${this.selectedType}`;
+        let url = `${self.stationsApi}?wma=${wmaNames.join()}&type=${this.selectedType}&list=${this.stationsList}&variable=${this.variableSample}`;
         console.log(url);
-        let stationFile = `${dir}/${url.hashCode()}.json`;
-        console.log(stationFile);
+        //console.log(stationFile);
         // Check if online
-        if (navigator.onLine) {
-          let cancelToken = null;
-          if (self.stationsRequest) {
+        let cancelToken = null;
+         if (self.stationsRequest) {
             cancelToken = self.stationsRequest.token;
           }
           axios.get(url, { cancelToken: cancelToken }).then(response => {
             self.mapDashboardRef.loadStationsToMap(response.data);
-            fs.writeFileSync(stationFile, JSON.stringify(response.data));
             self.createCatchmentTree(response.data);
           }).catch(error => {
             console.log(error);
           });
-        } else {
-          if (fs.existsSync(stationFile)) {
-            let jsonData = fs.readFileSync(stationFile, 'utf-8');
-            let stationsData = JSON.parse(jsonData);
-            self.mapDashboardRef.loadStationsToMap(stationsData);
-            self.createCatchmentTree(stationsData);
-          }
-        }
         self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
           self.catchmentTreeRef.toggleNode(station, isStationSelected);
         });
@@ -492,7 +539,7 @@
           let secondary = stationsData.features[i]['properties']['secondary'];
           let station = stationsData.features[i]['properties']['station'];
           let place = stationsData.features[i]['properties']['desc'];
-          let sampleSize = stationsData.features[i]['properties']['sample_size'];
+          let sampleSize = stationsData.features[i]['properties']['sample_size_iucma'];
           let latestReading = stationsData.features[i]['properties']['latest'];
           let hydro = stationsData.features[i]['properties']['hydro'];
           this.stationsFeatures[station] = stationsData.features[i];
@@ -512,7 +559,7 @@
             catchmentsData[secondary].sort();
           }
         }
-        console.log(catchmentsData);
+        //console.log(catchmentsData);
         let treeData = self.generateTreeData(catchmentsData);
         this.catchmentTreeRef.createTree(treeData, this.onCatchmentTreeSelectedHandler, this.onTreeReady);
       },
@@ -556,7 +603,7 @@
         let _selectedStations = [];
         let selectedBits = [];
         let _unselectedStations = Object.assign([], this.selectedStations);
-        console.log(_unselectedStations);
+        //console.log(_unselectedStations);
         for (i = 0; i < data.selected.length; i++) {
           selected = data.instance.get_node(data.selected[i]).text;
           selectedBits = selected.split(':');

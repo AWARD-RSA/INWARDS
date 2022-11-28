@@ -811,3 +811,6 @@ color: white;
   background: #10556A;
   cursor: pointer;
 }
+.inwards_label{
+  font-size: small;
+}
