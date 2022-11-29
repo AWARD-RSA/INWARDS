@@ -179,6 +179,9 @@
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
 
           <div class="row no-gutters">
+            <div class="col-md-12">
+                  <SiteRisk ref="siteComponent" style="margin-top: 5px;"/>
+            </div>      
              <div class="col-md-12">
                   <MaxHazard ref="maxComponent" style="margin-top: 5px;"/>
             </div>           
@@ -239,6 +242,7 @@
   import TimeseriesChart from './TimeseriesChart';
   import DurationChart from './DurationChart';
   import LoadChart from './LoadChart';
+  import SiteRisk from './SiteRisk';
   import StatusBar from '../StatusBar';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
@@ -262,6 +266,7 @@
       DurationChart,
       LoadChart,
       MaxHazard,
+      SiteRisk,
       StatusBar
     },
     data () {
@@ -368,12 +373,14 @@
         if(mergeDWS === true){
             this.mergeAPI = 'true';
         }
+
         this.loading = true;
         this.$refs.boxComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.timeseriesComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1], this.mergeAPI);
         this.$refs.durationComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.loadComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.maxComponent.updateTable(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
+        this.$refs.siteComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1]  +'&merge='+  this.mergeAPI);
         this.loading = false;
       },
       detectType () {
@@ -399,6 +406,9 @@
         this.variableSample = this.selectedVariable[0];
         this.catchmentTreeRef.refreshStations();
         this.fetchStations();
+      },
+      loadRiskTable (urk_paramters) {
+        this.$refs.siteComponent.showRiskTable(urk_paramters);
       },
       fetchStations () {
         let self = this; 
