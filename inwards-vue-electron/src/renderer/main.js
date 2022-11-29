@@ -6,6 +6,7 @@ import $ from 'jquery';
 import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/util.js';
+import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'jquery/dist/jquery.min.js';
 import './static/css/font-awesome.min.css';

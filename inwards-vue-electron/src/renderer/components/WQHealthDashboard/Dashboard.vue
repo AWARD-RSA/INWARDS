@@ -179,12 +179,57 @@
         <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;">
 
           <div class="row no-gutters">
-            <div class="col-md-12">
+            <nav>
+                  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#riskTab" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Risk Assesment</a>
+                      <a class="nav-item nav-link" data-toggle="tab" href="#wqTab" role="tab" aria-controls="nav-profile" aria-selected="false">Water Quality Analysis</a>
+                      <a class="nav-item nav-link" data-toggle="tab" href="#complianceTab" role="tab" aria-controls="nav-profile" aria-selected="false">Compliance</a>
+                    </div>
+                    </nav>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent-login">
+            <div class="tab-pane fade show active" id="riskTab" role="tabpanel" aria-labelledby="home-tab">
+              <div class="row no-gutters">
+            <div class="col-md-6">
                   <SiteRisk ref="siteComponent" style="margin-top: 5px;"/>
-            </div>      
+            </div>  
+            <div class="col-md-6">
+              <HeighestRisk ref="heighestComponent" style="margin-top: 5px;"/>
+            </div>
+            <div class="col-md-12">
+              <div class="card rounded-0 box">
+                <div class="card-header inwards_card_tab">All Site Risk Assesment (Max)</div>
+              <div class="card-body chart-container">
+              <div class="row no-gutters">
+              <div class="col-3">
+                  <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Max</a>
+                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+                      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+                      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                  </div>
+              </div>
+              <div class="col-9">
+                  <div class="tab-content" id="v-pills-tabContent">
+                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <AllSites ref="allComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+            </div> 
+            </div>
+            </div>
+            </div>
+            </div>                       
+            </div>
              <div class="col-md-12">
                   <MaxHazard ref="maxComponent" style="margin-top: 5px;"/>
-            </div>           
+            </div>
+            </div>
+          </div>
+            <div class="tab-pane fade" id="wqTab" role="tabpanel" aria-labelledby="wqTab">
+            
+
             <div class="col-md-6">
                   <TimeseriesChart ref="timeseriesComponent" style="margin-top: 5px;"/>
             </div>
@@ -198,13 +243,19 @@
               <div class="col-md-6" style="padding-left: 2px;">
                   <DurationChart ref="durationComponent" style="margin-top: 5px;"/>
               </div>
+
+            </div>
+            <div class="tab-pane fade" id="complianceTab" role="tabpanel" aria-labelledby="complianceTab">...</div>
+
               <br>
-          </div>
-           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>          
+          
+           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>    
+          </div>      
         </div>
       </div>
       <NavButtons/> 
     </div>
+  </div>
   </div>
 </template>
 <style>
@@ -243,6 +294,8 @@
   import DurationChart from './DurationChart';
   import LoadChart from './LoadChart';
   import SiteRisk from './SiteRisk';
+  import HeighestRisk from './HeighestRisk';
+  import AllSites from './AllSites';
   import StatusBar from '../StatusBar';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
@@ -267,6 +320,8 @@
       LoadChart,
       MaxHazard,
       SiteRisk,
+      HeighestRisk,
+      AllSites,
       StatusBar
     },
     data () {
@@ -380,7 +435,9 @@
         this.$refs.durationComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.loadComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.maxComponent.updateTable(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.$refs.siteComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1]  +'&merge='+  this.mergeAPI);
+        this.$refs.siteComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType  +'&merge='+  this.mergeAPI);
+        this.$refs.heighestComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType  +'&merge='+  this.mergeAPI);
+        this.$refs.allComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType +'&merge='+  this.mergeAPI);
         this.loading = false;
       },
       detectType () {

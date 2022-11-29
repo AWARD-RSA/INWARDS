@@ -1,7 +1,7 @@
 
 <template>
           <div class="card rounded-0">
-            <div class="card-header inwards_card">Hazard quotients for toxic effects and cancer risks for the maximum values in the Crocodile River sites</div>
+            <div class="card-header inwards_card_tab">Hazard quotients for toxic effects and cancer risks for the maximum values in the Crocodile River sites</div>
            <div class="card-body">
               <div class="row no-gutters">
              <table class="table" style="font-size: 11px;">

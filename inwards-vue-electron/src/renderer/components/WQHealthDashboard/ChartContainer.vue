@@ -1,6 +1,6 @@
 <template>
   <div class="card rounded-0 box" v-bind:style="styleObject">
-    <div class="card-header inwards_card">{{ chartTitle }}
+    <div class="card-header inwards_card_tab">{{ chartTitle }}
     </div>
     <div class="card-body chart-container">
       <section v-if="errored">

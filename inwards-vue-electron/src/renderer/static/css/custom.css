@@ -113,6 +113,17 @@ cursor: pointer; /* Add a pointer on hover */
     padding-left: 0.6rem;
 
 }
+.inwards_card_tab{
+  background-color: #10556A;
+  border-color: #10556A;
+  height: 100%;
+  width: 100%;
+  color: #f1f1f1;
+  padding-bottom: 0.8rem;
+  padding-top: 0.8rem;
+  padding-left: 0.2rem;
+
+}
 .inwards_search{
   background-color: #10556A;
   border-color: #10556A;
@@ -371,13 +382,18 @@ nav > div a.nav-item.nav-link.active:after
   border: 15px solid transparent;
   border-top-color: #272e38 ;
 }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #272e38;
+}
+
 .tab-content{
   background: #fdfdfd;
     line-height: 5px;
     border: 1px solid #ddd;
     border-top:5px solid #272e38;
     border-bottom:5px solid #272e38;
-    padding:30px 25px;
+    padding: 0,0,0,0;
 }
 
 nav > div a.nav-item.nav-link:hover

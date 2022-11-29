@@ -1,51 +1,99 @@
 <template>
-  <div class="card rounded-0 box" v-bind:style="styleObject">
-    <div class="card-header inwards_card">Site Risk Assesment </div>
+  <div class="card rounded-0 box">
+    <div class="card-header inwards_card_tab">Site Risk Assesment </div>
     <div class="card-body chart-container">           
         <div class="row">
                <div class="col-sm-12">
-                <table class="table">
+                <table class="table table-sm">
                 <thead>
-				<tr style="font-size: 0.8rem;">
-                      <th> Parameters</th>
-                      <th>Station</th>
+			          	<tr style="font-size: 0.8rem;">
+                      <th>Parameters</th>                      
+                      <th>Outputs</th>
+                      <th>Safe Level</th>
                   </tr>
               </thead>
-              <tbody v-for="log in riskData" :key="log.id" style="font-size: 0.7rem;">
-              <th style="font-size: 0.8rem;">
-                    <tr><td>Site</td></tr>
-                    <tr><td>Date</td></tr>
-                    <tr><td>Conc water mg/l</td></tr>
-                    <tr><td>Ingestion rate L</td></tr>
-                    <tr><td>RfD mg/kg/d</td></tr>
-                    <tr><td>Slope factor (β)</td></tr>
-                    <tr><td>Exp duration ED (years)</td></tr>
-                    <tr><td>Exp frequency EF (days/y)</td></tr>
-                    <tr><td>Body weight BW (kg)</td></tr>
-                    <tr><td>Av time days (days xED)</td></tr>
-                    <tr><td>Lifetime Lft (years)</td></tr>
-                    <tr><td>ADD (Avg Daily Dose)</td></tr>
-                    <tr><td>LADD</td></tr>
-                    <tr><td>Hazard quotient</td></tr>
-                    <tr><td>Cancer risk</td></tr>
-                  </th>
-              <th>
-                      <tr><td>{{ log.site }}</td></tr>
-                      <tr><td>{{ log.date }}</td></tr>
-                      <tr><td>{{ log.conc_observed }}</td></tr>
-                      <tr><td>{{ log.ingestion_rate }}</td></tr>
-                      <tr><td>{{ log.RfD }}</td></tr>
-                      <tr><td>{{ log.slope_factor }}</td></tr>
-                      <tr><td>{{ log.duration_ED_years }}</td></tr>
-                      <tr><td>{{ log.frequency_EF_days }}</td></tr>
-                      <tr><td>{{ log.Body_weight_BW }}</td></tr>
-                      <tr><td>{{ log.average_time_xED }}</td></tr>
-                      <tr><td>{{ log.lifetime_years }}</td></tr>
-                      <tr><td>{{ log.avg_daily_dose }}</td></tr>
-                      <tr><td>{{ log.LADD }}</td></tr>
-                      <tr><td>{{ log.hazard_quotient }}</td></tr>
-                      <tr><td>{{ log.cancer_risk }}</td></tr>
-              </th>
+              <tbody v-for="log in riskData" :key="log.id" style="font-size:x-small; font-weight: lighter;">
+                <tr>
+                    <th>Water Quality Parameter</th>
+                      <th>{{ log.variable }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Site</th>
+                      <th>{{ log.site }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <th>{{ log.date }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Conc water mg/l</th>
+                      <th>{{ log.conc_observed }}</th>
+                      <th>-</th>
+                    </tr>
+
+                    <tr>
+                      <th>Ingestion rate L</th>
+                      <th>{{ log.ingestion_rate }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>RfD mg/kg/d</th>
+                      <th>{{ log.RfD }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Slope factor (β)</th>
+                      <th>{{ log.slope_factor }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Exp duration ED (years)</th>
+                      <th>{{ log.duration_ED_years }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Exp frequency EF (days/y)</th>
+                      <th>{{ log.frequency_EF_days }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Body weight BW (kg)</th>
+                      <th>{{ log.Body_weight_BW }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Av time days (days xED)</th>
+                      <th>{{ log.average_time_xED }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Lifetime Lft (years)</th>
+                      <th>{{ log.lifetime_years }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>ADD (Avg Daily Dose)</th>
+                      <th>{{ log.avg_daily_dose }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>LADD</th>
+                      <th>{{ log.LADD }}</th>
+                      <th>-</th>
+                    </tr>
+                    <tr>
+                      <th>Hazard quotient</th>
+                      <th :style="{'background-color': log.hazard }">{{ log.hazard_quotient }}</th>
+                      <th>1</th>
+                    </tr>
+                    <tr>
+                      <th>Cancer risk</th>                      
+                      <th :style="{'background-color': log.cancer }">{{ log.cancer_risk }}</th>
+                      <th>0.0001</th>
+                    </tr>
             </tbody>
           </table>
             </div>
