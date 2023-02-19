@@ -15,10 +15,11 @@
              <div class="col-sm-12">
           <div class="form-group">
         <table class="table is-scrollable is-stripped is-bordered is-hoverable">
-        <thead><tr><th title="Field #1">Constituent</th>
-        <th title="Field #2">Risk</th>
-        <th title="Field #3">Effect</th>
-        <th title="Field #4">Treatment</th>
+        <thead><tr>
+            <th title="Field #1">Constituent</th>
+            <th title="Field #2">Risk</th>
+            <th title="Field #3">Effect</th>
+            <th title="Field #4">Treatment</th>
         </tr></thead>
         <tbody>
           <tr>

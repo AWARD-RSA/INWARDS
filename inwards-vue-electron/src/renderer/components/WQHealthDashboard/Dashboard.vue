@@ -4,7 +4,9 @@
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
         <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px;">
+          
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
+            <div class="col-md-12" align="center"><img src="../../assets/banner.png" alt="" style="align: center;" height="50px"></div>
             <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-bar-chart" style="padding-right: 10px;"></i>Parameters</h6></div>
             <div class="card-body">
               <div class="row" style="margin-bottom: 0.1rem;">
@@ -36,15 +38,7 @@
                 </div>
                 </div>
              </div>
-             <div class="row">
-             <div class="col-md-12">
-                  <div class="form-group" style="margin-right: 0.2rem;">
-                    <div class="slidecontainer" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;">
-                      <input type="range" min="1" max="100" value="10" class="slider" id="customRange3">  
-                  </div>
-                    <div class="form-control input rounded-0 minSamples inwards_label" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" placeholder="Set minimum number of samples using slider above">Refine sites by sample size</div>
-                  </div>
-                </div>            
+             <div class="row">        
                 <div class="col-md-12">
                   <div class="form-group" style="margin-right: 0.5rem;">
                   <select class="form-control rounded-0 inwards_label" style="margin-left: 4px; margin-right: 10px;" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable" @change="changeVariable()">
@@ -84,11 +78,11 @@
                       </div> 
                         <div class="form-check form-check-inline funkyradio-primary" >
                         <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">DWS Domestic</label>
+                        <label for="siteOverview" class="form-check-label">DWS Irrigation</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary" >
                         <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">DWS Agric</label>
+                        <label for="siteOverview" class="form-check-label">DWS Livestock</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary" >
                         <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
@@ -132,6 +126,14 @@
              <div class="row" style="margin-bottom: 0.1rem;">
                   <div class="col-md-12">
                     <p class="divider-text"><span class="bg-light">Output Selection</span></p>
+                    <div class="col-md-12">
+                    <div class="form-group" style="margin-right: 0.2rem;">
+                      <div class="slidecontainer" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;">
+                        <input type="range" min="1" max="100" value="10" class="slider" id="customRange3">  
+                    </div>
+                      <div class="form-control input rounded-0 minSamples inwards_label" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" placeholder="Set minimum number of samples using slider above">Refine sites by sample size</div>
+                    </div>
+                  </div>    
                     <div class="funkyradio">
                       <div class="form-check form-check-inline funkyradio-primary" >
                         <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
@@ -181,79 +183,200 @@
           <div class="row no-gutters">
             <nav>
                   <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#riskTab" role="tab" aria-controls="nav-home" aria-selected="true" style="text-align: center;">Risk Assesment</a>
-                      <a class="nav-item nav-link" data-toggle="tab" href="#wqTab" role="tab" aria-controls="nav-profile" aria-selected="false">Water Quality Analysis</a>
-                      <a class="nav-item nav-link" data-toggle="tab" href="#complianceTab" role="tab" aria-controls="nav-profile" aria-selected="false">Compliance</a>
+                      <a class="nav-item nav-link active" id="nav-riskTab-tab" data-toggle="tab" href="#riskTab" role="tab" aria-controls="nav-riskTab" aria-selected="true" style="text-align: center;">Risk Assesment</a>
+                      <a class="nav-item nav-link" id="nav-nara-tab" data-toggle="tab" href="#naraTab" role="tab" aria-controls="nav-wqTab" aria-selected="false">Water Quality Naratives</a>
+
+                      <a class="nav-item nav-link" id="nav-wqTab-tab" data-toggle="tab" href="#wqTab" role="tab" aria-controls="nav-wqTab" aria-selected="false">Water Quality Analysis</a>
+                      <a class="nav-item nav-link" id="nav-complianceTab-tab"  data-toggle="tab" href="#complianceTab" role="tab" aria-controls="nav-complianceTab" aria-selected="false">Compliance</a>
                     </div>
                     </nav>
-                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent-login">
-            <div class="tab-pane fade show active" id="riskTab" role="tabpanel" aria-labelledby="home-tab">
-              <div class="row no-gutters">
-            <div class="col-md-6">
-                  <SiteRisk ref="siteComponent" style="margin-top: 5px;"/>
-            </div>  
-            <div class="col-md-6">
-              <HeighestRisk ref="heighestComponent" style="margin-top: 5px;"/>
-            </div>
+            <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent-login" style="width: 100%; height: 100hr;">
+            <div class="tab-pane fade show active" id="riskTab" role="tabpanel" aria-labelledby="riskTab-tab">
+            <div class="row no-gutters">
             <div class="col-md-12">
               <div class="card rounded-0 box">
-                <div class="card-header inwards_card_tab">All Site Risk Assesment (Max)</div>
+                <div class="card-header inwards_card_tab" style="border-bottom: 1px solid white;">Selected Site Risk Assesment</div>
               <div class="card-body chart-container">
               <div class="row no-gutters">
               <div class="col-3">
-                  <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Max</a>
-                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-                      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-                      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                <nav>
+                  <div class="nav flex-column nav-pills nav-fill" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-item nav-link nav-vertical active" id="v-pills-singleMax-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-singleMax" role="tab" aria-controls="v-pills-singleMax" aria-selected="true">Max</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-singleMedian-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-singleMedian" role="tab" aria-controls="v-pills-singleMedian" aria-selected="false">Median</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-singleMin-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-singleMin" role="tab" aria-controls="v-pills-singleMin" aria-selected="false">Min</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-singleLatest-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-singleLatest" role="tab" aria-controls="v-pills-singleLatest" aria-selected="false">Latest</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-narative-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-narative" role="tab" aria-controls="v-pills-narative" aria-selected="false">Narative</a>
+
+                    </div>
+                  </nav>
                   </div>
-              </div>
               <div class="col-9">
                   <div class="tab-content" id="v-pills-tabContent">
-                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <AllSites ref="allComponent" style="margin-top: 5px;"/>
+                      <div class="tab-pane fade show active" id="v-pills-singleMax" role="tabpanel" aria-labelledby="v-pills-singleMax-tab">
+                        <SiteRisk ref="siteComponent" style="margin-top: 5px;"/>
+            </div>                
+                    <div class="tab-pane fade" id="v-pills-singleMedian" role="tabpanel" aria-labelledby="v-pills-singleMedian-tab">
+
                     </div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-singleMin" role="tabpanel" aria-labelledby="v-pills-singleMin-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-singleLatest" role="tabpanel" aria-labelledby="v-pills-singleLatest-tab">...</div>
+                    <div class="tab-pane fade" id="v-pills-narative" role="tabpanel" aria-labelledby="v-pills-narative-tab">
+                      <NarativeBlock ref="narativeComponent" style="margin-top: 5px;"/>
+                    </div>
+
+            </div> 
+            </div>
+            </div>
+            </div>
+            </div>                       
+            </div>       
+
+            <div class="col-md-12">
+              <div class="card rounded-0 box" >
+                <div class="card-header inwards_card_tab" style="border-bottom: 1px solid white;">All Sites Risk Assesment</div>
+              <div class="card-body chart-container">
+              <div class="row no-gutters">
+              
+              <div class="col-md-3">
+                <nav>
+                  <div class="nav flex-column nav-pills nav-fill" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-item nav-link nav-vertical active" id="v-pills-allMax-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-allMax" role="tab" aria-controls="v-pills-allMax" aria-selected="true">Max</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-allMedian-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-allMedian" role="tab" aria-controls="v-pills-allMedian" aria-selected="false">Median</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-allMin-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-allMin" role="tab" aria-controls="v-pills-allMin" aria-selected="false">Min</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-allLatest-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-allLatest" role="tab" aria-controls="v-pills-allLatest" aria-selected="false">Latest</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-maxsite-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-maxsite" role="tab" aria-controls="v-pills-maxsite" aria-selected="false">Max Site Value</a>
+
+                    </div>
+                  </nav>
+                  </div>
+
+              <div class="col-md-9" style="width: 100%">
+                  <div class="tab-content" id="v-pills-tabContent">
+                      <div class="tab-pane fade show active" id="v-pills-allMax" role="tabpanel" aria-labelledby="v-pills-allMax-tab">
+                        <AllSites ref="allComponent" style="margin-top: 5px;"/>
+                        <button class="btn btn-secondary btn-lg active" @click="showRiskHazard()"> <i class="fa fa-info"></i></button>
+                                          </div>
+                    <div class="tab-pane fade" id="v-pills-allMedian" role="tabpanel" aria-labelledby="v-pills-allMedian-tab">
+                      <MedianRisk ref="medianComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-allMin" role="tabpanel" aria-labelledby="v-pills-allMin-tab">
+                      <MinRisk ref="minComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-allLatest" role="tabpanel" aria-labelledby="v-pills-allLatest-tab">
+                      <LatestRisk ref="latestComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-maxsite" role="tabpanel" aria-labelledby="v-pills-maxsite-tab">
+                      <HeighestRisk ref="heighestComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-allrisk" role="tabpanel" aria-labelledby="v-pills-allrisk-tab">
+                      <MaxHazard ref="maxComponent" style="margin-top: 5px;"/>
+                    </div>
             </div> 
             </div>
             </div>
             </div>
             </div>                       
             </div>
-             <div class="col-md-12">
-                  <MaxHazard ref="maxComponent" style="margin-top: 5px;"/>
             </div>
+          </div>
+          <div class="tab-pane fade show active" id="naraTab" role="tabpanel" aria-labelledby="nav-nara-tab">
+            <div class="row no-gutters">
+            <div class="col-md-12"> 
+              
+              
+              
+              <HealthNaratives ref="healthnarativesComponent" style="margin-top: 5px;"/>
+            </div>       
             </div>
           </div>
             <div class="tab-pane fade" id="wqTab" role="tabpanel" aria-labelledby="wqTab">
-            
-
-            <div class="col-md-6">
+            <div class="row no-gutters">
+              <div class="col-md-6">
                   <TimeseriesChart ref="timeseriesComponent" style="margin-top: 5px;"/>
-            </div>
-            <div class="col-md-6" style="padding-left: 2px;">
-                  <BoxChart ref="boxComponent" style="margin-top: 5px;"/>
-              </div>
-
-            <div class="col-md-6">
-                  <LoadChart ref="loadComponent" style="margin-top: 5px;"/>
               </div>
               <div class="col-md-6" style="padding-left: 2px;">
-                  <DurationChart ref="durationComponent" style="margin-top: 5px;"/>
-              </div>
-
+                    <BoxChart ref="boxComponent" style="margin-top: 5px;"/>
+                </div>
+              <div class="col-md-6"> 
+                    <LoadChart ref="loadComponent" style="margin-top: 5px;"/>
+                </div>
+                <div class="col-md-6" style="padding-left: 2px;">
+                    <DurationChart ref="durationComponent" style="margin-top: 5px;"/>
+                </div>
+                </div>
             </div>
-            <div class="tab-pane fade" id="complianceTab" role="tabpanel" aria-labelledby="complianceTab">...</div>
+            <div class="tab-pane fade" id="complianceTab" role="tabpanel" aria-labelledby="complianceTab">
+
+              <div class="col-md-12">
+              <div class="card rounded-0 box">
+                <div class="card-header inwards_card_tab" style="border-bottom: 1px solid white;">All Sites Risk Assesment</div>
+              
+              <div class="card-body">
+              <div class="row no-gutters">
+                <div class="col-2">
+                <nav>
+                  <div class="nav flex-column nav-pills nav-fill" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-item nav-link nav-vertical active" id="v-pills-ecoli-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-ecoli" role="tab" aria-controls="v-pills-ecoli" aria-selected="true">E.COLI_Susp_Water</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-phos-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-phos" role="tab" aria-controls="v-pills-phos" aria-selected="false">PO4_P_Diss_Water</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-eCon-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-eCon" role="tab" aria-controls="v-pills-eCon" aria-selected="false">EC_Phys_Water</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-arse-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-arse" role="tab" aria-controls="v-pills-arse" aria-selected="false">As_Diss_Water</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-TIN-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-TIN" role="tab" aria-controls="v-pills-TIN" aria-selected="false">TIN (TBC)</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-turb-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-turb" role="tab" aria-controls="v-pills-turb" aria-selected="false">Turbidity(TBC)</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-temp-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-temp" role="tab" aria-controls="v-pills-temp" aria-selected="false">Temp(TBC)</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-phLower-tab" data-toggle="pill" style="border-bottom: 1px solid grey;"  href="#v-pills-phLower" role="tab" aria-controls="v-pills-phLower" aria-selected="false">ph_lower(TBC)</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-phUpper-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-phUpper" role="tab" aria-controls="v-pills-phUpper" aria-selected="false">ph_upper(TBC)</a>
+                      <a class="nav-item nav-link nav-vertical" id="v-pills-cad-tab" data-toggle="pill" style="border-bottom: 1px solid grey;" href="#v-pills-cad" role="tab" aria-controls="v-pills-cad" aria-selected="true">CN_Diss_Water(TBC)</a>
+                    </div>
+                  </nav>
+                  </div>
+
+              <div class="col-10">
+                  <div class="tab-content" id="v-pills-tabContent">
+                      <div class="tab-pane fade show active" id="v-pills-ecoli" role="tabpanel" aria-labelledby="v-pills-ecoli-tab">
+                        <EcoliCompliance ref="ecoliComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-phos" role="tabpanel" aria-labelledby="v-pills-phos-tab">
+                      <PhosCompliance ref="phosComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-eCon" role="tabpanel" aria-labelledby="v-pills-eCon-tab">
+                      <EcCompliance ref="ecComponent" style="margin-top: 5px;"/>
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-arse" role="tabpanel" aria-labelledby="v-pills-arse-tab">
+                      <ArseCompliance ref="arrqoComponent" style="margin-top: 5px;"/>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-TIN" role="tabpanel" aria-labelledby="v-pills-TIN-tab">
+                    
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-turb" role="tabpanel" aria-labelledby="v-pills-turb-tab">...</div>
+                    
+                    <div class="tab-pane fade" id="v-pills-temp" role="tabpanel" aria-labelledby="v-pills-temp-tab">
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-phLower" role="tabpanel" aria-labelledby="v-pills-phLower-tab">
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-phUpper" role="tabpanel" aria-labelledby="v-pills-phUpper-tab">
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-cad" role="tabpanel" aria-labelledby="v-pills-cad-tab">
+                      <CnCompliance ref="cnComponent" style="margin-top: 5px;"/>
+
+                    </div>
+            </div> 
+          </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>                       
+            </div>
+            </div>
 
               <br>
-          
+              <RiskHazard ref="riskhazardComponent" style="margin-top: 5px;"/>
+
            <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>    
-          </div>      
-        </div>
-      </div>
+               
       <NavButtons/> 
+    </div>
     </div>
   </div>
   </div>
@@ -294,12 +417,23 @@
   import DurationChart from './DurationChart';
   import LoadChart from './LoadChart';
   import SiteRisk from './SiteRisk';
+  import RiskHazard from './RiskHazard';
+  import EcoliCompliance from './EcoliCompliance';
+  import EcCompliance from './EcCompliance';
+  import PhosCompliance from './PhosCompliance';
+  import ArseCompliance from './ArseCompliance';
+  import CnCompliance from './CnCompliance';
+  import LatestRisk from './LatestRisk';
+  import MedianRisk from './MedianRisk';
+  import HealthNaratives from './HealthNaratives';
   import HeighestRisk from './HeighestRisk';
   import AllSites from './AllSites';
+  import MinRisk from './MinRisk';
   import StatusBar from '../StatusBar';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON';
+  import NarativeBlock from './NarativeBlock';
   import {Fill, Stroke, Style} from 'ol/style';
   import { GridLoader } from 'vue-spinner/dist/vue-spinner.min.js';
   import $ from 'jquery';
@@ -307,6 +441,7 @@
   import stateStore from '../../store/state_handler';
   require('promise.prototype.finally').shim();
   const { dialog, app } = require('electron').remote;
+
   export default {
 
     components: {
@@ -322,7 +457,18 @@
       SiteRisk,
       HeighestRisk,
       AllSites,
-      StatusBar
+      MedianRisk,
+      MinRisk,
+      LatestRisk,
+      StatusBar,
+      EcoliCompliance,
+      PhosCompliance,
+      EcCompliance,
+      CnCompliance,
+      ArseCompliance,
+      RiskHazard,
+      HealthNaratives,
+      NarativeBlock
     },
     data () {
       return {
@@ -438,6 +584,16 @@
         this.$refs.siteComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType  +'&merge='+  this.mergeAPI);
         this.$refs.heighestComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType  +'&merge='+  this.mergeAPI);
         this.$refs.allComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType +'&merge='+  this.mergeAPI);
+        this.$refs.medianComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType +'&merge='+  this.mergeAPI);
+        this.$refs.minComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType +'&merge='+  this.mergeAPI);
+        this.$refs.latestComponent.showRiskTable('stations='+ this.selectedStations +'&variable='+ this.selectedVariable[0]  +'&sd='+  this.formatDate(dateStart)  +'&ed='+  this.formatDate(dateEnd)  +'&unit='+  this.selectedVariable[1] +'&type='+  this.selectedType +'&merge='+  this.mergeAPI);
+        this.$refs.ecoliComponent.showRiskTable();
+        this.$refs.phosComponent.showRiskTable();
+        this.$refs.ecComponent.showRiskTable();
+        this.$refs.cnComponent.showRiskTable();
+        this.$refs.arrqoComponent.showRiskTable();
+        this.$refs.healthnarativesComponent.showNarativesTable();
+
         this.loading = false;
       },
       detectType () {
@@ -462,10 +618,16 @@
         console.log(this.selectedVariable);
         this.variableSample = this.selectedVariable[0];
         this.catchmentTreeRef.refreshStations();
-        this.fetchStations();
+        //this.fetchStations();
       },
       loadRiskTable (urk_paramters) {
         this.$refs.siteComponent.showRiskTable(urk_paramters);
+      },
+      showNarativesTable (urk_paramters) {
+        this.$refs.healthnarativesComponent.showNarativesTable(urk_paramters);
+      },
+      showRiskHazard () {
+        this.$refs.narativeComponent.showNarativeTable();
       },
       fetchStations () {
         let self = this; 
@@ -609,6 +771,8 @@
           let sampleSize = stationsData.features[i]['properties']['sample_size_iucma'];
           let latestReading = stationsData.features[i]['properties']['latest'];
           let hydro = stationsData.features[i]['properties']['hydro'];
+          let rqo = stationsData.features[i]['properties']['ewr_site'];
+          let iucma = stationsData.features[i]['properties']['iucma'];
           this.stationsFeatures[station] = stationsData.features[i];
           this.stationsCoordinates[station] = stationsData.features[i].geometry.coordinates;
           let flow = 'N';
@@ -618,7 +782,7 @@
           if (catchmentsData.hasOwnProperty(secondary)) {
             let stationName = '';
             if (latestReading != null) {
-              stationName = station + ': ' + ' (' + sampleSize + ') ' + ' (' + flow + ') ' + place + ' ' + latestReading.toString().slice(0, 10);
+              stationName = station + ': ' + ' (' + iucma + ') ' + ' (' + sampleSize + ') ' + ' (' + rqo + ') ' + place + ' ' + latestReading.toString().slice(0, 10);
             } else {
               stationName = 'Problem with Station';
             }

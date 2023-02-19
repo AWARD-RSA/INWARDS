@@ -9,7 +9,7 @@
       <section v-else style="height: 100%;">
         <div v-if='loading'><ring-loader :loading="loading" :color="color" :size="size" class="loading_disks"></ring-loader></div>
         <div v-else style="height: 100%">
-          <div :id="chartDivId" style="height: 100%;"><ring-loader :loading="loading" :color="color" :size="size" class="loading_disks"></ring-loader></div>
+          <div :id="chartDivId" style="height: 380px;"><ring-loader :loading="loading" :color="color" :size="size" class="loading_disks"></ring-loader></div>
         </div>
       </section>
     </div>

@@ -1,6 +1,9 @@
 <template>
-
-                <table class="table table-sm">
+  <div class="card rounded-0 box">
+    <div class="card-body chart-container">           
+        <div class="row">
+               <div class="col-sm-12">
+                <table class="table table-striped">
                   <thead>
                    <tr style="font-size: 0.8rem;">
                         <th>Station</th>
@@ -18,6 +21,10 @@
                   </tr>
               </tbody>
             </table>
+        </div>
+        </div>
+        </div>
+        </div>
 
     </template>
     <script type="text/javascript">

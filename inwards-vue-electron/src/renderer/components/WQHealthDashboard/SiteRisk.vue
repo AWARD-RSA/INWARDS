@@ -1,10 +1,9 @@
 <template>
   <div class="card rounded-0 box">
-    <div class="card-header inwards_card_tab">Site Risk Assesment </div>
     <div class="card-body chart-container">           
         <div class="row">
                <div class="col-sm-12">
-                <table class="table table-sm">
+                <table class="table table-m table-striped">
                 <thead>
 			          	<tr style="font-size: 0.8rem;">
                       <th>Parameters</th>                      

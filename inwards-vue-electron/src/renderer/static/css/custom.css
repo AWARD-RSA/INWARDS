@@ -830,3 +830,21 @@ color: white;
 .inwards_label{
   font-size: small;
 }
+
+nav > div a.nav-item.nav-link.nav-vertical.active:after {
+  content: "";
+  position: relative;
+  bottom: -56px;
+  left: -55%;
+  border: 15px solid transparent;
+  border-top-color: #272e38;
+  visibility: hidden;
+}
+
+
+p {
+    font-size: 1rem;
+    color: #272e38;
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 1;
+}
