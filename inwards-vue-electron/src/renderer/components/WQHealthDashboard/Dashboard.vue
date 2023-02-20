@@ -14,15 +14,15 @@
                     <p class="divider-text"><span class="bg-light">Data Source Selection</span></p>
                     <div class="funkyradio">
                       <div class="form-check form-check-inline funkyradio-primary">
-                        <input name="chart_components" id="veryHigh" type="checkbox" class="form-check-input form-check-input"> 
+                        <input name="chart_components" id="veryHigh" type="checkbox" class="form-check-input form-check-input" checked> 
                         <label for="veryHigh" class="form-check-label">IUCMA Data</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary">
-                        <input name="chart_components" id="high" type="checkbox" class="form-check-input form-check-input"> 
+                        <input name="chart_components" id="high" type="checkbox" class="form-check-input form-check-input" disabled> 
                         <label for="high" class="form-check-label">DWS Data</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary">
-                        <input name="chart_components" id="merge" type="checkbox" class="form-check-input form-check-input"> 
+                        <input name="chart_components" id="merge" type="checkbox" class="form-check-input form-check-input" disabled> 
                         <label for="merge" class="form-check-label">Merge Datasets</label>
                       </div>                      
                     </div>
@@ -65,60 +65,60 @@
                     <p class="divider-text"><span class="bg-light">Limits and Standards</span></p>
                     <div class="funkyradio">
                       <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">RQOs</label>
+                        <input name="chart_components" id="rqoLimits" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="rqoLimits" class="form-check-label">RQOs</label>
                       </div> 
                         <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox" class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">SANS241</label>
+                        <input name="chart_components" id="sansLimits" type="checkbox" class="form-check-input" disabled> 
+                        <label for="sansLimits" class="form-check-label">SANS241</label>
                       </div> 
                         <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox" class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">DWS Domestic</label>
+                        <input name="chart_components" id="dwsDomestic" type="checkbox" class="form-check-input" disabled> 
+                        <label for="dwsDomestic" class="form-check-label">DWS Domestic</label>
                       </div> 
                         <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">DWS Irrigation</label>
+                        <input name="chart_components" id="dwsIrrigation" type="checkbox"  class="form-check-input" disabled> 
+                        <label for="dwsIrrigation" class="form-check-label">DWS Irrigation</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">DWS Livestock</label>
+                        <input name="chart_components" id="dwsLivestock" type="checkbox"  class="form-check-input" disabled> 
+                        <label for="dwsLivestock" class="form-check-label">DWS Livestock</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">DWS Industry</label>
+                        <input name="chart_components" id="dwsIndustry" type="checkbox"  class="form-check-input" disabled> 
+                        <label for="dwsIndustry" class="form-check-label">DWS Industry</label>
                       </div>
                       <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">DWS NWRQOs</label>
+                        <input name="chart_components" id="dwsNWRQOs" type="checkbox"  class="form-check-input" checked> 
+                        <label for="dwsNWRQOs" class="form-check-label">DWS NWRQOs</label>
                       </div>
                   </div>
                     <p class="divider-text"><span class="bg-light">Hazard and Cancer Risk Scale</span></p>
                     <div class="funkyradio">
                       <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">Catchment</label>
+                        <input name="chart_components" id="catchmentView" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="catchmentView" class="form-check-label">Catchment</label>
                         <div class="form-check form-check-inline funkyradio-primary">
-                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">Site</label>
+                        <input name="chart_components" id="siteView" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="siteView" class="form-check-label">Site</label>
                       </div>  
                       </div>
                       <p class="divider-text"><span class="bg-light">Data Parameters</span></p>
                       <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">Varaible Specific</label>
+                        <input name="chart_components" id="variableSpecific" type="checkbox"  class="form-check-input" checked> 
+                        <label for="variableSpecific" class="form-check-label">Varaible Specific</label>
                       </div> 
                         <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  checked="checked" class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">Max</label>
+                        <input name="chart_components" id="maxLabel" type="checkbox"  checked="checked" class="form-check-input"> 
+                        <label for="maxLabel" class="form-check-label">Max</label>
                       </div> 
                         <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">Median</label>
+                        <input name="chart_components" id="medianLabel" type="checkbox"  class="form-check-input" checked> 
+                        <label for="medianLabel" class="form-check-label">Median</label>
                       </div> 
                         <div class="form-check form-check-inline funkyradio-primary" >
-                        <input name="chart_components" id="siteOverview" type="checkbox"  class="form-check-input"> 
-                        <label for="siteOverview" class="form-check-label">Most Recent</label>
+                        <input name="chart_components" id="recentLabel" type="checkbox"  class="form-check-input" checked> 
+                        <label for="recentLabel" class="form-check-label">Most Recent</label>
                       </div>
                   </div>
                   </div>
@@ -592,7 +592,7 @@
         this.$refs.ecComponent.showRiskTable();
         this.$refs.cnComponent.showRiskTable();
         this.$refs.arrqoComponent.showRiskTable();
-        this.$refs.healthnarativesComponent.showNarativesTable();
+        this.$refs.healthnarativesComponent.showNarativesTable('variable='+ this.selectedVariable[0]);
 
         this.loading = false;
       },
