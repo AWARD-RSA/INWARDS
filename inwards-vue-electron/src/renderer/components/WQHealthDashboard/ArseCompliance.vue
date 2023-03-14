@@ -11,7 +11,7 @@
                           <th>Detection Limit</th>
                           <th>RQO Concentration</th>
                           <th>95th Percentile Observed</th>                      
-                          <th>% Samples below RQO</th>
+                          <th>% of samples compliant with RQO</th>
                       </tr>
                   </thead>
                   <tbody>

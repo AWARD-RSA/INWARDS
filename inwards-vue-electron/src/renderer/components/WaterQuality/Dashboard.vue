@@ -3,8 +3,11 @@
     <StatusBar/>
     <div class="container-fluid" style="height: 100%;">
       <div class="row no-gutters" style="height: 100%;">
+
         <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px; overflow: hidden;">
           <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
+            <div class="col-md-12" align="center"><img src="../../assets/dws.png" alt="" style="align: center;" height="50px"></div>
+
             <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-bar-chart" style="padding-right: 10px;"></i>Parameters</h6></div>
             <div class="card-body">
               <div class="row">

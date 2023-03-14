@@ -59,16 +59,17 @@
                     <img src="../../assets/heart-illustration-1-svgrepo-com.svg" alt="" height="50">
                   </div>
                 </div>
-                  <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;"><h5 style="color:#5C5F62;">Health Effects of {{ log.mon_variable_name }}</h5></div>
-                  <div class="row h-20 justify-content-center align-items-center" style="margin-bottom: 1px;">
+                <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;"><h5 style="color:#5C5F62;">Toxic Acute Health Effects of {{ log.mon_variable_name }}</h5></div>
+                  <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;">
                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
+                   <div class="col-md-10">
                     <p style="color:#5C5F62;">
-                      {{ log.health_effects }}                 
+                      {{log.health_effect_toxic_acute}}                 
                      </p>   
-                  </div> 
-                <div class="col-md-1"></div>              
+                   </div> 
+                   <div class="col-md-1"></div>              
                 </div>
+
                 </div>
                 <div class="col-md-12">
                   <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 5px;">
@@ -85,7 +86,7 @@
                   </div>
                 </div>
                   <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;">
-                    <h5 style="color:#5C5F62;">Chronic Health Effects of {{ log.mon_variable_name }}</h5></div>
+                    <h5 style="color:#5C5F62;">Toxic Chronic Health Effects of {{ log.mon_variable_name }}</h5></div>
                   <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;">
                    <div class="col-md-1"></div>
                    <div class="col-md-10">
@@ -102,19 +103,18 @@
                     <img src="../../assets/bucket-valve-svgrepo-com.svg" alt="" height="50">
                   </div>
                 </div>
-                  <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;"><h5 style="color:#5C5F62;">Acute Health Effects of {{ log.mon_variable_name }}</h5></div>
-                  <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;">
+                <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 1px;"><h5 style="color:#5C5F62;">Carcinogenic Health Effects of {{ log.mon_variable_name }}</h5></div>
+                  <div class="row h-20 justify-content-center align-items-center" style="margin-bottom: 1px;">
                    <div class="col-md-1"></div>
-                   <div class="col-md-10">
+                    <div class="col-md-10">
                     <p style="color:#5C5F62;">
-                      {{log.health_effect_toxic_acute}}                 
+                      {{ log.health_effects }}                 
                      </p>   
-                   </div> 
-                   <div class="col-md-1"></div>              
+                  </div> 
+                <div class="col-md-1"></div>              
                 </div>
                 </div>                              
               </div>
-
                 <div class="row">
                 <div class="col-md-12">
                 <div class="row h-10 justify-content-center align-items-center" style="margin-bottom: 5px;">

@@ -10,6 +10,7 @@
                           <th>Observed</th>                      
                           <th>Hazard Quotient</th>
                           <th>Cancer Risk</th>
+                          <th>Half the Detection Limit</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -18,6 +19,7 @@
                           <th>{{ log.conc_observed }}</th>
                           <th :style="{'background-color': log.hazard }">{{ log.hazard_quotient }}</th>                  
                           <th :style="{'background-color': log.cancer }">{{ log.cancer_risk }}</th>
+                          <th>{{ log.detection }}</th>
                     </tr>
                 </tbody>
               </table>

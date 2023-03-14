@@ -233,7 +233,7 @@
 
             <div class="col-md-12">
               <div class="card rounded-0 box" >
-                <div class="card-header inwards_card_tab" style="border-bottom: 1px solid white;">All Sites Risk Assesment</div>
+                <div class="card-header inwards_card_tab" style="border-bottom: 1px solid white;">All Sites Risk Assesment (Inkomati WMA)</div>
               <div class="card-body chart-container">
               <div class="row no-gutters">
               
