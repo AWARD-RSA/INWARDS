@@ -1,6 +1,7 @@
 html, body, #app, .col-md-12 {
   height: 100%;
   width: 100%;
+  font-family: "Roboto", "Open Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 .container-fluid {
   height: 100%;
@@ -161,8 +162,8 @@ cursor: pointer; /* Add a pointer on hover */
 }
 
 html {
-    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-size: 14px;
+  font-family: "Roboto", "Open Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
 }
 
 .table {
@@ -450,6 +451,12 @@ grid-template-columns: repeat(auto-fill, minmax(85px, 2fr));
 grid-gap: 0.4rem;
 height: 90px;
 }
+.grid-logo-login {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(75px, 2fr));
+  grid-gap: 0.1rem;
+  height: 60px;
+  }
 .grid-logo > div {
 background: rgba(255, 255, 255, 0.9);
 padding: 0.4rem;
@@ -470,6 +477,26 @@ grid-area: 1/1/2/2;
 width: 100%;
 grid-area: 1/1/2/2;
 }
+.grid-logo-login > div {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.1rem;
+  display: grid;
+  place-items: center;
+  border: 0.1px solid rgb(252, 250, 250);
+  -moz-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, 0);
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, 0);
+  }
+  .grid-logo-login > div::before {
+  content: "";
+  display: block;
+  padding-bottom: 0%;
+  grid-area: 0.5/0.5/1/1;
+  }
+  .grid-logo-login > div img {
+  width: 80%;
+  grid-area: 0.5/0.5/1/1;
+  }
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -744,6 +771,26 @@ color: white;
 .btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
 .btn-labeled {padding-top: 0;padding-bottom: 0;}
 .btn { margin-bottom:1px; }
+.watermarked {
+  position: relative;
+}
+
+.watermarked:after {
+  content: "Site photograph source: DWS";
+  background-color: rgba(0, 0, 0, 0.34);
+  color: white;
+  display: block;
+  width: 100%;
+  height: 10%;
+  position: absolute;
+  bottom: 5%;
+  left: 0%;
+  padding-left: 0.1rem;
+  background-size: 100px 100px;
+  background-position: 30px 30px;
+  background-repeat: no-repeat;
+  opacity: 0.7;
+}
 
 .vertical-center {
   margin: 0;
@@ -829,8 +876,22 @@ color: white;
 }
 .inwards_label{
   font-size: small;
-}
 
+}
+.inwards_form_label{
+  font-size: small;
+  padding-bottom: 0rem;
+  margin-bottom: 0rem;
+  margin-left: 4px; 
+  margin-right: 10px;
+}
+.inwards_margin_low{
+  margin-bottom: 1px; /* Adjust this value as needed */
+
+}
+.input-group > label {
+  margin-bottom: 1px; /* Adjust this value as needed */
+}
 nav > div a.nav-item.nav-link.nav-vertical.active:after {
   content: "";
   position: relative;

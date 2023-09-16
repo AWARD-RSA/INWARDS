@@ -128,7 +128,6 @@ async function installDevTools() {
   })
 }
 
-
 function createWindow() {
   /**
    * Initial window options
@@ -159,13 +158,11 @@ function createWindow() {
   Menu.setApplicationMenu(menu);
   if (isDev) {
     mainWindow.loadURL('http://localhost:9080')
-    attachTitlebarToWindow(mainWindow);
     mainWindow.on('closed', () => {
       mainWindow = null;
     });
   } else {
     mainWindow.loadFile(`${__dirname}/index.html`)
-    attachTitlebarToWindow(mainWindow);
     global.__static = require('path')
       .join(__dirname, '/static')
       .replace(/\\/g, '\\\\')
@@ -188,7 +185,7 @@ app.on('ready', () => {
       mainWindow.webContents.once("devtools-opened", () => {
       });
       setTimeout(() => {
-        mainWindow.webContents.openDevTools();
+        mainWindow.webContents.openDevTools({ mode: 'right' });
       }, 3000);
     });
   }
@@ -205,7 +202,6 @@ app.on('ready', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
   if (mainWindow === null) {
-    //Menu.setApplicationMenu(menu);
     createWindow()
   }
 })
@@ -227,14 +223,31 @@ function realTime (dash) {
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
 
-/*
-import { autoUpdater } from 'electron-updater'
+/* autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available')
+})
 
 autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
+  mainWindow.webContents.send('update_downloaded')
 })
  */
+/* ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall()
+})
+ipcMain.handle('get-user-data-path', () => {
+  return app.getPath('userData')
+})
+ipcMain.handle('get-app-path', () => {
+  return app.getPath('userData')
+})
+ipcMain.handle('show-message-box', async (event, options) => {
+  const result = await dialog.showMessageBox(null, options)
+  return result
+})
+ipcMain.handle('open-dialog', async (event, options) => {
+  const result = await dialog.showOpenDialog(options)
+  return result
+})
+ipcMain.handle('get-app-data-path', async () => {
+  return app.getPath('userData')
+}) */

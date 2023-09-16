@@ -15,7 +15,7 @@ import EffectsTable from '@/components/WQHealthDashboard/EffectsTable.vue'
 import LimitsTable from '@/components/WQHealthDashboard/LimitsTable.vue'
 import AdminDashboard from '@/components/AdminDashboard/Dashboard.vue'
 import UserSupport from '@/components/UserSupport/Dashboard.vue'
-
+import LoadDashboard from '@/components/LoadDashboard/Dashboard.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +51,11 @@ export default new Router({
       path: '/iucma-dashboard',
       name: 'iucma-dashboard-page',
       component: IucmaDashboard
+    },
+      {
+      path: '/load-dashboard',
+      name: 'load-dashboard-page',
+      component: LoadDashboard
     },
     {
       path: '/fish-dashboard',

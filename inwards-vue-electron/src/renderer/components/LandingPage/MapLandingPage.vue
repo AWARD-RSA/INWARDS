@@ -42,6 +42,7 @@
                     <button id="knpDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToKnpDashboard()" type="button"><span class="btn-label"><i class="fa fa-paw" aria-hidden="true"></i></span>KNP Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                     <button id="iucmaDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToIUCMADashboard()" type="button"><span class="btn-label"><i class="fa fa-area-chart" aria-hidden="true"></i></span>IUCMA EWR Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                     <button id="iucmaDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToIUCMAWqDashboard()" type="button"><span class="btn-label"><i class="fa fa-bullseye" aria-hidden="true"></i></span>IUCMA RQO Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button id="loadDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToLoadDashboard()" type="button"><span class="btn-label"><i class="fa fa-bullseye" aria-hidden="true"></i></span>Licensing Load Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                     <button id="verifiedDash" class="btn inwards_button text-left" style="width: 100%; display:none;" type="button"><span class="btn-label"><i class="fa fa-line-chart" aria-hidden="true"></i></span>Verified Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                     <button id="fishDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToFishDashboard()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-fish-fins" /></span>Fish Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                     <button id="invertDash" class="btn inwards_button btn-labeled text-left" style="width: 100%" @click="goToInvertDashboard()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-bug" /></span>Invert Dashboard<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
@@ -62,7 +63,7 @@
             <div><img src="../../assets/knp.png" alt=""></div>
             <div><img src="../../assets/iucma.png" alt=""></div>
             <div><img src="../../assets/dws.png" alt=""></div>
-            <div><img src="../../assets/jrs-logo.svg" alt=""></div>
+            <div><img src="@/assets/jrs_square_logo.png" alt=""></div>
             <div><img src="../../assets/usaid.png" alt=""></div>
             <div><img src="../../assets/fbis_logo.png" alt=""></div>
             <div><img src="../../assets/kartoza.png" alt=""></div>
@@ -221,7 +222,6 @@
   import router from '../../router/index';
   import StatusBar from '../StatusBar';
   import Overlay from 'ol/Overlay';
-  import {Legend} from 'ol/Control';
 
 
   export default {
@@ -752,6 +752,9 @@
       },
       goToHealthDashboard () {
         router.push({ path: 'wq-health-dashboard' });
+      },
+      goToLoadDashboard () {
+        router.push({ path: 'load-dashboard' });
       },
       goHome () {
         router.push({ path: '/' });

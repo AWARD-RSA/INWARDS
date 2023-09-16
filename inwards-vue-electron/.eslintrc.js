@@ -32,8 +32,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier',
     'prettier/@typescript-eslint',
-    'prettier/vue',
-    'standard'
+    'prettier/vue'
   ],
   globals: {
     __static: true

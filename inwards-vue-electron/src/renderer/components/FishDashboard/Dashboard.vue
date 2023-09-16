@@ -261,6 +261,7 @@
   import stateStore from '../../store/state_handler';
   import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
+  import 'vue-multiselect/dist/vue-multiselect.min.css';
   import Multiselect from 'vue-multiselect';
   import GeoJSON from 'ol/format/GeoJSON';
   import {Fill, Stroke, Style} from 'ol/style';
@@ -416,6 +417,7 @@
         }
         this.loading = true;
         this.$refs.siteComponent.siteTable(this.selectedBioStations);
+        this.selectedSpecies = ["All"];
         // this.$refs.boxComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.timeseriesComponent.displayChart(this.selectedHydroStations, this.selectedBioStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedSpecies);
         // this.$refs.durationComponent.displayChart(this.selectedBioStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);

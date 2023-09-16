@@ -5,6 +5,7 @@
     <button id="wqDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToWqDashboard()" type="button">WQ Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="knpDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToKnpDashboard()" type="button">TPC Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="iucmaDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToIUCMADashboard()" type="button">IUCMA Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
+    <button id="loadDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToLoadDashboard()" type="button">Load Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="userDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToUserDefinedDashboard()" type="button">User Defined Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="verifiedDash" class="btn inwards_button" style="width: 100%; display:none;" type="button">Verified Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
     <button id="fishDash" class="btn inwards_button" style="width: 100%; display:none;" @click="goToFishDashboard()" type="button">Fish Dashboard<i class="fa fa-chevron-right" style="padding-left: 10px;"></i></button>
@@ -34,6 +35,9 @@
       },
       goToIUCMADashboard () {
         router.push({ path: 'iucma-dashboard' });
+      },
+      goToLoadDashboard () {
+        router.push({ path: 'load-dashboard' });
       },
       goToWqDashboard () {
         router.push({ path: 'wq-dashboard' });

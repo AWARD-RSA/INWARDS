@@ -98,19 +98,52 @@
                   </div>
                 </div>
                 <hr>
-                <div class="row">
-                <div class="col-md-12">
-                <button class="btn inwards_button" type="button" style="width: 100%" @click="updateCharts()">
-                  <i class="fa fa-line-chart"></i>Update Dashboard
-                </button>
-                </div>
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="updateCharts()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-refresh" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Apply<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>               
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="exportReport()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-save" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Report<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="showRiverLog()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Logbook<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="submitRiverLog()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Log<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="showPlatesForm()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Plate submissions<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="showSubmitForm()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Plate<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                  </div>
+
               </div>
             </div>
           </div>
           <hr>
           <div class="card rounded-0" style="margin-top: 0px; margin-bottom: 5px;">
             <div class="card-body">
-              <ComplianceTable ref="complianceTable"/>
+              <nav>
+                  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                      <a class="nav-item nav-link active" id="nav-verified-tab" data-toggle="tab" href="#verified-tab" role="tab" aria-controls="nav-verified" aria-selected="true" style="text-align: center;">Verified Compliance</a>
+                      <a class="nav-item nav-link" id ="nav-iucma-tab" data-toggle="tab" href="#iucma-unverified-tab" role="tab" aria-controls="nav-iucma" aria-selected="false">Unverified Compliance IUCMA</a>
+
+                      <a class="nav-item nav-link" id="nav-unverified-tab" data-toggle="tab" href="#unverified-tab" role="tab" aria-controls="nav-unverified" aria-selected="false">Unverified Compliance DWS</a>
+                    </div>
+                    </nav>
+                    <div class="tab-content py-1 px-1 px-sm-0" id="nav-tabContent-login">
+                        <div class="tab-pane fade show active" id="verified-tab" role="tabpanel" aria-labelledby="home-tab" >            
+                          <ComplianceTable ref="complianceTable"/>
+                          
+                        </div>
+                        <div class="tab-pane fade" id="iucma-unverified-tab" role="tabpanel" aria-labelledby="home-tab" >            
+                          <UnverifiedIUCMA ref="iucmaTable"/>
+                        </div>
+                        <div class="tab-pane fade" id="unverified-tab" role="tabpanel" aria-labelledby="home-tab" >            
+                          <UnverifiedCompliance ref="unverifiedTable"/>
+                        </div>
+                </div>            
             </div>
           </div>
         </div>
@@ -159,6 +192,11 @@
         </div>
         <NavButtons/>
       </div>
+      <RiverLog ref="logComponent" style="margin-top: 5px;"/>
+      <SubmitForm ref="submitComponent" style="margin-top: 5px;"/>
+      <PlateSubmissions ref="submissionsComponent" style="margin-top: 5px;"/>
+      <SubmitLog ref="submitLogComponent" style="margin-top: 5px;"/>
+      <UpdateLog ref="submitLogUpdateComponent" style="margin-top: 5px;"/>
     </div>
   </div>
 </template>
@@ -186,14 +224,84 @@
     stroke-width: 15px;
     stroke: rgb(0, 0, 0);
 }
+nav > .nav.nav-tabs {
+  border: white;
+  color: #fff;
+  background: #272e38;
+  border-radius: 0;
+}
+
+nav > div a.nav-item.nav-link {
+  border: white;
+  border-width: 0.1rem;  /* Reduced border width */
+  padding: 5px 0.5px;  /* Reduced padding */
+  font-size: 13px;  /* Reduced font size */
+  color: #fff;
+  background: #272e38;
+  border-radius: 0;
+}
+
+nav > div a.nav-item.nav-link.active {
+  border: white;
+  border-width: 0.1rem;  /* Reduced border width */
+  padding: 5px 0.5px;  /* Reduced padding */
+  color: #fff;
+  background: #10556A;
+  border-radius: 0;
+}
+
+nav > div a.nav-item.nav-link.active:after {
+  content: "";
+  position: relative;
+  bottom: -8px;  /* Adjusted bottom position */
+  left: 0%;
+  border: 14px solid transparent;  /* Reduced border size */
+  border-top-color: #272e38;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #272e38;
+}
+
+.tab-content {
+  background: #fdfdfd;
+  line-height: 1px;
+  border: 1px solid #ddd;
+  border-top: 5px solid #272e38;
+  border-bottom: 5px solid #272e38;
+  padding: 0, 0, 0, 0;
+}
+
+nav > div a.nav-item.nav-link:hover {
+  border: none;
+  background: #4CAF50;
+  color: #fff;
+  border-radius: 0;
+  transition: background 0.20s linear;
+}
+
+nav > div a.nav-item.nav-link:focus {
+  border: none;
+  background: #10556A;
+  color: #fff;
+  border-radius: 0;
+  transition: background 0.20s linear;
+}
 </style>
 <script>
   import axios from 'axios';
   import NavButtons from '../../components/NavButtons';
   import MapDashboard from './MapDashboard';
   import ComplianceTable from './ComplianceTable';
+  import UnverifiedCompliance from './UnverifiedCompliance';
+  import UnverifiedIUCMA from './UnverifiedIUCMA';
   import OperationalReserve from './OperationalReserve';
-  import RiverLog from './RiverLog';
+  import RiverLog from '../KnpDashboard/RiverLog';
+  import SubmitForm from './SubmitForm';
+  import SubmitLog from './SubmitLog';
+  import UpdateLog from './UpdateLog';
+  import PlateSubmissions from './PlateSubmissions';
   import CrocChart from './CrocChart';
   import SabieChart from './SabieChart';
   import ExeChart from './ExeChart';
@@ -221,6 +329,8 @@
       MapDashboard,
       NavButtons,
       ComplianceTable,
+      UnverifiedCompliance,
+      UnverifiedIUCMA,
       CrocChart,
       SabieChart,
       ExeChart,
@@ -235,7 +345,11 @@
       MariteS5,
       RiverLog,
       OperationalReserve,
-      StatusBar
+      StatusBar,
+      SubmitLog,
+      SubmitForm,
+      UpdateLog,
+      PlateSubmissions
     },
     data () {
       return {
@@ -248,15 +362,22 @@
       };
     },
     mounted () {
-      document.getElementById('dateStart').setAttribute('value', '2019-10-01');
-      document.getElementById('dateEnd').setAttribute('value', '2020-09-30');
       let self = this;
       this.mapDashboardRef = this.$refs.mapDashboard;
       let map = this.$refs.mapDashboard.map;
       this.mapDashboardRef.connectedToTree = false;
-      let startDate = new Date();
-      startDate = '2019-10-01';
-      let endDate = this.formatDate(new Date());
+      let currentDate = new Date();
+      let year = currentDate.getFullYear();
+      let hydrologicalStartDate = new Date(`${year}-10-01`);
+      let lastHydrologicalStartDate = new Date(`${year - 1}-10-01`);
+      if (currentDate < hydrologicalStartDate) {
+        hydrologicalStartDate = lastHydrologicalStartDate;
+      }
+      let startDate = `${hydrologicalStartDate.getFullYear()}-${String(hydrologicalStartDate.getMonth() + 1).padStart(2, '0')}-${String(hydrologicalStartDate.getDate()).padStart(2, '0')}`;
+      let endDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+     
+      document.getElementById('dateStart').setAttribute('value', startDate);
+      document.getElementById('dateEnd').setAttribute('value', endDate);
       let critical = document.getElementById('critical').checked;
       let veryHigh = document.getElementById('veryHigh').checked;
       let high = document.getElementById('high').checked;
@@ -337,6 +458,27 @@
       },
       showOperationalReserve () {
         this.$refs.operationalComponent.showOperationalModal();
+      },
+      showSubmitForm () {
+        this.$refs.submitComponent.showSubmitForm();
+      },
+      showPlatesForm () {
+        this.$refs.submissionsComponent.showPlatesForm();
+      },
+      showRiverLog () {
+        this.$refs.logComponent.showLogModal();
+      },
+      submitRiverLog () {
+        this.$refs.submitLogComponent.submitRiverLog();
+      },
+      submitRiverLogUpdate (id) {
+        this.$refs.submitLogUpdateComponent.submitLogUpdate(id);
+      },
+      exportReport(){
+
+      },
+      verifiedDischarge(){
+
       },
       addKnpLayer (map) {
         const knpJson = require('../../assets/knp.json');

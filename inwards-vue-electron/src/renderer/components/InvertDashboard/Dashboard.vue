@@ -338,6 +338,8 @@
           return;
         }
         this.loading = true;
+        this.selectedFamily = ["All"];
+
         this.$refs.invertsiteComponent.invertsiteTable(this.selectedInvertStations);
         // this.$refs.boxComponent.displayChart(this.selectedInvertStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
         this.$refs.inverttimeseriesComponent.displayChart(this.selectedHydroStations, this.selectedInvertStations, this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedFamily);

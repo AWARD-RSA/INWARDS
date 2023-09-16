@@ -9,6 +9,8 @@ const SELECTED_STATIONS = 'selectedStations';
 const SELECTED_BIOSTATIONS = 'selectedBioStations';
 const SELECTED_HYDROSTATIONS = 'selectedHydroStations';
 const SELECTED_INVERTSTATIONS = 'selectedInvertStations';
+const SELECTED_LOAD_STATIONS = 'selectedLoadStations';
+const SELECTED_LOAD_SITES = 'selectedLoadSites';
 const stateStore = {
   debug: true,
   keys: {
@@ -22,8 +24,11 @@ const stateStore = {
     selectedBioStations: 'selectedBioStations',
     selectedInvertStations: 'selectedInvertStations',
     selectedHydroStations: 'selectedHydroStations',
+    selectedLoadStations: 'selectedLoadStations',
+    selectedLoadSites: 'selectedLoadSites',
     loginStatus: 'loginStatus',
-    databaseStatus: 'databaseStatus'
+    databaseStatus: 'databaseStatus',
+    
   },
   keysToUpload: [
     SELECTED_CHARTS,
@@ -33,15 +38,17 @@ const stateStore = {
     SELECTED_BIOSTATIONS,
     SELECTED_HYDROSTATIONS,
     SELECTED_INVERTSTATIONS,
+    SELECTED_LOAD_SITES,
+    SELECTED_LOAD_STATIONS,
     TIMESTAMP
   ],
   state: {},
-  print (message) {
+  print(message) {
     if (this.debug) {
       console.log(message);
     }
   },
-  async setState (key, newValue, uploadToServer = true) {
+  async setState(key, newValue, uploadToServer = true) {
     const self = this;
     this.print(`Set state ${key} to ${JSON.stringify(newValue)}`);
     this.state[key] = newValue;
@@ -59,7 +66,7 @@ const stateStore = {
       });
     });
   },
-  getState (key, callback) {
+  getState(key, callback) {
     const self = this;
     this.print(`Get state for ${key}`);
     if (this.state.hasOwnProperty(key)) {
@@ -89,14 +96,14 @@ const stateStore = {
       });
     }
   },
-  clearState (key) {
+  clearState(key) {
     if (this.state.hasOwnProperty(key)) {
       this.print(`Clear state for ${key}`);
       this.state[key] = null;
       this.setState(key, null);
     }
   },
-  clearAll () {
+  clearAll() {
     let self = this;
     // Removing all documents with the 'match-all' query
     db.remove({}, { multi: true }, function (err, numRemoved) {
@@ -104,7 +111,7 @@ const stateStore = {
       self.state = {};
     });
   },
-  uploadToServer (callback = null) {
+  uploadToServer(callback = null) {
     // Upload user state to server
     let dataToUpload = {};
     if (!this.state.hasOwnProperty(this.keys.loginStatus)) {
@@ -121,7 +128,7 @@ const stateStore = {
       }
     });
   },
-  updateFromServer (callback) {
+  updateFromServer(callback) {
     // Get user states from the server, if the server has the latest data then update the local data
     let self = this;
     let url = `https://inwards.award.org.za/user_data/user_pref.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}`;
@@ -135,7 +142,11 @@ const stateStore = {
       }
       callback();
     });
+    
+  },
+  clearSelectedLoadStations() {
+    this.clearState(this.keys.selectedLoadSites)
+    console.log('Cleared: ' + this.keys.selectedLoadSites)
   }
-};
-
+}
 export default stateStore;
