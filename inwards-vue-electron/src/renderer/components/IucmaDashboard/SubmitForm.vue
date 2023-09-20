@@ -3,7 +3,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5><img class="modal-title" src="../../assets/knp.png" style="width: 10%;">Gauge Plate Submission</h5>
+            <h5><img class="modal-title" src="../../assets/iucma.png" style="width: 10%;">Gauge Plate Submission</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -129,7 +129,7 @@
             console.log(this.userCode);
         }
         );
-        this.$http.get('https://inwards.award.org.za/app_json/stations_all.php')
+        this.$http.get('https://inwards.award.org.za/app_json/iucma_verification/stations_all.php')
         .then(
           response => {
             this.stations = response.data;

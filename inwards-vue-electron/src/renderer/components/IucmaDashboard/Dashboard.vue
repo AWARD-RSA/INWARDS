@@ -117,7 +117,9 @@
                   <div class="col-md-4">
                     <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="showSubmitForm()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Plate<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
-
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="dischargeVerification()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-magnifying-glass-chart" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Verify Discharge<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                  </div>
               </div>
             </div>
           </div>
@@ -197,6 +199,8 @@
       <PlateSubmissions ref="submissionsComponent" style="margin-top: 5px;"/>
       <SubmitLog ref="submitLogComponent" style="margin-top: 5px;"/>
       <UpdateLog ref="submitLogUpdateComponent" style="margin-top: 5px;"/>
+      <VerifyDischarge ref="verifyDischargeComponent" style="margin-top: 5px;"/>
+
     </div>
   </div>
 </template>
@@ -294,6 +298,7 @@ nav > div a.nav-item.nav-link:focus {
   import NavButtons from '../../components/NavButtons';
   import MapDashboard from './MapDashboard';
   import ComplianceTable from './ComplianceTable';
+  import VerifyDischarge from './VerifyDischarge';
   import UnverifiedCompliance from './UnverifiedCompliance';
   import UnverifiedIUCMA from './UnverifiedIUCMA';
   import OperationalReserve from './OperationalReserve';
@@ -331,6 +336,7 @@ nav > div a.nav-item.nav-link:focus {
       ComplianceTable,
       UnverifiedCompliance,
       UnverifiedIUCMA,
+      VerifyDischarge,
       CrocChart,
       SabieChart,
       ExeChart,
@@ -477,7 +483,8 @@ nav > div a.nav-item.nav-link:focus {
       exportReport(){
 
       },
-      verifiedDischarge(){
+      dischargeVerification(){
+        this.$refs.verifyDischargeComponent.showVerifyForm();
 
       },
       addKnpLayer (map) {

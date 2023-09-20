@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import axios from 'axios';
 import VueAxios from 'vue-axios'
-import vSelect from 'vue-select';
+import 'bootstrap-table/dist/bootstrap-table.min.css';
 import $ from 'jquery';
+window.$ = $;
+window.jQuery = $;
+import vSelect from 'vue-select';
 import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/util.js';
 import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'jquery/dist/jquery.min.js';
 import './static/css/font-awesome.min.css';
 import 'vue-select/dist/vue-select.css';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.css';
@@ -29,11 +31,13 @@ import 'jquery-ui/ui/widgets/draggable.js';
 import 'jquery-ui/themes/base/all.css';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
-import { faBug, faFishFins, faMap, faUserSecret, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faFishFins, faMap, faUserSecret, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine, faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
 const { getCurrentWindow } = require('electron');
 const { ipcMain, dialog } = require('electron');
 const { ipcRenderer } = require('electron');
-library.add(faUserSecret, faFishFins, faMap, faBug, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine);
+
+import 'bootstrap-table/dist/bootstrap-table.min.js';
+library.add(faUserSecret, faFishFins, faMap, faBug, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine, faMagnifyingGlassChart);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
