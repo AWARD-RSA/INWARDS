@@ -3,11 +3,16 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5><img class="modal-title" src="../../assets/iucma.png" style="width: 10%;">Gauge Plate Submission</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-title">
+                <div class="text-center">
+                  Gauge Plate Submission
+            <img class="rounded float-right" src="../../assets/iucma.png" style="width: 10%;"/>
+        </div>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-          </div>
+        </div>
           <div class="modal-body">
             <div class="row">
                 <div class="col-sm-6">                    
@@ -126,7 +131,7 @@
     stateStore.getState(
         stateStore.keys.loginStatus, (status) => {
             this.userCode = status['uniqueCode'];
-            console.log(this.userCode);
+            //console.log(this.userCode);
         }
         );
         this.$http.get('https://inwards.award.org.za/app_json/iucma_verification/stations_all.php')
@@ -176,7 +181,7 @@
             s = '0' + s;
         }
         today = yyyy + '-' + mm + '-' + dd+'T'+H+':'+i+':'+s;
-        console.log(today);
+       // console.log(today);
         document.getElementById('dateObserved').value = today;
         operationalModel.modal({
           keyboard: true
@@ -191,7 +196,7 @@
             let stationsAll = this.selectedStations;
             let stationSplit = stationsAll.split(':');
             let siteCode = stationSplit[0];
-            console.log(siteCode);
+           // console.log(siteCode);
             let segment = $('#segment').val();
             let height = this.selectedGaugeHeight;
             let discharge =   $('#dischargeEstimate').val();
@@ -218,13 +223,13 @@
         let stationSplit = stationsAll.split(':');
         let siteCode = stationSplit[0];
         let heightPlate = this.selectedGaugeHeight;
-        console.log('https://inwards.award.org.za/app_json/plate_convert.php?station='+siteCode+'&height='+heightPlate);
+        //console.log('https://inwards.award.org.za/app_json/plate_convert.php?station='+siteCode+'&height='+heightPlate);
         this.$http.get('https://inwards.award.org.za/app_json/plate_convert.php?station='+siteCode+'&height='+heightPlate)
         .then(
           response => {
             this.discharge = response.data;
-            console.log(this.discharge);
-            console.log(this.discharge[0].flow);
+            //console.log(this.discharge);
+            //console.log(this.discharge[0].flow);
             document.getElementById("dischargeEstimate").value = this.discharge[0].flow;
           })
         .catch(function (error) {
@@ -239,7 +244,7 @@
             let stationsAll = this.selectedStations;
             let stationSplit = stationsAll.split(':');
             let siteCode = stationSplit[0];
-            console.log(siteCode);
+           // console.log(siteCode);
             let segment = $('#segment').val();
             let height = this.selectedGaugeHeight;
             let dischargeEst = $('#dischargeEstimate').val(); 

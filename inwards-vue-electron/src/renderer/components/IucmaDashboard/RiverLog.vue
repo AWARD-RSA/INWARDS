@@ -68,7 +68,7 @@
           .then(
             response => {
               this.logs = response.data;
-              console.log(this.logs);
+              //console.log(this.logs);
             })
           .catch(function (error) {
             console.log(error);

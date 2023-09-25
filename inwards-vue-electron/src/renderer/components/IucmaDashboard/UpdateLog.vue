@@ -142,14 +142,14 @@
       stateStore.getState(
           stateStore.keys.loginStatus, (status) => {
               this.userCode = status['uniqueCode'];
-              console.log(this.userCode);
+              //console.log(this.userCode);
           }
           );
         }, 
       methods: {
         submitLogUpdate (id) {
             let idSend = id;
-            console.log('https://inwards.award.org.za/app_json/knp_log_edit.php?id='+idSend+'&user_code='+this.userCode);
+            //console.log('https://inwards.award.org.za/app_json/knp_log_edit.php?id='+idSend+'&user_code='+this.userCode);
             this.$http.get('https://inwards.award.org.za/app_json/knp_log_edit.php?id='+idSend+'&user_code='+this.userCode)
             .then(
             response => {
@@ -184,7 +184,7 @@
         },
         onUpdateImageUpload(){
             this.imageFile = this.$refs.imageFile.files[0];
-            console.log(this.imageFile.path);
+            //console.log(this.imageFile.path);
             document.getElementById("imageUpdateThumbnail").src = this.imageFile.path;
             this.imageCurrent = this.imageFile.path;
         },
@@ -213,7 +213,7 @@
               let station = $('#stationUpdate').val();
               let descUpdateText = $('#descUpdate').val();
               let dateStartString = $('#dateEvent').val();
-              console.log(dateStartString);
+              //console.log(dateStartString);
               let dateStart = new Date(dateStartString);
               let labelUpdate = $('#labelUpdate').val();
               let problemsUpdate = $('#problemsUpdate').val();
@@ -221,7 +221,7 @@
               let actionsUpdate = $('#actionsUpdate').val();
               let resultUpdate = $('#resultUpdate').val();
               let id = this.idCurrent;
-              console.log(resultUpdate);
+             // console.log(resultUpdate);
   
               this.axios.post('https://inwards.award.org.za/app_json/data_upload/log_image.php',
               formData,
@@ -241,12 +241,12 @@
                 if(data.data.image != ''){
                     imageURL = data.data.image;
                 }                           
-                console.log(filesURL);
-                console.log(imageURL);
+                //console.log(filesURL);
+                //console.log(imageURL);
               },
               ).then(function(){
                   let api = 'https://inwards.award.org.za/app_json/data_upload/knp_submit_update.php?id='+id+'&code=' + verifyCode + '&station=' + station + '&site_desc=' + descUpdateText + '&date_event=' + dateStartString + '&chart_label=' + labelUpdate + '&mg_problems=' + problemsUpdate + '&mg_options=' + optionsUpdate + '&mg_actions=' + actionsUpdate + '&result=' + resultUpdate + '&attachments=' + filesURL + '&image=' + imageURL;
-                  console.log(api);
+                  //console.log(api);
                   $.get(api, function (data) {
                     if (data === 'true') {
                       dialog.showMessageBox(null, {
@@ -272,7 +272,7 @@
           let verifyCode = $('#knpCode').val();
           let station = $('#stationUpdate').val();
           let dateStartString = $('#dateEvent').val();
-          console.log(dateStartString);
+          //console.log(dateStartString);
           let dateStart = new Date(dateStartString);
           let labelUpdate = $('#labelUpdate').val();
           let problemsUpdate = $('#problemsUpdate').val();
@@ -280,7 +280,7 @@
           let actionsUpdate = $('#actionsUpdate').val();
           let resultUpdate = $('#resultUpdate').val();
           let api = 'https://inwards.award.org.za/app_json/operational_reserve.php?code=' + verifyCode + '&station=' + station + '&sd=' + this.formatDate(dateStart) + '&label=' + labelUpdate + '&mg_problems' + problemsUpdate + '&mg_options=' + optionsUpdate + '&mg_actions=' + actionsUpdate + '&result=' + resultUpdate;
-          console.log(api);
+          //console.log(api);
           $.get(api, function (data) {
             if (data === 'true') {
               dialog.showMessageBox(null, {

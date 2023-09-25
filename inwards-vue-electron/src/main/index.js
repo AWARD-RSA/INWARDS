@@ -1,7 +1,7 @@
 
 // 'use strict';
-import { app, BrowserWindow, Menu, MenuItem } from 'electron';
-const path = require('path');
+import { app, BrowserWindow, Menu, MenuItem, ipcMain, dialog  } from 'electron';
+const fs = require('fs');
 //import { setupTitlebar, attachTitlebarToWindow } from "custom-electron-titlebar";
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
@@ -129,52 +129,45 @@ async function installDevTools() {
 }
 
 function createWindow() {
-  /**
-   * Initial window options
-   */
-    mainWindow = new BrowserWindow({
-    backgroundColor: '#fff',
-    width: 960,
-    height: 540,
-    minWidth: 960,
-    minHeight: 540,
-    setFullScreen: true,
-    useContentSize: true,
-    frame: false,
-    titleBarStyle: 'hidden',
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
-      nodeIntegrationInWorker: false,
-      contextIsolation: false,
-      webSecurity: false,
-    }
-    //show: false
-  })
-  // eslint-disable-next-line
-  //setupTitlebar();
 
-  // load root file/url
-  Menu.setApplicationMenu(menu);
-  if (isDev) {
-    mainWindow.loadURL('http://localhost:9080')
+      mainWindow = new BrowserWindow({
+        backgroundColor: '#fff',
+        width: 960,
+        height: 540,
+        minWidth: 960,
+        minHeight: 540,
+        setFullScreen: true,
+        useContentSize: true,
+        frame: false,
+        titleBarStyle: 'hidden',
+        webPreferences: {
+          nodeIntegration: true,
+          enableRemoteModule: true,
+          nodeIntegrationInWorker: false,
+          contextIsolation: false,
+          webSecurity: false,
+        }
+      })
+    Menu.setApplicationMenu(menu);
+    if (isDev) {
+      mainWindow.loadURL('http://localhost:9080')
+      mainWindow.on('closed', () => {
+        mainWindow = null;
+      });
+    } else {
+      mainWindow.loadFile(`${__dirname}/index.html`)
+      global.__static = require('path')
+        .join(__dirname, '/static')
+        .replace(/\\/g, '\\\\')
+    }
+    mainWindow.on('ready-to-show', () => {
+      mainWindow.show()
+      mainWindow.focus()
+    })
     mainWindow.on('closed', () => {
-      mainWindow = null;
-    });
-  } else {
-    mainWindow.loadFile(`${__dirname}/index.html`)
-    global.__static = require('path')
-      .join(__dirname, '/static')
-      .replace(/\\/g, '\\\\')
-  }
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
-    mainWindow.focus()
-  })
-  mainWindow.on('closed', () => {
-    console.log('\nApplication exiting...')
-  })
-  mainWindow.maximize();
+      console.log('\nApplication exiting...')
+    })
+    mainWindow.maximize();
 }
 
 app.on('ready', () => {

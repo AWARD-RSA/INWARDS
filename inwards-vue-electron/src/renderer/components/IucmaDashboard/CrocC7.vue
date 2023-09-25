@@ -17,30 +17,32 @@
     },
     methods: {
       fetchChartData () {
-        console.log('Fetching...');
+       // console.log('Fetching...');
         let self = this;
         this.loading = true;
         const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`;
-        console.log(url);
+        //console.log(url);
         axios.get(url).then(response => {
           let jsonData = response.data;
           let boxData = [];
           setTimeout(() => {
             let layout = {
               title: false,
+              hovermode: 'compare',
               font: {
                 family: 'Raleway, Calibri',
                 size: 9
               },
+              "xaxis": {"type": "date", "autorange": true, "showspikes": true},
               yaxis: {
                 title: 'Discharge (cumecs)',
                 autorange: true,
                 showgrid: true,
                 zeroline: true,
                 gridwidth: 1,
+                showspikes: true,
                 zerolinecolor: 'rgb(0, 0, 0)',
-                zerolinewidth: 2,
-                rangemode: 'nonnegative'
+                zerolinewidth: 2
               },
               margin: {
                 l: 50,
@@ -52,15 +54,25 @@
               paper_bgcolor: 'rgb(255, 255, 255)',
               plot_bgcolor: 'rgb(255, 255, 255)',
               showlegend: true,
+              hovermode: "x",
               legend: {
                 orientation: 'h'
+              },
+              modebar: {
+                add: 'v1hovermode'
               }
+            };
+            var config = {
+                showEditInChartStudio: true,
+                plotlyServerURL: "https://chart-studio.plotly.com",
+                displaylogo: false,
+                displayModeBar: true
             };
             for (let variable in jsonData) {
               boxData.push(jsonData[variable]);
             }
             document.getElementById(self.chartDivId).innerHTML = '';
-            Plotly.newPlot(self.chartDivId, boxData, layout, {displayModeBar: true});
+            Plotly.newPlot(self.chartDivId, boxData, layout, config);
           }, 1000);
         }).catch(error => {
           console.log(error);

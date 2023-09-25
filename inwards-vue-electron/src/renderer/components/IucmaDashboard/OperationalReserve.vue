@@ -68,15 +68,15 @@ export default {
       let verifyEmail = $('#operationalEmail').val();
       var stations = document.getElementById('operationalStations');
       var stationSelected = stations.options[stations.selectedIndex].value;
-      console.log(stationSelected);
+      //console.log(stationSelected);
       let dateStartString = $('#operationalStart').val();
-      console.log(dateStartString);
+      //console.log(dateStartString);
       let dateEndString = $('#operationalEnd').val();
       let dateStart = new Date(dateStartString);
       let dateEnd = new Date(dateEndString);
       let discharge = $('#dischargeValue').val();
       let api = 'https://inwards.award.org.za/app_json/operational_reserve.php?email=' + verifyEmail + '&station=' + stationSelected + '&sd=' + this.formatDate(dateStart) + '&ed=' + this.formatDate(dateEnd) + '&discharge=' + discharge;
-      console.log(api);
+     // console.log(api);
       $.get(api, function (data) {
         if (data === 'true') {
           dialog.showMessageBox(null, {

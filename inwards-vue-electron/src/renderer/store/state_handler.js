@@ -45,7 +45,7 @@ const stateStore = {
   state: {},
   print(message) {
     if (this.debug) {
-      console.log(message);
+      //console.log(message);
     }
   },
   async setState(key, newValue, uploadToServer = true) {
@@ -122,7 +122,7 @@ const stateStore = {
     }
     let url = `https://inwards.award.org.za/user_data/backup.php?user_code=${this.state[this.keys.loginStatus]['uniqueCode']}&json=${JSON.stringify(dataToUpload)}`;
     axios.get(url).then(response => {
-      console.log('User states in server has been updated');
+      //console.log('User states in server has been updated');
       if (callback) {
         callback();
       }

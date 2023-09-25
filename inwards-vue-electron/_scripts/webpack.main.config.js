@@ -40,6 +40,10 @@ const config = {
         test: /\.node$/,
         use: 'node-loader',
       },
+      {
+        test: /\.docx$/,
+        use: 'file-loader?name=[name].[ext]'
+      },
     ],
   },
   node: {

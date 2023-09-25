@@ -41,7 +41,7 @@ this.$http.get('https://inwards.award.org.za/app_json/iucma_compliance.php?sd=' 
   .then(
     response => {
       this.dws = response.data;
-      console.log(this.dws);
+      //console.log(this.dws);
       $('#iucmaCompliance').bootstrapTable('load', this.dws);
     })
   .catch(function (error) {
@@ -59,7 +59,7 @@ updateTable () {
     .then(
       response => {
         this.dws = response.data;
-        console.log(this.dws);
+        //console.log(this.dws);
         $('#iucmaCompliance').bootstrapTable('load', this.dws);
 
       })

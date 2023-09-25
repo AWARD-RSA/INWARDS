@@ -107,6 +107,10 @@ const config = {
           },
         },
       },
+      {
+        test: /\.docx$/,
+        use: 'file-loader?name=[name].[ext]'
+      },
     ],
   },
   node: {

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import axios from 'axios';
 import VueAxios from 'vue-axios'
 import 'bootstrap-table/dist/bootstrap-table.min.css';
+import 'bootstrap-table';
+//import 'bootstrap-table/dist/bootstrap-table.min.css';
 import $ from 'jquery';
 window.$ = $;
 window.jQuery = $;
@@ -31,13 +33,16 @@ import 'jquery-ui/ui/widgets/draggable.js';
 import 'jquery-ui/themes/base/all.css';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
-import { faBug, faFishFins, faMap, faUserSecret, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine, faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faFishFins, faMap, faUserSecret, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine, faMagnifyingGlassChart, faInfo } from '@fortawesome/free-solid-svg-icons';
 const { getCurrentWindow } = require('electron');
 const { ipcMain, dialog } = require('electron');
 const { ipcRenderer } = require('electron');
+import VueKatex from 'vue-katex'
+import 'katex/dist/katex.min.css'
 
-import 'bootstrap-table/dist/bootstrap-table.min.js';
-library.add(faUserSecret, faFishFins, faMap, faBug, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine, faMagnifyingGlassChart);
+
+//import 'bootstrap-table/dist/bootstrap-table.min.js';
+library.add(faUserSecret, faFishFins, faMap, faBug, faUser, faVial, faTint, faMapMarkedAlt, faWater, faSliders, faArrowUp, faArrowDown, faCircle, faRightLeft, faFile, faFolderOpen, faSave, faProjectDiagram, faCalculator, faFaucetDrip, faArrowUpFromWaterPump, faArrowUpFromGroundWater, faCube, faTrash, faRefresh, faChartLine, faMagnifyingGlassChart, faInfo);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
@@ -46,6 +51,7 @@ const isDev = process.env.NODE_ENV === 'development'
 Vue.component('v-select', vSelect)
 Vue.component('multiselect', Multiselect)
 Vue.http = Vue.prototype.$http = axios
+Vue.use(VueKatex)
 Vue.config.devtools = isDev
 Vue.config.performance = isDev
 Vue.config.productionTip = isDev

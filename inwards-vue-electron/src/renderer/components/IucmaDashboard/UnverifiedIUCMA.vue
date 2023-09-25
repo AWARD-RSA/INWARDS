@@ -41,7 +41,7 @@ created () {
     .then(
       response => {
         this.dws = response.data;
-        console.log(this.dws);
+        //console.log(this.dws);
         $('#dwsCompliance').bootstrapTable('load', this.dws);
       })
     .catch(function (error) {
@@ -59,7 +59,7 @@ methods: {
       .then(
         response => {
           this.dws = response.data;
-          console.log(this.dws);
+         // console.log(this.dws);
           $('#dwsCompliance').bootstrapTable('load', this.dws);
 
         })

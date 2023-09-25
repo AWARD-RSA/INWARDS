@@ -100,25 +100,28 @@
                 <hr>
                 <div class="row no-gutters">
                   <div class="col-md-4">
-                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="updateCharts()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-refresh" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Apply<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>               
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="updateCharts()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-refresh" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Apply<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>               
                   </div>
                   <div class="col-md-4">
-                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="exportReport()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-save" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Report<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="exportReport()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-save" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Report<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
                   <div class="col-md-4">
-                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="showRiverLog()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Logbook<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="showRiverLog()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Logbook<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
                   <div class="col-md-4">
-                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="submitRiverLog()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Log<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="submitRiverLog()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Log<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
                   <div class="col-md-4">
-                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="showPlatesForm()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Plate submissions<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="showPlatesForm()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Plate submissions<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
                   <div class="col-md-4">
-                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="showSubmitForm()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Plate<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="showSubmitForm()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-chart-line" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Plate<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
                   <div class="col-md-4">
-                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: small;" @click="dischargeVerification()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-magnifying-glass-chart" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Verify Discharge<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="dischargeVerification()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-magnifying-glass-chart" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Verify Discharge<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="manageVerifications()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-magnifying-glass-chart" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Manage Verifications<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>
                   </div>
               </div>
             </div>
@@ -200,6 +203,8 @@
       <SubmitLog ref="submitLogComponent" style="margin-top: 5px;"/>
       <UpdateLog ref="submitLogUpdateComponent" style="margin-top: 5px;"/>
       <VerifyDischarge ref="verifyDischargeComponent" style="margin-top: 5px;"/>
+      <ManageVerifications ref="manageVerificationsComponent" style="margin-top: 5px;"/>
+
 
     </div>
   </div>
@@ -299,6 +304,7 @@ nav > div a.nav-item.nav-link:focus {
   import MapDashboard from './MapDashboard';
   import ComplianceTable from './ComplianceTable';
   import VerifyDischarge from './VerifyDischarge';
+  import ManageVerifications from './ManageVerifications';
   import UnverifiedCompliance from './UnverifiedCompliance';
   import UnverifiedIUCMA from './UnverifiedIUCMA';
   import OperationalReserve from './OperationalReserve';
@@ -328,6 +334,13 @@ nav > div a.nav-item.nav-link:focus {
   import path from 'path';
   require('promise.prototype.finally').shim();
   const { app } = require('electron').remote;
+  import Docxtemplater from "docxtemplater";
+  import PizZip from "pizzip";
+  import PizZipUtils from "pizzip/utils/index.js";
+  import { saveAs } from "file-saver";
+  function loadFile(url, callback) {
+    PizZipUtils.getBinaryContent(url, callback);
+  }
   export default {
 
     components: {
@@ -337,6 +350,7 @@ nav > div a.nav-item.nav-link:focus {
       UnverifiedCompliance,
       UnverifiedIUCMA,
       VerifyDischarge,
+      ManageVerifications,
       CrocChart,
       SabieChart,
       ExeChart,
@@ -447,7 +461,7 @@ nav > div a.nav-item.nav-link:focus {
           }
           axios.get(url, { cancelToken: cancelToken }).then(response => {
             self.mapDashboardRef.loadStationsToMap(response.data);
-            self.createCatchmentTree(response.data);
+            //self.createCatchmentTree(response.data);
           }).catch(error => {
             console.log(error);
           });
@@ -480,12 +494,104 @@ nav > div a.nav-item.nav-link:focus {
       submitRiverLogUpdate (id) {
         this.$refs.submitLogUpdateComponent.submitLogUpdate(id);
       },
-      exportReport(){
 
+      exportReport(){
+            loadFile("https://inwards.award.org.za/app_json/iucma_verification/ewr_report_template.docx", function(
+            error,
+            content
+          ) {
+            if (error) {
+              throw error;
+            }
+            const zip = new PizZip(content);
+            const doc = new Docxtemplater(zip, { paragraphLoop: true, linebreaks: true });
+
+            doc.setData({
+              reportTitle: 'EWR Compliance Report for the Inkomati Usuthu Catchment Management Agency (IUCMA)'
+            });            
+            try {
+              // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+              doc.render();
+            } catch (error) {
+              // The error thrown here contains additional information when logged with JSON.stringify (it contains a properties object containing all suberrors).
+              function replaceErrors(key, value) {
+                if (value instanceof Error) {
+                  return Object.getOwnPropertyNames(value).reduce(function(
+                    error,
+                    key
+                  ) {
+                    error[key] = value[key];
+                    return error;
+                  },
+                  {});
+                }
+                return value;
+              }
+              console.log(JSON.stringify({ error: error }, replaceErrors));
+
+              if (error.properties && error.properties.errors instanceof Array) {
+                const errorMessages = error.properties.errors
+                  .map(function(error) {
+                    return error.properties.explanation;
+                  })
+                  .join("\n");
+                console.log("errorMessages", errorMessages);
+                // errorMessages is a humanly readable message looking like this :
+                // 'The tag beginning with "foobar" is unopened'
+              }
+              throw error;
+            }
+            const out = doc.getZip().generate({
+              type: "blob",
+              mimeType:
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            });
+            // Output the document using Data-URI
+            saveAs(out, "ewr_report_iucma.docx");
+          });
+
+/*           const template = fs.readFileSync('../../assets/ewr_report_template.docx', 'binary')
+          const zip = new PizZip(template)
+          const doc = new Docxtemplater().loadZip(zip)
+
+          // Fill in text
+          doc.setData({
+              reportTitle: 'EWR Compliance Report for the Inkomati Usuthu Catchment Management Agency (IUCMA)',
+              // ... other placeholders
+          })
+
+          // Convert the Plotly graph to an image and embed in the report
+          Plotly.toImage('chartComponent-unverified-timeseries-X2H016FW', { format: 'png' }).then((dataURL) => {
+              const imageBase64 = dataURL.split(',')[1]
+              doc.setData({
+                  chartImage: imageBase64
+              }) 
+              // You can similarly fill table data and other placeholders
+          })
+                        // Render the doc
+          doc.render()
+          const buf = doc.getZip().generate({ type: 'nodebuffer' })
+            // Save the document somewhere, for instance:
+            dialog.showSaveDialog({
+                title: 'Save the report',
+                defaultPath: 'IUCMA_EWR_REPORT.docx',
+                filters: [
+                    { name: 'Word Document', extensions: ['docx'] }
+                ]
+            }).then(result => {
+                if (!result.canceled && result.filePath) {
+                    fs.writeFileSync(result.filePath, buf)
+                }
+            }).catch(err => {
+                console.error(err)
+            }) */
       },
       dischargeVerification(){
         this.$refs.verifyDischargeComponent.showVerifyForm();
 
+      },
+      manageVerifications(){
+        this.$refs.manageVerificationsComponent.showVerificationsForm();
       },
       addKnpLayer (map) {
         const knpJson = require('../../assets/knp.json');

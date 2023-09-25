@@ -1,83 +1,746 @@
 <template>
-  <div style="height: 100%;">
-    <StatusBar/>
-    <div class="container-fluid" style="height: 100%;">
-      <div class="row no-gutters" style="height: 100%;">
-        <div class="col-md-4 no-float left-panel" style="background: #252526; padding-left: 8px; overflow: hidden;">
-          <div class="card rounded-0" style="margin-top: 5px; margin-bottom: 5px; width:100%">
-            <div class="card-header inwards_card"><h6 style="color: white;"><i class="fa fa-bar-chart" style="padding-right: 10px;"></i>Parameters</h6></div>
+  <div style="height: 100%">
+    <StatusBar />
+    <div class="container-fluid" style="height: 100%">
+      <div class="row no-gutters" style="height: 100%">
+        <div
+          class="col-md-4 no-float left-panel"
+          style="background: #252526; padding-left: 8px"
+        >
+          <div
+            class="card rounded-0"
+            style="margin-top: 5px; margin-bottom: 5px; width: 100%"
+          >
+            <div class="card-header inwards_card">
+              <h6 style="color: white">
+                <i class="fa fa-bar-chart" style="padding-right: 10px"></i
+                >Parameters
+              </h6>
+            </div>
             <div class="card-body">
-              <div class="row">
+              <div class="row" style="margin-bottom: 0.1rem">
                 <div class="col-md-12">
-                  <div class="form-group" style="margin-right: 0.5rem;">
-                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px; margin-top: 5px;" name="typeSelect" v-model="selectedType" @change="detectType()">
-                    <option value="" disabled selected hidden>Select a site type (e.g. River, WWTW etc)</option>
-                    <option class="dropdown-item" v-for="type in types" v-bind:key="type.type" v-bind:value="type.type"> {{ type.type }} </option>
-                  </select>
-                </div>
-                </div>
-             </div>
-            <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group" style="margin-right: 0.5rem;">
-                  <select class="form-control rounded-0" style="margin-left: 4px; margin-right: 10px;" name="variableSelect" v-model="selectedVariable" placeholder="Please Select Water Quality Variable">
-                    <option value="" disabled selected hidden>Select a variable</option>
-                    <option class="dropdown-item" v-for="variable in variables" v-bind:key="variable.id" v-bind:value="[variable.mon_variable_abbr,variable.measure_unit_abbr]"> {{ variable.mon_variable_name }} </option>
-                  </select>
-                </div>
-                </div>
-             </div>
-              <div class="row">
-                <div class="col-sm-6" style="padding-right: 5px;">
-                  <div class="form-group">
-                    <input class="form-control rounded-0" id="dateStart" style="margin-left: 4px;" placeholder='Start Date' onfocus="(this.type='date')">
-                  </div>
-                </div>
-                <div class="col-sm-6" style="padding-left: 2px;">
-                  <div class="form-group" style="margin-right: 0.2rem;">
-                    <input class="form-control rounded-0" id="dateEnd" style="margin-right: 0px;" placeholder='End Date' onfocus="(this.type='date')">
+                  <p class="divider-text">
+                    <span class="bg-light">Data Source Selection</span>
+                  </p>
+                  <div class="funkyradio">
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="veryHigh"
+                        type="checkbox"
+                        class="form-check-input form-check-input"
+                        checked
+                      />
+                      <label for="veryHigh" class="form-check-label"
+                        >IUCMA Data</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="high"
+                        type="checkbox"
+                        class="form-check-input form-check-input"
+                        disabled
+                      />
+                      <label for="high" class="form-check-label"
+                        >DWS Data</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="merge"
+                        type="checkbox"
+                        class="form-check-input form-check-input"
+                        disabled
+                      />
+                      <label for="merge" class="form-check-label"
+                        >Merge Datasets</label
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="divider-text">
+                    <span class="bg-light">Case Study Inputs</span>
+                  </p>
+                  <div class="form-group" style="margin-right: 0.5rem">
+                    <select
+                      class="form-control rounded-0 inwards_label"
+                      style="
+                        margin-left: 4px;
+                        margin-right: 10px;
+                        margin-top: 5px;
+                      "
+                      name="typeSelect"
+                      v-model="selectedType"
+                    >
+                      <option value="" disabled selected hidden>
+                        Select a site type (e.g. River)
+                      </option>
+                      <option
+                        class="dropdown-item inwards_label"
+                        v-for="siteType in types"
+                        v-bind:key="siteType.type"
+                        v-bind:value="siteType.type"
+                      >
+                        {{ siteType.type }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group" style="margin-right: 0.5rem">
+                    <select
+                      class="form-control rounded-0 inwards_label"
+                      style="margin-left: 4px; margin-right: 10px"
+                      name="variableSelect"
+                      v-model="selectedVariable"
+                      placeholder="Please Select Water Quality Variable"
+                      @change="changeVariable()"
+                    >
+                      <option value="" disabled selected hidden>
+                        Select a variable
+                      </option>
+                      <option
+                        class="dropdown-item"
+                        v-for="variable in variables"
+                        v-bind:key="variable.id"
+                        v-bind:value="[
+                          variable.mon_variable_abbr,
+                          variable.measure_unit_abbr,
+                        ]"
+                      >
+                        {{ variable.mon_variable_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6" style="padding-right: 5px">
+                  <div class="form-group">
+                    <input
+                      class="form-control rounded-0 inwards_label"
+                      id="dateStart"
+                      style="margin-left: 4px"
+                      placeholder="Start Date"
+                      onfocus="(this.type='date')"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-6" style="padding-left: 2px">
+                  <div class="form-group" style="margin-right: 0.2rem">
+                    <input
+                      class="form-control rounded-0 inwards_label"
+                      id="dateEnd"
+                      style="margin-right: 0px"
+                      placeholder="End Date"
+                      onfocus="(this.type='date')"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 0.1rem">
+                <div class="col-md-12">
+                  <p class="divider-text">
+                    <span class="bg-light">Limits and Standards</span>
+                  </p>
+                  <div class="funkyradio">
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="rqoLimits"
+                        type="checkbox"
+                        checked="checked"
+                        class="form-check-input"
+                      />
+                      <label for="rqoLimits" class="form-check-label"
+                        >RQOs</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="sansLimits"
+                        type="checkbox"
+                        class="form-check-input"
+                        disabled
+                      />
+                      <label for="sansLimits" class="form-check-label"
+                        >SANS241</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="dwsDomestic"
+                        type="checkbox"
+                        class="form-check-input"
+                        disabled
+                      />
+                      <label for="dwsDomestic" class="form-check-label"
+                        >DWS Domestic</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="dwsIrrigation"
+                        type="checkbox"
+                        class="form-check-input"
+                        disabled
+                      />
+                      <label for="dwsIrrigation" class="form-check-label"
+                        >DWS Irrigation</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="dwsLivestock"
+                        type="checkbox"
+                        class="form-check-input"
+                        disabled
+                      />
+                      <label for="dwsLivestock" class="form-check-label"
+                        >DWS Livestock</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="dwsIndustry"
+                        type="checkbox"
+                        class="form-check-input"
+                        disabled
+                      />
+                      <label for="dwsIndustry" class="form-check-label"
+                        >DWS Industry</label
+                      >
+                    </div>
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="dwsNWRQOs"
+                        type="checkbox"
+                        class="form-check-input"
+                        checked
+                      />
+                      <label for="dwsNWRQOs" class="form-check-label"
+                        >DWS NWRQOs</label
+                      >
+                    </div>
+                  </div>
+                  <p class="divider-text">
+                    <span class="bg-light">Assesment Scale</span>
+                  </p>
+                  <div class="funkyradio">
+                    <div
+                      class="form-check form-check-inline funkyradio-primary"
+                    >
+                      <input
+                        name="chart_components"
+                        id="catchmentView"
+                        type="checkbox"
+                        checked="checked"
+                        class="form-check-input"
+                      />
+                      <label for="catchmentView" class="form-check-label"
+                        >Catchment</label
+                      >
+                      <div
+                        class="form-check form-check-inline funkyradio-primary"
+                      >
+                        <input
+                          name="chart_components"
+                          id="siteView"
+                          type="checkbox"
+                          checked="checked"
+                          class="form-check-input"
+                        />
+                        <label for="siteView" class="form-check-label"
+                          >Site</label
+                        >
+                      </div>
+                    </div>
+                    <p class="divider-text">
+                      <span class="bg-light">Data Parameters</span>
+                    </p>
+                    <div class="funkyradio">
+                      <div
+                        class="form-check form-check-inline funkyradio-primary"
+                      >
+                        <input
+                          name="chart_components"
+                          id="variableSpecific"
+                          type="checkbox"
+                          class="form-check-input"
+                          checked
+                        />
+                        <label for="variableSpecific" class="form-check-label"
+                          >Varaible Specific</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="funkyradio">
+                <div class="form-check form-check-inline funkyradio-primary">
+                  <input
+                    name="chart_components"
+                    id="siteOverview"
+                    type="checkbox"
+                    checked="checked"
+                    class="form-check-input"
+                  />
+                  <label for="siteOverview" class="form-check-label"
+                    >Timeseries</label
+                  >
+                </div>
+                <div class="form-check form-check-inline funkyradio-primary">
+                  <input
+                    name="chart_components"
+                    id="veryHigh"
+                    type="checkbox"
+                    class="form-check-input form-check-input"
+                  />
+                  <label for="veryHigh" class="form-check-label"
+                    >Boxplots</label
+                  >
+                </div>
+                <div class="form-check form-check-inline funkyradio-primary">
+                  <input
+                    name="chart_components"
+                    id="high"
+                    type="checkbox"
+                    class="form-check-input form-check-input"
+                  />
+                  <label for="high" class="form-check-label"
+                    >Duration Curve</label
+                  >
+                </div>
+                <div class="form-check form-check-inline funkyradio-primary">
+                  <input
+                    name="chart_components"
+                    id="critical"
+                    type="checkbox"
+                    class="form-check-input form-check-input"
+                  />
+                  <label for="critical" class="form-check-label">Table</label>
+                </div>
               </div>
             </div>
-          <CatchmentTree ref="catchmentTree"/>
+          </div>
+          <CatchmentTree ref="catchmentTree" />
           <div class="card rounded-0">
             <div class="card-body">
               <div class="row no-gutters">
-                <button class="btn inwards_button" type="button" style="width: 100%" @click="doAnalysis ()">
+                <button
+                  class="btn inwards_button"
+                  type="button"
+                  style="width: 100%"
+                  @click="doAnalysis()"
+                >
                   <i class="fa fa-line-chart"></i>Analyse
                 </button>
+              </div>
+            </div>
+          </div>
+          <div class="card rounded-0">
+            <div class="card-body">
+              <div class="row no-gutters">
+                <RouterLink
+                  class="btn inwards_button"
+                  type="button"
+                  style="width: 100%"
+                  to="limits-dashboard"
+                >
+                  <i class="fa fa-info"></i>
+                  <span>View All Limtis and Naratives</span>
+                </RouterLink>
+              </div>
+            </div>
+          </div>
+          <MapDashboard ref="mapDashboard" />
+        </div>
+        <div
+          class="col-md-8 no-float right-panel no-gutters"
+          style="
+            background: #1e1e1e;
+            padding-bottom: 5px;
+            padding-left: 1px;
+            padding-right: 1px;
+            padding-top: 5px;
+          "
+        >
+          <div class="row no-gutters" style="background-color: white">
+            <ul
+              class="nav nav-tabs"
+              id="myTab"
+              role="tablist"
+              style="width: 100%, margin: 0; padding: 0;"
+            >
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="nav-complianceTab-tab"
+                  data-toggle="tab"
+                  data-target="#complianceTab"
+                  type="button"
+                  role="tab"
+                  aria-controls="complianceTab"
+                  aria-selected="true"
+                  style="text-align: center"
+                >
+                  Compliance
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="nav-wqTab-tab"
+                  data-toggle="tab"
+                  data-target="#wqTab"
+                  type="button"
+                  role="tab"
+                  aria-controls="wqTab"
+                  aria-selected="false"
+                  style="text-align: center"
+                >
+                  Water Quality Analysis
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="nav-riskTab-tab"
+                  data-toggle="tab"
+                  data-target="#riskTab"
+                  type="button"
+                  role="tab"
+                  aria-controls="riskTab"
+                  aria-selected="false"
+                  style="text-align: center"
+                >
+                  All Sites Overview for selected variable
+                </button>
+              </li>
+            </ul>
+            <div
+              class="tab-content no-gutters"
+              id="myTabContent"
+              style="
+                height: calc(100vh - (75px)) !important;
+                width: calc(100vw - (40px)) !important;
+              "
+            >
+              <div
+                class="tab-pane fade show active"
+                id="complianceTab"
+                role="tabpanel"
+                aria-labelledby="nav-complianceTab-tab"
+              >
+                <div class="row no-gutters">
+                  <div class="col-md-2">
+                    <div
+                      class="btn inwards_button"
+                      @click="viewRQOs()"
+                      style="float: bottom"
+                    >
+                      View RQO Info
+                    </div>
+                    <nav>
+                      <div
+                        class="nav flex-column nav-pills"
+                        id="v-pills-tab"
+                        role="tablist"
+                        aria-orientation="vertical"
+                      >
+                        <a
+                          class="nav-item nav-link nav-vertical active"
+                          id="v-pills-ecoli-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-ecoli"
+                          role="tab"
+                          aria-controls="v-pills-ecoli"
+                          aria-selected="true"
+                          >E.COLI_Susp_Water</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-phos-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-phos"
+                          role="tab"
+                          aria-controls="v-pills-phos"
+                          aria-selected="false"
+                          >PO4_P_Diss_Water</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-eCon-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-eCon"
+                          role="tab"
+                          aria-controls="v-pills-eCon"
+                          aria-selected="false"
+                          >EC_Phys_Water</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-arse-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-arse"
+                          role="tab"
+                          aria-controls="v-pills-arse"
+                          aria-selected="false"
+                          >As_Diss_Water</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-TIN-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-TIN"
+                          role="tab"
+                          aria-controls="v-pills-TIN"
+                          aria-selected="false"
+                          >TIN (TBC)</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-turb-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-turb"
+                          role="tab"
+                          aria-controls="v-pills-turb"
+                          aria-selected="false"
+                          >Turbidity(TBC)</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-temp-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-temp"
+                          role="tab"
+                          aria-controls="v-pills-temp"
+                          aria-selected="false"
+                          >Temp(TBC)</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-phLower-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-phLower"
+                          role="tab"
+                          aria-controls="v-pills-phLower"
+                          aria-selected="false"
+                          >ph_lower(TBC)</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-phUpper-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-phUpper"
+                          role="tab"
+                          aria-controls="v-pills-phUpper"
+                          aria-selected="false"
+                          >ph_upper(TBC)</a
+                        >
+                        <a
+                          class="nav-item nav-link nav-vertical"
+                          id="v-pills-cad-tab"
+                          data-toggle="pill"
+                          style="border-bottom: 1px solid grey; padding: 10px"
+                          href="#v-pills-cad"
+                          role="tab"
+                          aria-controls="v-pills-cad"
+                          aria-selected="true"
+                          >CN_Diss_Water(TBC)</a
+                        >
+                      </div>
+                    </nav>
+                  </div>
+                  <div class="col-md-10">
+                    <div
+                      class="tab-content"
+                      id="v-pills-tabContent"
+                      style="height: calc(100vh - (75px)) !important"
+                    >
+                      <div
+                        class="tab-pane fade show active"
+                        id="v-pills-ecoli"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-ecoli-tab"
+                      >
+                        <EcoliCompliance
+                          ref="ecoliComponent"
+                          style="margin-top: 5px"
+                        />
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-phos"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-phos-tab"
+                      >
+                        <PhosCompliance
+                          ref="phosComponent"
+                          style="margin-top: 5px"
+                        />
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-eCon"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-eCon-tab"
+                      >
+                        <EcCompliance
+                          ref="ecComponent"
+                          style="margin-top: 5px"
+                        />
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-arse"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-arse-tab"
+                      >
+                        <ArseCompliance
+                          ref="arrqoComponent"
+                          style="margin-top: 5px"
+                        />
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-TIN"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-TIN-tab"
+                      ></div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-turb"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-turb-tab"
+                      >
+                        ...
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-temp"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-temp-tab"
+                      ></div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-phLower"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-phLower-tab"
+                      ></div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-phUpper"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-phUpper-tab"
+                      ></div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-cad"
+                        role="tabpanel"
+                        aria-labelledby="v-pills-cad-tab"
+                      >
+                        <CnCompliance
+                          ref="cnComponent"
+                          style="margin-top: 5px"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div
+                class="tab-pane fade"
+                id="wqTab"
+                role="tabpanel"
+                aria-labelledby="nav-wqTab-tab"
+                style="height: calc(100vh - (75px)) !important"
+              >
+                <div class="row no-gutters">
+                  <div class="col-md-6">
+                    <TimeseriesChart
+                      ref="timeseriesComponent"
+                      style="margin-top: 5px"
+                    />
+                  </div>
+                  <div class="col-md-6" style="padding-left: 2px">
+                    <BoxChart ref="boxComponent" style="margin-top: 5px" />
+                  </div>
+                  <div class="col-md-6">
+                    <LoadChart ref="loadComponent" style="margin-top: 5px" />
+                  </div>
+                  <div class="col-md-6" style="padding-left: 2px">
+                    <DurationChart
+                      ref="durationComponent"
+                      style="margin-top: 5px"
+                    />
+                  </div>
+                </div>
               </div>
-          <MapDashboard ref="mapDashboard"/>
-        </div>
-        <div class="col-md-8 no-float right-panel" style="background: #1E1E1E; padding-bottom: 50px; padding-left: 10px; padding-right: 10px;  overflow: hidden;">
-
-          <div class="row no-gutters">
- 
-            <div class="col-md-6">
-                  <TimeseriesChart ref="timeseriesComponent" style="margin-top: 5px;"/>
-              </div>
-            <div class="col-md-6" style="padding-left: 2px;">
-                  <BoxChart ref="boxComponent" style="margin-top: 5px;"/>
-              </div>
-
-            <div class="col-md-6">
-                  <LoadChart ref="loadComponent" style="margin-top: 5px;"/>
-              </div>
-              <div class="col-md-6" style="padding-left: 2px;">
-                  <DurationChart ref="durationComponent" style="margin-top: 5px;"/>
-              </div>
-              <br>
+              <div
+                class="tab-pane fade"
+                id="riskTab"
+                role="tabpanel"
+                aria-labelledby="nav-riskTab-tab"
+              ></div>
+            </div>
           </div>
-           <grid-loader :loading="loading" :color="color" :size="size" class="loading_disks"></grid-loader>          
         </div>
       </div>
-      <NavButtons/> 
     </div>
-    <RiverLog ref="logComponent" style="margin-top: 5px;"/>
+    <grid-loader
+      :loading="loading"
+      :color="color"
+      :size="size"
+      class="loading_disks"
+    ></grid-loader>
+    <NavButtons />
+    <RQOOverview ref="rqoOverview" />
   </div>
 </template>
 <style>
@@ -85,419 +748,632 @@
   stroke-width: 5px;
 }
 .right-panel {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 .left-panel {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 .c3-line-Reserve {
-    stroke-width: 2px;
+  stroke-width: 2px;
 }
 .c3-line-Observed {
-    stroke-width: 2px;
+  stroke-width: 2px;
 }
 .c3-line-Last_Year {
-    stroke-width: 2px;
-    stroke-dasharray: 5.5;
+  stroke-width: 2px;
+  stroke-dasharray: 5.5;
 }
 .c3-circle-Events {
-    stroke-width: 15px;
-    stroke: rgb(0, 0, 0);
+  stroke-width: 15px;
+  stroke: rgb(0, 0, 0);
 }
 </style>
 <script>
-  import axios from 'axios';
-  import NavButtons from '../../components/NavButtons'; 
-  import MapDashboard from './MapDashboard';
-  import CatchmentTree from './CatchmentTree';
-  import RiverLog from './RiverLog';
-  import BoxChart from './BoxChart';
-  import TimeseriesChart from './TimeseriesChart';
-  import DurationChart from './DurationChart';
-  import LoadChart from './LoadChart';
-  import StatusBar from '../StatusBar';
-  import VectorLayer from 'ol/layer/Vector';
-  import VectorSource from 'ol/source/Vector';
-  import GeoJSON from 'ol/format/GeoJSON';
-  import {Fill, Stroke, Style} from 'ol/style';
-  import { GridLoader } from 'vue-spinner/dist/vue-spinner.min.js';
-  import $ from 'jquery';
-  import path from 'path';
-  import stateStore from '../../store/state_handler';
-  require('promise.prototype.finally').shim();
-  const { dialog, app } = require('electron').remote;
-  export default {
+import axios from 'axios'
+import NavButtons from '../../components/NavButtons'
+import MapDashboard from './MapDashboard'
+import MaxHazard from './MaxHazard'
+import CatchmentTree from './CatchmentTree'
+import BoxChart from './BoxChart'
+import TimeseriesChart from './TimeseriesChart'
+import DurationChart from './DurationChart'
+import LoadChart from './LoadChart'
+import SiteRisk from './SiteRisk'
+import RiskHazard from './RiskHazard'
+import EcoliCompliance from './EcoliCompliance'
+import EcCompliance from './EcCompliance'
+import PhosCompliance from './PhosCompliance'
+import ArseCompliance from './ArseCompliance'
+import CnCompliance from './CnCompliance'
+import LatestRisk from './LatestRisk'
+import MedianRisk from './MedianRisk'
+import HealthNaratives from './HealthNaratives'
+import HeighestRisk from './HeighestRisk'
+import AllSites from './AllSites'
+import MinRisk from './MinRisk'
+import StatusBar from '../StatusBar'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import GeoJSON from 'ol/format/GeoJSON'
+import NarativeBlock from './NarativeBlock'
+import RQOOverview from './RQOOverview'
+import { Fill, Stroke, Style } from 'ol/style'
+import { GridLoader } from 'vue-spinner/dist/vue-spinner.min.js'
+import $ from 'jquery'
+import path from 'path'
+import stateStore from '../../store/state_handler'
+require('promise.prototype.finally').shim()
+const { dialog, app } = require('electron').remote
 
-    components: {
-      MapDashboard,
-      NavButtons,
-      GridLoader,
-      CatchmentTree,
-      BoxChart,
-      TimeseriesChart,
-      DurationChart,
-      LoadChart,
-      RiverLog,
-      StatusBar
-    },
-    data () {
-      return {
-        stationsApi: 'https://inwards.award.org.za/app_json/iucma_wq_stations.php',
-        boxplotApi: 'https://inwards.award.org.za/app_json/wq_boxplot.php',
-        stationsCoordinates: {}, // To stored all stations with their coordinates
-        stationsFeatures: {}, // To stored station features
-        stationsRequest: null,
-        selectedStations: [],
-        selectedWMAs: [],
-        selectedType: '',
-        types: [],
-        selectedVariable: '',
-        variableUnit: '',
-        variables: [],
-        color: '#177a98',
-        height: '35px',
-        width: '4px',
-        margin: '2px',
-        size: '40px',
-        loading: false,
-        radius: '2px'
-      };
-    },
-    beforeMount () {
-      this.loadVariables();
-      this.loadTypes();
-    },
-    mounted () {
-      let self = this;
-      self.mapDashboardRef = self.$refs.mapDashboard;
-      self.catchmentTreeRef = self.$refs.catchmentTree;
-      stateStore.getState(
-        stateStore.keys.selectedWMAs,
-        function (selectedWMAs) {
-          if (!selectedWMAs) {
-            return false;
-          }
-          if (selectedWMAs.length === 0) {
-            return false;
-          }
-          self.selectedWMAs = selectedWMAs;
-          self.mapDashboardRef.showSelectedWMA(selectedWMAs);
-        }
-      );
-      self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
-        self.catchmentTreeRef.toggleNode(station, isStationSelected);
-      });
-      self.$bus.$on('refreshStations', () => {
-        self.fetchStations();
-      });
-      self.$bus.$on('addStationsToStore', (stations, chartStoredId) => {
-        self.addStationsToStore(stations, chartStoredId);
-      });
-      let map = this.$refs.mapDashboard.map;
-      self.addKnpLayer(map);
-    },
-    methods: {
-      doAnalysis () {
-        console.log(this.selectedVariable);
-        console.log(this.selectedStations[0]);
-        console.log(this.selectedType);
-        console.log(this.variables);
-        if (this.selectedStations.length === 0) {
-          dialog.showMessageBox(null, {
-            type: 'warning',
-            message: 'Please select at least one station',
-            buttons: ['OK']
-          });
-          return;
-        }
-        let dateStartString = $('#dateStart').val();
-        let dateEndString = $('#dateEnd').val();
-        if (!dateStartString || !dateEndString) {
-          dialog.showMessageBox(null, {
-            type: 'warning',
-            message: 'Missing start date / end date',
-            buttons: ['OK']
-          });
-          return;
-        }
-        let dateStart = new Date(dateStartString);
-        let dateEnd = new Date(dateEndString);
-        if (dateStart > dateEnd) {
-          dialog.showMessageBox(null, {
-            type: 'warning',
-            message: 'End date should be after start date',
-            buttons: ['OK']
-          });
-          return;
-        }
-        this.loading = true;
-        this.$refs.boxComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.$refs.timeseriesComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.$refs.durationComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.$refs.loadComponent.displayChart(this.selectedStations, this.selectedVariable[0], this.formatDate(dateStart), this.formatDate(dateEnd), this.selectedVariable[1]);
-        this.loading = false;
-      },
-      detectType () {
-        this.catchmentTreeRef.refreshStations();
-        console.log(this.selectedType);
-        this.fetchStations();
-      },
-      loadTypes () {
-        axios.get('http://inwards.award.org.za/app_json/iucma_gauge_types.php').then(response => {
-          this.types = response.data;
-        }).catch(e => {
-        });
-      },
-      loadVariables () {
-        axios.get('http://inwards.award.org.za/app_json/variables.php').then(response => {
-          this.variables = response.data;
-        }).catch(e => {
-        });
-      },
-      fetchStations () {
-        let self = this;
-        let wmaNames = Object.assign([], self.selectedWMAs);
-        console.log(wmaNames);
-        let fs = require('fs');
-        let dir = path.join(app.getPath('userData'), '/stations');
-        // TODO : Create an util class for file storage
-        if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir);
-        }
-        // Cancel previous request if any
-        if (this.stationsRequest) {
-          this.stationsRequest.cancel('Canceling stations request');
-          this.stationsRequest = null;
-        }
-        // Wrap wma name with single quotes, for api purposes
-        wmaNames = wmaNames.sort();
-        for (let i = 0; i < wmaNames.length; i++) {
-          wmaNames[i] = `'${wmaNames[i]}'`;
-        }
-        let url = `${self.stationsApi}?wma=${wmaNames.join()}&type=${this.selectedType}`;
-        console.log(url);
-        let stationFile = `${dir}/${url.hashCode()}.json`;
-        console.log(stationFile);
-        // Check if online
-        if (navigator.onLine) {
-          let cancelToken = null;
-          if (self.stationsRequest) {
-            cancelToken = self.stationsRequest.token;
-          }
-          axios.get(url, { cancelToken: cancelToken }).then(response => {
-            self.mapDashboardRef.loadStationsToMap(response.data);
-            fs.writeFileSync(stationFile, JSON.stringify(response.data));
-            self.createCatchmentTree(response.data);
-          }).catch(error => {
-            console.log(error);
-          });
-        } else {
-          if (fs.existsSync(stationFile)) {
-            let jsonData = fs.readFileSync(stationFile, 'utf-8');
-            let stationsData = JSON.parse(jsonData);
-            self.mapDashboardRef.loadStationsToMap(stationsData);
-            self.createCatchmentTree(stationsData);
-          }
-        }
-        self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
-          self.catchmentTreeRef.toggleNode(station, isStationSelected);
-        });
-        self.$bus.$on('refreshStations', () => {
-          self.fetchStations();
-        });
-        self.$bus.$on('addStationsToStore', (stations, chartStoredId) => {
-          self.addStationsToStore(stations, chartStoredId);
-        });
-        stateStore.getState(
-          stateStore.keys.dateEnd,
-          function (dateEnd) {
-            if (!dateEnd) {
-              var endDate = new Date();
-              var dd = endDate.getDate();
-              var mm = endDate.getMonth() + 1;
-              var yyyy = endDate.getFullYear();
-              if (dd < 10) {
-                dd = '0' + dd;
-              }
-              if (mm < 10) {
-                mm = '0' + mm;
-              }
-              dateEnd = yyyy + '-' + mm + '-' + dd;
-            }
-            document.getElementById('dateEnd').setAttribute('value', dateEnd);
-          }
-        );
-        document.getElementById('dateEnd').onchange = function () {
-          stateStore.setState(
-            stateStore.keys.dateEnd,
-            this.value
-          );
-        };
-        var startDate = new Date();
-        startDate.setDate(startDate.getDate() - 18250);
-        var dd = startDate.getDate();
-        var mm = startDate.getMonth() + 1;
-        var yyyy = startDate.getFullYear();
-        if (dd < 10) {
-          dd = '0' + dd;
-        }
-        if (mm < 10) {
-          mm = '0' + mm;
-        }
-        startDate = yyyy + '-' + mm + '-' + dd;
-        document.getElementById('dateStart').setAttribute('value', startDate);
-      },
-      addStationsToStore (stations, chartStoredId) {
-        let self = this;
-        stateStore.getState(
-          stateStore.keys.selectedStations,
-          function (selectedStations) {
-            if (!selectedStations || typeof selectedStations === 'undefined') {
-              selectedStations = {};
-            }
-            for (let i = 0; i < stations.length; i++) {
-              if (!selectedStations[stations[i]]) {
-                selectedStations[stations[i]] = {
-                  'feature': self.stationsFeatures[stations[i]],
-                  'stationCoord': self.stationsCoordinates[stations[i]],
-                  'chartStored': [chartStoredId]
-                };
-              } else {
-                if (selectedStations[stations[i]]['chartStored'].indexOf(chartStoredId) < 0) {
-                  selectedStations[stations[i]]['chartStored'].push(chartStoredId);
-                }
-              }
-            }
-            stateStore.setState(
-              stateStore.keys.selectedStations,
-              selectedStations
-            );
-          }
-        );
-      },
-      showRiverLog () {
-        this.$refs.logComponent.showLogModal();
-      },
-      addKnpLayer (map) {
-        const knpJson = require('../../assets/knp.json');
-        let knpLayer = new VectorLayer({
-          source: new VectorSource({
-            features: (new GeoJSON({
-              defaultDataProjection: 'EPSG:4326'
-            })).readFeatures(knpJson, {
-              dataProjection: 'EPSG:4326',
-              featureProjection: 'EPSG:3857'
-            })
-          }),
-          updateWhileAnimating: true,
-          updateWhileInteracting: false
-        });
-        // map.addLayer(knpLayer);
-        let knpStyle = new Style({
-          stroke: new Stroke({
-            color: [51, 204, 51, 0.6],
-            width: 1
-          }),
-          fill: new Fill({
-            color: [51, 204, 51, 0.2]
-          }),
-          zIndex: 1
-        });
-        knpLayer.setStyle(knpStyle);
-      },
-      createCatchmentTree (stationsData) {
-        let self = this;
-        // Start adding stations data to catchment
-        let catchmentsData = self.mapDashboardRef.getCatchmentsData();
-        for (let i = 0; i < stationsData.features.length; i++) {
-          // let primary = stationsData.features[i]['properties']['primary'];
-          let secondary = stationsData.features[i]['properties']['secondary'];
-          let station = stationsData.features[i]['properties']['station'];
-          let place = stationsData.features[i]['properties']['desc'];
-          let sampleSize = stationsData.features[i]['properties']['sample_size'];
-          let latestReading = stationsData.features[i]['properties']['latest'];
-          let hydro = stationsData.features[i]['properties']['hydro'];
-          this.stationsFeatures[station] = stationsData.features[i];
-          this.stationsCoordinates[station] = stationsData.features[i].geometry.coordinates;
-          let flow = 'N';
-          if (hydro > 0) {
-            flow = 'Y';
-          }
-          if (catchmentsData.hasOwnProperty(secondary)) {
-            let stationName = '';
-            if (latestReading != null) {
-              stationName = station + ': ' + ' (' + sampleSize + ') ' + ' (' + flow + ') ' + place + ' ' + latestReading.toString().slice(0, 10);
-            } else {
-              stationName = 'Problem with Station';
-            }
-            catchmentsData[secondary].push(stationName);
-            catchmentsData[secondary].sort();
-          }
-        }
-        console.log(catchmentsData);
-        let treeData = self.generateTreeData(catchmentsData);
-        this.catchmentTreeRef.createTree(treeData, this.onCatchmentTreeSelectedHandler, this.onTreeReady);
-      },
-      onTreeReady (event, data) {
-        const self = this;
-        stateStore.getState(
-          stateStore.keys.selectedCatchments,
-          function (selectedCatchments) {
-            if (!selectedCatchments) {
-              return false;
-            }
-            self.catchmentTreeRef.toggleMultipleNodes(selectedCatchments, true);
-          }
-        );
-      },
-      generateTreeData (dictionary) {
-        let treeData = [];
-        let self = this;
-        $.each(dictionary, function (key, catchment) {
-          let hasChildren = false;
-          if (typeof catchment === 'object' || catchment instanceof Array) {
-            hasChildren = true;
-          }
-          let c = {
-            text: hasChildren ? key : catchment,
-            id: hasChildren ? key : catchment,
-            type: hasChildren ? 'layer' : 'station'
-          };
-          if (hasChildren) {
-            c['children'] = self.generateTreeData(catchment);
-          };
-          treeData.push(c);
-        });
-        return treeData;
-      },
-      onCatchmentTreeSelectedHandler (event, data) {
-        // On catchment tree clicked
-        let i = [];
-        let selected = '';
-        let selectedCatchments = [];
-        let _selectedStations = [];
-        let selectedBits = [];
-        let _unselectedStations = Object.assign([], this.selectedStations);
-        console.log(_unselectedStations);
-        for (i = 0; i < data.selected.length; i++) {
-          selected = data.instance.get_node(data.selected[i]).text;
-          selectedBits = selected.split(':');
-          let type = data.instance.get_node(data.selected[i]).type;
-          if (type === 'layer') {
-            selectedCatchments.push(selectedBits[0]);
-          } else if (type === 'station') {
-            _selectedStations.push(selectedBits[0]);
-            if (_unselectedStations.indexOf(selectedBits[0]) !== -1) _unselectedStations.splice(_unselectedStations.indexOf(selectedBits[0]), 1);
-          }
-        }
-        this.mapDashboardRef.toggleSelectedStationsByStationNames(
-          _selectedStations,
-          _unselectedStations
-        );
-        this.selectedStations = _selectedStations;
-        stateStore.setState(stateStore.keys.selectedCatchments, this.selectedStations);
-        this.mapDashboardRef.selectCatchments(selectedCatchments);
-      }
+export default {
+  components: {
+    MapDashboard,
+    NavButtons,
+    GridLoader,
+    CatchmentTree,
+    RQOOverview,
+    BoxChart,
+    TimeseriesChart,
+    DurationChart,
+    LoadChart,
+    MaxHazard,
+    SiteRisk,
+    HeighestRisk,
+    AllSites,
+    MedianRisk,
+    MinRisk,
+    LatestRisk,
+    StatusBar,
+    EcoliCompliance,
+    PhosCompliance,
+    EcCompliance,
+    CnCompliance,
+    ArseCompliance,
+    RiskHazard,
+    HealthNaratives,
+    NarativeBlock,
+  },
+  data() {
+    return {
+      stationsApi:
+        'https://inwards.award.org.za/app_json/iucma_wq_stations.php',
+      boxplotApi: 'https://inwards.award.org.za/app_json/wq_boxplot.php',
+      stationsCoordinates: {}, // To stored all stations with their coordinates
+      stationsFeatures: {}, // To stored station features
+      stationsRequest: null,
+      selectedStations: [],
+      selectedWMAs: [],
+      mergeAPI: 'false',
+      selectedType: '',
+      types: [],
+      selectedVariable: '',
+      variableUnit: '',
+      variables: [],
+      variableSample: 'All',
+      stationsList: 'all',
+      color: '#177a98',
+      height: '35px',
+      width: '4px',
+      margin: '2px',
+      size: '40px',
+      loading: false,
+      radius: '2px',
     }
-  };
+  },
+  beforeMount() {
+    this.loadVariables()
+    this.loadTypes()
+  },
+  mounted() {
+    let self = this
+    self.mapDashboardRef = self.$refs.mapDashboard
+    self.catchmentTreeRef = self.$refs.catchmentTree
+    stateStore.getState(stateStore.keys.selectedWMAs, function (selectedWMAs) {
+      if (!selectedWMAs) {
+        return false
+      }
+      if (selectedWMAs.length === 0) {
+        return false
+      }
+      self.selectedWMAs = selectedWMAs
+      self.mapDashboardRef.showSelectedWMA(selectedWMAs)
+    })
+    self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
+      self.catchmentTreeRef.toggleNode(station, isStationSelected)
+    })
+    self.$bus.$on('refreshStations', () => {
+      self.fetchStations()
+    })
+    self.$bus.$on('addStationsToStore', (stations, chartStoredId) => {
+      self.addStationsToStore(stations, chartStoredId)
+    })
+    let map = this.$refs.mapDashboard.map
+    self.addKnpLayer(map)
+    $('#customRange3').on('input', function () {
+      let v = $('#customRange3').val()
+      //console.log(v);
+      $('div.minSamples').text(v)
+    })
+  },
+  methods: {
+    doAnalysis() {
+      console.log(this.selectedVariable)
+      this.variableSample = this.selectedVariable
+      console.log(this.selectedStations[0])
+      console.log(this.selectedType)
+      console.log(this.variables)
+      if (this.selectedStations.length === 0) {
+        dialog.showMessageBox(null, {
+          type: 'warning',
+          message: 'Please select at least one station',
+          buttons: ['OK'],
+        })
+        return
+      }
+      let dateStartString = $('#dateStart').val()
+      let dateEndString = $('#dateEnd').val()
+      if (!dateStartString || !dateEndString) {
+        dialog.showMessageBox(null, {
+          type: 'warning',
+          message: 'Missing start date / end date',
+          buttons: ['OK'],
+        })
+        return
+      }
+      let dateStart = new Date(dateStartString)
+      let dateEnd = new Date(dateEndString)
+      if (dateStart > dateEnd) {
+        dialog.showMessageBox(null, {
+          type: 'warning',
+          message: 'End date should be after start date',
+          buttons: ['OK'],
+        })
+        return
+      }
+      let mergeDWS = document.getElementById('merge').checked
+
+      if (mergeDWS === true) {
+        this.mergeAPI = 'true'
+      }
+
+      this.loading = true
+      this.$refs.boxComponent.displayChart(
+        this.selectedStations,
+        this.selectedVariable[0],
+        this.formatDate(dateStart),
+        this.formatDate(dateEnd),
+        this.selectedVariable[1]
+      )
+      this.$refs.timeseriesComponent.displayChart(
+        this.selectedStations,
+        this.selectedVariable[0],
+        this.formatDate(dateStart),
+        this.formatDate(dateEnd),
+        this.selectedVariable[1],
+        this.mergeAPI
+      )
+      this.$refs.durationComponent.displayChart(
+        this.selectedStations,
+        this.selectedVariable[0],
+        this.formatDate(dateStart),
+        this.formatDate(dateEnd),
+        this.selectedVariable[1]
+      )
+      this.$refs.loadComponent.displayChart(
+        this.selectedStations,
+        this.selectedVariable[0],
+        this.formatDate(dateStart),
+        this.formatDate(dateEnd),
+        this.selectedVariable[1]
+      )
+      /*       this.$refs.maxComponent.updateTable(
+        this.selectedStations,
+        this.selectedVariable[0],
+        this.formatDate(dateStart),
+        this.formatDate(dateEnd),
+        this.selectedVariable[1]
+      ) */
+      /* this.$refs.siteComponent.showRiskTable(
+        'stations=' +
+          this.selectedStations +
+          '&variable=' +
+          this.selectedVariable[0] +
+          '&sd=' +
+          this.formatDate(dateStart) +
+          '&ed=' +
+          this.formatDate(dateEnd) +
+          '&unit=' +
+          this.selectedVariable[1] +
+          '&type=' +
+          this.selectedType +
+          '&merge=' +
+          this.mergeAPI
+      )
+      this.$refs.heighestComponent.showRiskTable(
+        'stations=' +
+          this.selectedStations +
+          '&variable=' +
+          this.selectedVariable[0] +
+          '&sd=' +
+          this.formatDate(dateStart) +
+          '&ed=' +
+          this.formatDate(dateEnd) +
+          '&unit=' +
+          this.selectedVariable[1] +
+          '&type=' +
+          this.selectedType +
+          '&merge=' +
+          this.mergeAPI
+      )
+      this.$refs.allComponent.showRiskTable(
+        'stations=' +
+          this.selectedStations +
+          '&variable=' +
+          this.selectedVariable[0] +
+          '&sd=' +
+          this.formatDate(dateStart) +
+          '&ed=' +
+          this.formatDate(dateEnd) +
+          '&unit=' +
+          this.selectedVariable[1] +
+          '&type=' +
+          this.selectedType +
+          '&merge=' +
+          this.mergeAPI
+      )
+      this.$refs.medianComponent.showRiskTable(
+        'stations=' +
+          this.selectedStations +
+          '&variable=' +
+          this.selectedVariable[0] +
+          '&sd=' +
+          this.formatDate(dateStart) +
+          '&ed=' +
+          this.formatDate(dateEnd) +
+          '&unit=' +
+          this.selectedVariable[1] +
+          '&type=' +
+          this.selectedType +
+          '&merge=' +
+          this.mergeAPI
+      )
+      this.$refs.minComponent.showRiskTable(
+        'stations=' +
+          this.selectedStations +
+          '&variable=' +
+          this.selectedVariable[0] +
+          '&sd=' +
+          this.formatDate(dateStart) +
+          '&ed=' +
+          this.formatDate(dateEnd) +
+          '&unit=' +
+          this.selectedVariable[1] +
+          '&type=' +
+          this.selectedType +
+          '&merge=' +
+          this.mergeAPI
+      )
+      this.$refs.latestComponent.showRiskTable(
+        'stations=' +
+          this.selectedStations +
+          '&variable=' +
+          this.selectedVariable[0] +
+          '&sd=' +
+          this.formatDate(dateStart) +
+          '&ed=' +
+          this.formatDate(dateEnd) +
+          '&unit=' +
+          this.selectedVariable[1] +
+          '&type=' +
+          this.selectedType +
+          '&merge=' +
+          this.mergeAPI
+      )
+      this.$refs.ecoliComponent.showRiskTable()
+      this.$refs.phosComponent.showRiskTable()
+      this.$refs.ecComponent.showRiskTable()
+      this.$refs.cnComponent.showRiskTable()
+      this.$refs.arrqoComponent.showRiskTable()
+      this.$refs.healthnarativesComponent.showNarativesTable(
+        'variable=' + this.selectedVariable[0]
+      ) */
+
+      this.loading = false
+    },
+    detectType() {
+      this.catchmentTreeRef.refreshStations()
+      console.log(this.selectedType)
+      this.fetchStations()
+    },
+    loadTypes() {
+      axios
+        .get('http://inwards.award.org.za/app_json/iucma_gauge_types.php')
+        .then((response) => {
+          this.types = response.data
+        })
+        .catch((e) => {})
+    },
+    loadVariables() {
+      axios
+        .get('http://inwards.award.org.za/app_json/variables.php')
+        .then((response) => {
+          this.variables = response.data
+        })
+        .catch((e) => {})
+    },
+    changeVariable() {
+      console.log(this.selectedVariable)
+      this.variableSample = this.selectedVariable[0]
+      this.catchmentTreeRef.refreshStations()
+      //this.fetchStations();
+    },
+    loadRiskTable(urk_paramters) {
+      this.$refs.siteComponent.showRiskTable(urk_paramters)
+    },
+    showNarativesTable(urk_paramters) {
+      this.$refs.healthnarativesComponent.showNarativesTable(urk_paramters)
+    },
+    showRiskHazard() {
+      this.$refs.narativeComponent.showNarativeTable()
+    },
+    fetchStations() {
+      let self = this
+      let wmaNames = Object.assign([], self.selectedWMAs)
+      // Cancel previous request if any
+      if (this.stationsRequest) {
+        this.stationsRequest.cancel('Canceling stations request')
+        this.stationsRequest = null
+      }
+      // Wrap wma name with single quotes, for api purposes
+      wmaNames = wmaNames.sort()
+      for (let i = 0; i < wmaNames.length; i++) {
+        wmaNames[i] = `'${wmaNames[i]}'`
+      }
+      let url = `${self.stationsApi}?wma=${wmaNames.join()}&type=${
+        this.selectedType
+      }&list=${this.stationsList}&variable=${this.variableSample}`
+      console.log(url)
+      //console.log(stationFile);
+      // Check if online
+      let cancelToken = null
+      if (self.stationsRequest) {
+        cancelToken = self.stationsRequest.token
+      }
+      axios
+        .get(url, { cancelToken: cancelToken })
+        .then((response) => {
+          self.mapDashboardRef.loadStationsToMap(response.data)
+          self.createCatchmentTree(response.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      self.$bus.$on('stationSelectedFromMap', (station, isStationSelected) => {
+        self.catchmentTreeRef.toggleNode(station, isStationSelected)
+      })
+      self.$bus.$on('refreshStations', () => {
+        self.fetchStations()
+      })
+      self.$bus.$on('addStationsToStore', (stations, chartStoredId) => {
+        self.addStationsToStore(stations, chartStoredId)
+      })
+      stateStore.getState(stateStore.keys.dateEnd, function (dateEnd) {
+        if (!dateEnd) {
+          var endDate = new Date()
+          var dd = endDate.getDate()
+          var mm = endDate.getMonth() + 1
+          var yyyy = endDate.getFullYear()
+          if (dd < 10) {
+            dd = '0' + dd
+          }
+          if (mm < 10) {
+            mm = '0' + mm
+          }
+          dateEnd = yyyy + '-' + mm + '-' + dd
+        }
+        document.getElementById('dateEnd').setAttribute('value', dateEnd)
+      })
+      document.getElementById('dateEnd').onchange = function () {
+        stateStore.setState(stateStore.keys.dateEnd, this.value)
+      }
+      var startDate = new Date()
+      startDate.setDate(startDate.getDate() - 18250)
+      var dd = startDate.getDate()
+      var mm = startDate.getMonth() + 1
+      var yyyy = startDate.getFullYear()
+      if (dd < 10) {
+        dd = '0' + dd
+      }
+      if (mm < 10) {
+        mm = '0' + mm
+      }
+      startDate = yyyy + '-' + mm + '-' + dd
+      document.getElementById('dateStart').setAttribute('value', startDate)
+    },
+    addStationsToStore(stations, chartStoredId) {
+      let self = this
+      stateStore.getState(
+        stateStore.keys.selectedStations,
+        function (selectedStations) {
+          if (!selectedStations || typeof selectedStations === 'undefined') {
+            selectedStations = {}
+          }
+          for (let i = 0; i < stations.length; i++) {
+            if (!selectedStations[stations[i]]) {
+              selectedStations[stations[i]] = {
+                feature: self.stationsFeatures[stations[i]],
+                stationCoord: self.stationsCoordinates[stations[i]],
+                chartStored: [chartStoredId],
+              }
+            } else {
+              if (
+                selectedStations[stations[i]]['chartStored'].indexOf(
+                  chartStoredId
+                ) < 0
+              ) {
+                selectedStations[stations[i]]['chartStored'].push(chartStoredId)
+              }
+            }
+          }
+          stateStore.setState(
+            stateStore.keys.selectedStations,
+            selectedStations
+          )
+        }
+      )
+    },
+    addKnpLayer(map) {
+      const knpJson = require('../../assets/knp.json')
+      let knpLayer = new VectorLayer({
+        source: new VectorSource({
+          features: new GeoJSON({
+            defaultDataProjection: 'EPSG:4326',
+          }).readFeatures(knpJson, {
+            dataProjection: 'EPSG:4326',
+            featureProjection: 'EPSG:3857',
+          }),
+        }),
+        updateWhileAnimating: true,
+        updateWhileInteracting: false,
+      })
+      // map.addLayer(knpLayer);
+      let knpStyle = new Style({
+        stroke: new Stroke({
+          color: [51, 204, 51, 0.6],
+          width: 1,
+        }),
+        fill: new Fill({
+          color: [51, 204, 51, 0.2],
+        }),
+        zIndex: 1,
+      })
+      knpLayer.setStyle(knpStyle)
+    },
+    createCatchmentTree(stationsData) {
+      let self = this
+      // Start adding stations data to catchment
+      let catchmentsData = self.mapDashboardRef.getCatchmentsData()
+      for (let i = 0; i < stationsData.features.length; i++) {
+        // let primary = stationsData.features[i]['properties']['primary'];
+        let secondary = stationsData.features[i]['properties']['secondary']
+        let station = stationsData.features[i]['properties']['station']
+        let place = stationsData.features[i]['properties']['desc']
+        let sampleSize =
+          stationsData.features[i]['properties']['sample_size_iucma']
+        let latestReading = stationsData.features[i]['properties']['latest']
+        let hydro = stationsData.features[i]['properties']['hydro']
+        let rqo = stationsData.features[i]['properties']['ewr_site']
+        let iucma = stationsData.features[i]['properties']['iucma']
+        this.stationsFeatures[station] = stationsData.features[i]
+        this.stationsCoordinates[station] =
+          stationsData.features[i].geometry.coordinates
+        let flow = 'N'
+        if (hydro > 0) {
+          flow = 'Y'
+        }
+        if (catchmentsData.hasOwnProperty(secondary)) {
+          let stationName = ''
+          if (latestReading != null) {
+            stationName =
+              station +
+              ': ' +
+              ' (' +
+              iucma +
+              ') ' +
+              ' (' +
+              sampleSize +
+              ') ' +
+              ' (' +
+              rqo +
+              ') ' +
+              place +
+              ' ' +
+              latestReading.toString().slice(0, 10)
+          } else {
+            stationName = 'Problem with Station'
+          }
+          catchmentsData[secondary].push(stationName)
+          catchmentsData[secondary].sort()
+        }
+      }
+      //console.log(catchmentsData);
+      let treeData = self.generateTreeData(catchmentsData)
+      this.catchmentTreeRef.createTree(
+        treeData,
+        this.onCatchmentTreeSelectedHandler,
+        this.onTreeReady
+      )
+    },
+    onTreeReady(event, data) {
+      const self = this
+      stateStore.getState(
+        stateStore.keys.selectedCatchments,
+        function (selectedCatchments) {
+          if (!selectedCatchments) {
+            return false
+          }
+          self.catchmentTreeRef.toggleMultipleNodes(selectedCatchments, true)
+        }
+      )
+    },
+    generateTreeData(dictionary) {
+      let treeData = []
+      let self = this
+      $.each(dictionary, function (key, catchment) {
+        let hasChildren = false
+        if (typeof catchment === 'object' || catchment instanceof Array) {
+          hasChildren = true
+        }
+        let c = {
+          text: hasChildren ? key : catchment,
+          id: hasChildren ? key : catchment,
+          type: hasChildren ? 'layer' : 'station',
+        }
+        if (hasChildren) {
+          c['children'] = self.generateTreeData(catchment)
+        }
+        treeData.push(c)
+      })
+      return treeData
+    },
+    viewRQOs() {
+      this.$refs.rqoOverview.showRQOOverview()
+    },
+    onCatchmentTreeSelectedHandler(event, data) {
+      // On catchment tree clicked
+      let i = []
+      let selected = ''
+      let selectedCatchments = []
+      let _selectedStations = []
+      let selectedBits = []
+      let _unselectedStations = Object.assign([], this.selectedStations)
+      //console.log(_unselectedStations);
+      for (i = 0; i < data.selected.length; i++) {
+        selected = data.instance.get_node(data.selected[i]).text
+        selectedBits = selected.split(':')
+        let type = data.instance.get_node(data.selected[i]).type
+        if (type === 'layer') {
+          selectedCatchments.push(selectedBits[0])
+        } else if (type === 'station') {
+          _selectedStations.push(selectedBits[0])
+          if (_unselectedStations.indexOf(selectedBits[0]) !== -1)
+            _unselectedStations.splice(
+              _unselectedStations.indexOf(selectedBits[0]),
+              1
+            )
+        }
+      }
+      this.mapDashboardRef.toggleSelectedStationsByStationNames(
+        _selectedStations,
+        _unselectedStations
+      )
+      this.selectedStations = _selectedStations
+      stateStore.setState(
+        stateStore.keys.selectedCatchments,
+        this.selectedStations
+      )
+      this.mapDashboardRef.selectCatchments(selectedCatchments)
+    },
+  },
+}
 </script>

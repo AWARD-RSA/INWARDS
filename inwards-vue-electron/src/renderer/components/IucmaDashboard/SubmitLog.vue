@@ -136,7 +136,7 @@ export default {
     stateStore.getState(
         stateStore.keys.loginStatus, (status) => {
             this.userCode = status['uniqueCode'];
-            console.log(this.userCode);
+            //console.log(this.userCode);
         }
         );
       }, 
@@ -187,24 +187,24 @@ export default {
               imageURL = data.data.image;
               //imageURL = data.data.image;
               
-              console.log(filesURL);
-              console.log(imageURL);
+              //console.log(filesURL);
+              //console.log(imageURL);
             },
             ).then(function(){
                 let verifyCode = $('#operationalCode').val();
                 let station = $('#stationAdd').val();
                 let siteDescText = $('#siteDesc').val();
                 let dateStartString = $('#operationalStart').val();
-                console.log(dateStartString);
+                //console.log(dateStartString);
                 let dateStart = new Date(dateStartString);
                 let labelAdd = $('#labelAdd').val();
                 let MgProblems = $('#mgProblems').val();
                 let MgOptions = $('#mgOptions').val();
                 let MgActions = $('#mgActions').val();
                 let ResultAdd = $('#resultAdd').val();
-                console.log(ResultAdd);
+                //console.log(ResultAdd);
                 let api = 'https://inwards.award.org.za/app_json/data_upload/logbook_knp_submit.php?code=' + verifyCode + '&station=' + station + '&site_desc=' + siteDescText + '&date_event=' + dateStartString + '&chart_label=' + labelAdd + '&mg_problems=' + MgProblems + '&mg_options=' + MgOptions + '&mg_actions=' + MgActions + '&result=' + ResultAdd + '&attachments=' + filesURL + '&image=' + imageURL;
-                console.log(api);
+                //console.log(api);
                 $.get(api, function (data) {
                   if (data === 'true') {
                     dialog.showMessageBox(null, {
@@ -229,7 +229,7 @@ export default {
         let verifyCode = $('#operationalCode').val();
         let station = $('#stationAdd').val();
         let dateStartString = $('#operationalStart').val();
-        console.log(dateStartString);
+        //console.log(dateStartString);
         let dateStart = new Date(dateStartString);
         let labelAdd = $('#labelAdd').val();
         let MgProblems = $('#mgProblems').val();
@@ -237,7 +237,7 @@ export default {
         let MgActions = $('#mgActions').val();
         let ResultAdd = $('#resultAdd').val();
         let api = 'https://inwards.award.org.za/app_json/operational_reserve.php?code=' + verifyCode + '&station=' + station + '&sd=' + this.formatDate(dateStart) + '&label=' + labelAdd + '&mg_problems' + MgProblems + '&mg_options=' + MgOptions + '&mg_actions=' + MgActions + '&result=' + ResultAdd;
-        console.log(api);
+       // console.log(api);
         $.get(api, function (data) {
           if (data === 'true') {
             dialog.showMessageBox(null, {
