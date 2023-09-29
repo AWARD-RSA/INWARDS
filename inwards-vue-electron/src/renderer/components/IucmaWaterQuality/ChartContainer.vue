@@ -1,7 +1,7 @@
 <template>
   <div class="card rounded-0 box" v-bind:style="styleObject">
     <div class="card-header">{{ chartTitle }}</div>
-    <div class="card-body">
+    <div class="card-body chart-container">
       <section v-if="errored">
         <p>
           We're sorry, we're not able to retrieve this information at the
@@ -40,7 +40,7 @@ export default {
   components: {
     RingLoader,
   },
-  name: 'wq-container',
+  name: 'chart-container',
   data() {
     return {
       chartId: null,
@@ -140,13 +140,16 @@ export default {
       // Override this function get the chart data
       return false
     },
-    displayChart(stations, variable, sd, ed, unit) {
+    displayChart(stations, variable, sd, ed, unit, rwqo, sans, rqo) {
       this.styleObject.display = 'block'
       this.urlParameters.stations = stations
       this.urlParameters.variable = variable
       this.urlParameters.sd = sd
       this.urlParameters.ed = ed
       this.urlParameters.unit = unit
+      this.urlParameters.rwqo = rwqo
+      this.urlParameters.sans = sans
+      this.urlParameters.rqo = rqo
       this.chartId = this.chartId
       console.log(this.chartId)
       this.chartDivId = this.chartId.replace(/,/g, '-')

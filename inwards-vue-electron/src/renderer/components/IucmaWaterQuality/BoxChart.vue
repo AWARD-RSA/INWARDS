@@ -46,14 +46,12 @@ export default {
                 zerolinewidth: 2,
                 rangemode: 'nonnegative',
               },
-              autosize: false,
-              width: 400,
-              height: 400,
+              autosize: true,
               margin: {
-                l: 50,
-                r: 50,
-                b: 50,
-                t: 50,
+                l: 40,
+                r: 0,
+                b: 20,
+                t: 20,
                 pad: 4,
               },
               paper_bgcolor: 'rgb(255, 255, 255)',
@@ -62,14 +60,21 @@ export default {
               legend: {
                 orientation: 'h',
               },
+              modebar: {
+                add: 'v1hovermode',
+              },
+            }
+            var config = {
+              showEditInChartStudio: true,
+              plotlyServerURL: 'https://chart-studio.plotly.com',
+              displaylogo: false,
+              displayModeBar: true,
             }
             for (let variable in jsonData) {
               boxData.push(jsonData[variable])
             }
             document.getElementById(self.chartDivId).innerHTML = ''
-            Plotly.newPlot(self.chartDivId, boxData, layout, {
-              displayModeBar: true,
-            })
+            Plotly.newPlot(self.chartDivId, boxData, layout, config)
           }, 1000)
         })
         .catch((error) => {

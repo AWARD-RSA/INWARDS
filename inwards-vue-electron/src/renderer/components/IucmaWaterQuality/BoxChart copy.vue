@@ -46,9 +46,7 @@ export default {
                 zerolinewidth: 2,
                 rangemode: 'nonnegative',
               },
-              autosize: false,
-              width: 350,
-              height: 350,
+              autosize: true,
               margin: {
                 l: 50,
                 r: 50,

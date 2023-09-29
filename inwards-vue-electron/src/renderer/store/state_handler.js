@@ -11,6 +11,15 @@ const SELECTED_HYDROSTATIONS = 'selectedHydroStations';
 const SELECTED_INVERTSTATIONS = 'selectedInvertStations';
 const SELECTED_LOAD_STATIONS = 'selectedLoadStations';
 const SELECTED_LOAD_SITES = 'selectedLoadSites';
+const SELECTED_RQIS_STATIONS = 'selectedRQISstations';
+const SELECTED_RQIS_SITES = 'selectedRQISSites';
+const SELECTED_IUCMA_STATIONS = 'selectedIUCMAstations';
+const SELECTED_IUCMA_SITES = 'selectedIUCMASites';
+const SELECTED_HEALTH_SITES = 'selectedHealthSites';
+
+const DATE_START = 'dateStart';
+const LOGIN_STATUS = 'loginStatus';
+const DATE_END = 'dateEnd';
 const stateStore = {
   debug: true,
   keys: {
@@ -18,15 +27,20 @@ const stateStore = {
     selectedWMAs: SELECTED_WMAS,
     selectedCharts: SELECTED_CHARTS,
     timestamp: TIMESTAMP,
-    dateStart: 'dateStart',
-    dateEnd: 'dateEnd',
-    selectedStations: 'selectedStations',
-    selectedBioStations: 'selectedBioStations',
-    selectedInvertStations: 'selectedInvertStations',
-    selectedHydroStations: 'selectedHydroStations',
-    selectedLoadStations: 'selectedLoadStations',
-    selectedLoadSites: 'selectedLoadSites',
-    loginStatus: 'loginStatus',
+    dateStart: DATE_START,
+    dateEnd: DATE_END,
+    selectedStations: SELECTED_STATIONS,
+    selectedBioStations: SELECTED_BIOSTATIONS,
+    selectedInvertStations: SELECTED_INVERTSTATIONS,
+    selectedHydroStations: SELECTED_HYDROSTATIONS,
+    selectedLoadStations: SELECTED_LOAD_STATIONS,
+    selectedLoadSites: SELECTED_LOAD_SITES,
+    loginStatus: LOGIN_STATUS,
+    selectedRQISstations: SELECTED_RQIS_STATIONS,
+    selectedRQISSites: SELECTED_RQIS_SITES,
+    selectedIUCMAstations: SELECTED_IUCMA_STATIONS,
+    selectedIUCMASites: SELECTED_IUCMA_SITES,
+    selectedHealthSites: SELECTED_HEALTH_SITES,
     databaseStatus: 'databaseStatus',
     
   },
@@ -40,6 +54,11 @@ const stateStore = {
     SELECTED_INVERTSTATIONS,
     SELECTED_LOAD_SITES,
     SELECTED_LOAD_STATIONS,
+    SELECTED_IUCMA_STATIONS,
+    SELECTED_IUCMA_SITES,
+    SELECTED_RQIS_STATIONS,
+    SELECTED_RQIS_SITES,
+    SELECTED_HEALTH_SITES,
     TIMESTAMP
   ],
   state: {},
@@ -52,6 +71,7 @@ const stateStore = {
     const self = this;
     this.print(`Set state ${key} to ${JSON.stringify(newValue)}`);
     this.state[key] = newValue;
+    console.log(newValue);
     this.state[TIMESTAMP] = Date.now();
     return new Promise(resolve => {
       db.update({ type: 'user_states' }, {

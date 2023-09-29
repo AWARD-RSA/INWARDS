@@ -166,8 +166,8 @@
                         name="chart_components"
                         id="rqoLimits"
                         type="checkbox"
-                        checked="checked"
                         class="form-check-input"
+                        v-model="rqoSelected"
                       />
                       <label for="rqoLimits" class="form-check-label"
                         >RQOs</label
@@ -181,7 +181,7 @@
                         id="sansLimits"
                         type="checkbox"
                         class="form-check-input"
-                        disabled
+                        v-model="sansSelected"
                       />
                       <label for="sansLimits" class="form-check-label"
                         >SANS241</label
@@ -195,7 +195,6 @@
                         id="dwsDomestic"
                         type="checkbox"
                         class="form-check-input"
-                        disabled
                       />
                       <label for="dwsDomestic" class="form-check-label"
                         >DWS Domestic</label
@@ -248,12 +247,12 @@
                     >
                       <input
                         name="chart_components"
-                        id="dwsNWRQOs"
+                        id="nwrqos"
                         type="checkbox"
                         class="form-check-input"
-                        checked
+                        v-model="nwrqoSelected"
                       />
-                      <label for="dwsNWRQOs" class="form-check-label"
+                      <label for="nwrqos" class="form-check-label"
                         >DWS NWRQOs</label
                       >
                     </div>
@@ -857,6 +856,9 @@ export default {
       margin: '2px',
       size: '40px',
       loading: false,
+      rqoSelected: true,
+      nwrqoSelected: false,
+      sansSelected: false,
       radius: '2px',
     }
   },
@@ -931,6 +933,9 @@ export default {
         return
       }
       let mergeDWS = document.getElementById('merge').checked
+      let rqo = document.getElementById('rqoLimits').checked
+      let nwrqo = document.getElementById('nwrqos').checked
+      let sans = document.getElementById('sansLimits').checked
 
       if (mergeDWS === true) {
         this.mergeAPI = 'true'
@@ -942,7 +947,10 @@ export default {
         this.selectedVariable[0],
         this.formatDate(dateStart),
         this.formatDate(dateEnd),
-        this.selectedVariable[1]
+        this.selectedVariable[1],
+        nwrqo,
+        sans,
+        rqo
       )
       this.$refs.timeseriesComponent.displayChart(
         this.selectedStations,
@@ -950,21 +958,29 @@ export default {
         this.formatDate(dateStart),
         this.formatDate(dateEnd),
         this.selectedVariable[1],
-        this.mergeAPI
+        nwrqo,
+        sans,
+        rqo
       )
       this.$refs.durationComponent.displayChart(
         this.selectedStations,
         this.selectedVariable[0],
         this.formatDate(dateStart),
         this.formatDate(dateEnd),
-        this.selectedVariable[1]
+        this.selectedVariable[1],
+        nwrqo,
+        sans,
+        rqo
       )
       this.$refs.loadComponent.displayChart(
         this.selectedStations,
         this.selectedVariable[0],
         this.formatDate(dateStart),
         this.formatDate(dateEnd),
-        this.selectedVariable[1]
+        this.selectedVariable[1],
+        nwrqo,
+        sans,
+        rqo
       )
       /*       this.$refs.maxComponent.updateTable(
         this.selectedStations,
@@ -1307,12 +1323,12 @@ export default {
     onTreeReady(event, data) {
       const self = this
       stateStore.getState(
-        stateStore.keys.selectedCatchments,
-        function (selectedCatchments) {
-          if (!selectedCatchments) {
+        stateStore.keys.selectedIUCMASites,
+        function (selectedIUCMASites) {
+          if (!selectedIUCMASites) {
             return false
           }
-          self.catchmentTreeRef.toggleMultipleNodes(selectedCatchments, true)
+          self.catchmentTreeRef.toggleMultipleNodes(selectedIUCMASites, true)
         }
       )
     },
@@ -1343,7 +1359,7 @@ export default {
       // On catchment tree clicked
       let i = []
       let selected = ''
-      let selectedCatchments = []
+      let selectedIUCMASites = []
       let _selectedStations = []
       let selectedBits = []
       let _unselectedStations = Object.assign([], this.selectedStations)
@@ -1353,7 +1369,7 @@ export default {
         selectedBits = selected.split(':')
         let type = data.instance.get_node(data.selected[i]).type
         if (type === 'layer') {
-          selectedCatchments.push(selectedBits[0])
+          selectedIUCMASites.push(selectedBits[0])
         } else if (type === 'station') {
           _selectedStations.push(selectedBits[0])
           if (_unselectedStations.indexOf(selectedBits[0]) !== -1)
@@ -1369,10 +1385,10 @@ export default {
       )
       this.selectedStations = _selectedStations
       stateStore.setState(
-        stateStore.keys.selectedCatchments,
+        stateStore.keys.selectedIUCMASites,
         this.selectedStations
       )
-      this.mapDashboardRef.selectCatchments(selectedCatchments)
+      this.mapDashboardRef.selectCatchments(selectedIUCMASites)
     },
   },
 }

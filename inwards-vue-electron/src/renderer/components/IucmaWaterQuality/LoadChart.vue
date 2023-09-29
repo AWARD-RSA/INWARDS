@@ -124,9 +124,7 @@ export default {
                 type: 'log',
                 rangemode: 'nonnegative',
               },
-              autosize: false,
-              width: 400,
-              height: 400,
+              autosize: true,
               margin: {
                 l: 40,
                 r: 0,
@@ -140,14 +138,21 @@ export default {
               legend: {
                 orientation: 'h',
               },
+              modebar: {
+                add: 'v1hovermode',
+              },
+            }
+            var config = {
+              showEditInChartStudio: true,
+              plotlyServerURL: 'https://chart-studio.plotly.com',
+              displaylogo: false,
+              displayModeBar: true,
             }
             for (let variable in jsonData) {
               boxData.push(jsonData[variable])
             }
             document.getElementById(self.chartDivId).innerHTML = ''
-            Plotly.newPlot(self.chartDivId, boxData, layout, {
-              displayModeBar: true,
-            })
+            Plotly.newPlot(self.chartDivId, boxData, layout, config)
           }, 1000)
         })
         .catch((error) => {
