@@ -21,6 +21,7 @@ export default {
       let self = this
       this.loading = true
       const url = `${this.baseUrl}?${this.dictToUri(this.urlParameters)}`
+      console.log(url)
       var variableTitle =
         this.urlParameters.variable + ' (' + this.urlParameters.unit + ')'
       console.log(url)

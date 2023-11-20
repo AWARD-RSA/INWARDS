@@ -24,7 +24,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="log in ecoliData"
+                v-for="log in turbData"
                 :key="log.id"
                 class="text-sm font-weight-light"
               >
@@ -56,14 +56,6 @@
 </template>
 
 <style>
-.card {
-  display: flex;
-  flex-direction: column; /* children are stacked vertically */
-}
-
-.chart-container {
-  flex: 1; /* This will grow to occupy remaining space */
-}
 .td-table {
   word-wrap: break-word;
   word-break: break-all;
@@ -82,18 +74,18 @@ import $ from 'jquery'
 export default {
   data() {
     return {
-      ecoliData: [],
+      turbData: [],
       station: '',
     }
   },
   mounted() {
     this.$http
       .get(
-        'https://inwards.award.org.za/app_json/wq_dash/rqos/compliance_table.php?stations=X2I050&sd=1972-12-10&ed=2022-11-28&type=0&variable=ECOLI_Susp_Water&unit=mg%2FL&merge=true&type=Rivers'
+        'https://inwards.award.org.za/app_json/wq_dash/rqos/compliance_table.php?stations=X2I050&sd=1972-12-10&ed=2023-11-28&type=0&variable=Turbidity&unit=mg%2FL&merge=true&type=Rivers'
       )
       .then((response) => {
-        this.ecoliData = response.data
-        console.log(this.ecoliData)
+        this.turbData = response.data
+        console.log(this.turbData)
       })
       .catch(function (error) {
         console.log(error)

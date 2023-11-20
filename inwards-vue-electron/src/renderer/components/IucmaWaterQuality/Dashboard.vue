@@ -4,7 +4,7 @@
     <div class="container-fluid" style="height: 100%">
       <div class="row no-gutters" style="height: 100%">
         <div
-          class="col-md-4 no-float left-panel"
+          class="col-md-3 no-float left-panel"
           style="background: #252526; padding-left: 8px"
         >
           <div
@@ -391,7 +391,7 @@
           <MapDashboard ref="mapDashboard" />
         </div>
         <div
-          class="col-md-8 no-float right-panel no-gutters"
+          class="col-md-9 no-float right-panel no-gutters"
           style="
             background: #1e1e1e;
             padding-bottom: 5px;
@@ -467,6 +467,10 @@
                 role="tabpanel"
                 aria-labelledby="nav-complianceTab-tab"
               >
+                <h5>
+                  RQOs for RIVERS for water quality (ecological and user) in
+                  priority Resource Units
+                </h5>
                 <div class="row no-gutters">
                   <div class="col-md-2">
                     <div
@@ -492,7 +496,7 @@
                           role="tab"
                           aria-controls="v-pills-ecoli"
                           aria-selected="true"
-                          >E.COLI_Susp_Water</a
+                          >E.COLI</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -503,7 +507,7 @@
                           role="tab"
                           aria-controls="v-pills-phos"
                           aria-selected="false"
-                          >PO4_P_Diss_Water</a
+                          >Orthophosphates</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -514,7 +518,7 @@
                           role="tab"
                           aria-controls="v-pills-eCon"
                           aria-selected="false"
-                          >EC_Phys_Water</a
+                          >Electrical Conductivity</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -525,7 +529,7 @@
                           role="tab"
                           aria-controls="v-pills-arse"
                           aria-selected="false"
-                          >As_Diss_Water</a
+                          >Arsenic</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -536,7 +540,7 @@
                           role="tab"
                           aria-controls="v-pills-TIN"
                           aria-selected="false"
-                          >TIN (TBC)</a
+                          >Total Inorganic Nitrogen</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -547,7 +551,7 @@
                           role="tab"
                           aria-controls="v-pills-turb"
                           aria-selected="false"
-                          >Turbidity(TBC)</a
+                          >Turbidity</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -569,7 +573,7 @@
                           role="tab"
                           aria-controls="v-pills-phLower"
                           aria-selected="false"
-                          >ph_lower(TBC)</a
+                          >pH lower</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -580,7 +584,7 @@
                           role="tab"
                           aria-controls="v-pills-phUpper"
                           aria-selected="false"
-                          >ph_upper(TBC)</a
+                          >pH upper</a
                         >
                         <a
                           class="nav-item nav-link nav-vertical"
@@ -591,7 +595,7 @@
                           role="tab"
                           aria-controls="v-pills-cad"
                           aria-selected="true"
-                          >CN_Diss_Water(TBC)</a
+                          >Cyanide</a
                         >
                       </div>
                     </nav>
@@ -651,14 +655,22 @@
                         id="v-pills-TIN"
                         role="tabpanel"
                         aria-labelledby="v-pills-TIN-tab"
-                      ></div>
+                      >
+                        <TINCompliance
+                          ref="TINrqoComponent"
+                          style="margin-top: 5px"
+                        />
+                      </div>
                       <div
                         class="tab-pane fade"
                         id="v-pills-turb"
                         role="tabpanel"
                         aria-labelledby="v-pills-turb-tab"
                       >
-                        ...
+                        <TurbidityCompliance
+                          ref="turbidityrqoComponent"
+                          style="margin-top: 5px"
+                        />
                       </div>
                       <div
                         class="tab-pane fade"
@@ -780,8 +792,10 @@ import LoadChart from './LoadChart'
 import SiteRisk from './SiteRisk'
 import RiskHazard from './RiskHazard'
 import EcoliCompliance from './EcoliCompliance'
+import TINCompliance from './TINCompliance'
 import EcCompliance from './EcCompliance'
 import PhosCompliance from './PhosCompliance'
+import TurbidityCompliance from './TurbidityCompliance'
 import ArseCompliance from './ArseCompliance'
 import CnCompliance from './CnCompliance'
 import LatestRisk from './LatestRisk'
@@ -808,6 +822,7 @@ export default {
   components: {
     MapDashboard,
     NavButtons,
+    TurbidityCompliance,
     GridLoader,
     CatchmentTree,
     RQOOverview,
@@ -824,6 +839,7 @@ export default {
     LatestRisk,
     StatusBar,
     EcoliCompliance,
+    TINCompliance,
     PhosCompliance,
     EcCompliance,
     CnCompliance,
