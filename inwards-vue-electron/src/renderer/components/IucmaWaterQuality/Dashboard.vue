@@ -6,7 +6,9 @@
         <div
           class="col-md-3 no-float left-panel"
           style="background: #252526; padding-left: 8px"
-        >
+        >                    
+        <button class="btn inwards_button btn-labeled text-left" style="width: 100%; font-size: x-small;" @click="submitData()" type="button"><span class="btn-label"><font-awesome-icon icon="fa-solid fa-refresh" style="color: rgb(255, 255, 255)"></font-awesome-icon></span>Submit Data<i class="fa fa-chevron-right vertical-center" style="padding-left: 10px; float : right; "></i></button>               
+
           <div
             class="card rounded-0"
             style="margin-top: 5px; margin-bottom: 5px; width: 100%"
@@ -752,6 +754,8 @@
     ></grid-loader>
     <NavButtons />
     <RQOOverview ref="rqoOverview" />
+    <SubmitData ref="submitDataComponent" style="margin-top: 5px;"/>
+
   </div>
 </template>
 <style>
@@ -810,6 +814,7 @@ import VectorSource from 'ol/source/Vector'
 import GeoJSON from 'ol/format/GeoJSON'
 import NarativeBlock from './NarativeBlock'
 import RQOOverview from './RQOOverview'
+import SubmitData from './SubmitData'
 import { Fill, Stroke, Style } from 'ol/style'
 import { GridLoader } from 'vue-spinner/dist/vue-spinner.min.js'
 import $ from 'jquery'
@@ -830,6 +835,7 @@ export default {
     TimeseriesChart,
     DurationChart,
     LoadChart,
+    SubmitData,
     MaxHazard,
     SiteRisk,
     HeighestRisk,
@@ -1290,8 +1296,7 @@ export default {
         let secondary = stationsData.features[i]['properties']['secondary']
         let station = stationsData.features[i]['properties']['station']
         let place = stationsData.features[i]['properties']['desc']
-        let sampleSize =
-          stationsData.features[i]['properties']['sample_size_iucma']
+        let sampleSize = stationsData.features[i]['properties']['sample_size_iucma']
         let latestReading = stationsData.features[i]['properties']['latest']
         let hydro = stationsData.features[i]['properties']['hydro']
         let rqo = stationsData.features[i]['properties']['ewr_site']
@@ -1371,6 +1376,9 @@ export default {
     viewRQOs() {
       this.$refs.rqoOverview.showRQOOverview()
     },
+    submitData () {
+        this.$refs.submitDataComponent.submitData();
+      },
     onCatchmentTreeSelectedHandler(event, data) {
       // On catchment tree clicked
       let i = []
