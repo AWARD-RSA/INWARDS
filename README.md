@@ -4,7 +4,7 @@ The freshwater biodiversity of the five transboundary rivers of South Africa tha
 
 This project will expand the Freshwater Biodiversity Information System (FBIS) currently being developed by the Freshwater Research Centre for the Cape Floristic Region to include freshwater biodiversity data for all of the catchments of the Lowveld River flowing through KNP. The prototype Integrated Water Resources Decision Support System (InWaRDS) will also be further developed into a cross-platform system and integrated with the FBIS to support analysis of changes and trends. By including biodiversity and drivers of change (hydrology and water quality), water resources managers will have a powerful tool that supports monitoring, analysis, and sound decision-making.
 
-![](http://maru.award.org.za/map.PNG)
+![](https://award.org.za/wp/wp-content/uploads/2020/09/Figures-for-Progress-Report-1.mp4)
 
 ## Key Objectives and Activities
 
